@@ -74,17 +74,6 @@
 }
 
 @layer base {
-  /* Removed aggressive border resets to fix UI components */
-  body {
-    @apply bg-background text-foreground antialiased;
-    background-image: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.15) 1px,
-        transparent 1px
-      ),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-    background-size: 50px 50px; /* Larger, more visible Grid */
-  }
 }
 
 /* Utilities for the new aesthetic */

@@ -2,13 +2,25 @@
 
 export function BackgroundPattern() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Noise Texture */}
+    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+      {/* Noise Texture - Increased opacity for a rougher surface feel */}
       <div
-        className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
         style={{
           backgroundImage:
             'url("https://grainy-gradients.vercel.app/noise.svg")',
+        }}
+      ></div>
+
+      {/* Rectangular Grid */}
+      <div
+        className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
+        style={{
+          backgroundSize: "50px 50px",
+          backgroundImage: `
+            repeating-linear-gradient(0deg, #333 0, #333 1px, transparent 1px, transparent 50px),
+            repeating-linear-gradient(90deg, #333 0, #333 1px, transparent 1px, transparent 50px)
+          `,
         }}
       ></div>
 

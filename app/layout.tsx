@@ -1,6 +1,6 @@
-import type React from "react";
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display } from "next/font/google";
+import type React from "react";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -19,8 +19,8 @@ export const viewport: Viewport = {
   themeColor: "#0a0a0a",
 };
 
-import { Providers } from "./providers";
 import { BackgroundPattern } from "@/components/background-pattern";
+import { Providers } from "./providers";
 
 export default function RootLayout({
   children,
