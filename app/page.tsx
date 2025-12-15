@@ -23,6 +23,10 @@ import { UpcomingEvents } from "@/components/upcoming-events";
 import { TopSellingEvents } from "@/components/top-selling-events";
 import { getCategories } from "@/lib/api/categories";
 
+// Fix Vercel caching - force dynamic rendering
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const featuredEvents = await getHomeFeaturedEvents();
   const trendingEvents = await getHomeTrendingEvents();
