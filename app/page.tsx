@@ -69,7 +69,7 @@ export default async function HomePage() {
       <TopSellingEvents events={topSellingEvents} />
 
       {/* Urgency/Deals */}
-      <LastMinuteDeals />
+      {/* <LastMinuteDeals /> */}
 
       {/* Trust & Authority */}
       <StatsSection />
