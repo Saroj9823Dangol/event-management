@@ -228,11 +228,11 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-[0.9] tracking-tight">
               {currentEvent.name}
             </h1>
-            <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light tracking-wide">
+            <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light tracking-wide line-clamp-2">
               {currentEvent.description}
             </p>
             <div className="flex items-center gap-6 text-white/60 mb-10 text-sm tracking-widest uppercase">
-              <span>{currentEvent.nearest_lineup.addressable.city}</span>
+              <span>{currentEvent.nearest_lineup.addressable.address}</span>
               <span className="w-1 h-1 bg-accent rounded-full" />
               <span>
                 {formatDateTime(currentEvent.nearest_lineup.start_date)}

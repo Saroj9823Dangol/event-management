@@ -91,7 +91,8 @@ export async function getEventDetail(slug: string): Promise<IEvent> {
   const response = await http.get(`/events`, {
     params: {
       slug,
-      includes: "category,organizer,performers,lineups.performers",
+      includes:
+        "category,organizer,performers,lineups.performers,policies,lineups.ticketTypes,lineups.addressable",
       include_nearest_lineup: 1,
       include_price_range: 1,
     },

@@ -6,59 +6,34 @@ import { motion } from "framer-motion";
 import { Minus, Plus, Shield, CreditCard, Clock } from "lucide-react";
 import { useBooking } from "@/components/event-detail/booking-context";
 import { IEvent } from "@/types";
+import logger from "@/lib/logger/logger";
 
 interface TicketSelectionProps {
   event: IEvent;
 }
 
-const ticketTypes = [
-  {
-    id: 1,
-    name: "General Admission",
-    description: "Standing room with full view of stage",
-    price: 189,
-    available: 847,
-  },
-  {
-    id: 2,
-    name: "Reserved Seating",
-    description: "Allocated seat in the lower bowl",
-    price: 349,
-    available: 234,
-  },
-  {
-    id: 3,
-    name: "VIP Experience",
-    description: "Premium viewing area, early entry, exclusive merch",
-    price: 750,
-    available: 52,
-  },
-  {
-    id: 4,
-    name: "Ultimate Package",
-    description: "Front row, meet & greet, private lounge access",
-    price: 1500,
-    available: 8,
-  },
-];
-
 export function TicketSelection({ event }: TicketSelectionProps) {
   // State to track quantity for each ticket type: { [ticketId]: quantity }
-  const [quantities, setQuantities] = useState<Record<number, number>>({});
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { selectedLineupId } = useBooking();
 
   const isLineupSelected = !!selectedLineupId;
 
+  const selectedLineUpTicketTypes = event.lineups.find(
+    (lineup) => lineup.id === selectedLineupId
+  )?.ticketTypes;
+
+  logger.log(selectedLineUpTicketTypes, "lineeeeup");
+
   // Calculate totals
   const totalQuantity = Object.values(quantities).reduce((a, b) => a + b, 0);
-  const subtotal = ticketTypes.reduce(
+  const subtotal = selectedLineUpTicketTypes?.reduce(
     (sum, ticket) => sum + ticket.price * (quantities[ticket.id] || 0),
     0
   );
-  const fees = Math.round(subtotal * 0.15);
-  const total = subtotal + fees;
+  const total = subtotal ? subtotal : 0;
 
-  const handleQuantityChange = (ticketId: number, delta: number) => {
+  const handleQuantityChange = (ticketId: string, delta: number) => {
     setQuantities((prev) => {
       const current = prev[ticketId] || 0;
       const next = Math.max(0, Math.min(10, current + delta)); // Limit 10 per type
@@ -109,7 +84,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                 Starting from
               </p>
               <p className="text-4xl font-serif text-white">
-                {event.low_price}
+                {event.currency} {event.low_price}
               </p>
             </div>
             <div className="bg-accent/20 px-3 py-1 rounded text-accent text-xs font-bold uppercase tracking-wider">
@@ -124,7 +99,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
             Select Tickets
           </h3>
           <div className="space-y-4">
-            {ticketTypes.map((ticket) => {
+            {selectedLineUpTicketTypes?.map((ticket) => {
               const qty = quantities[ticket.id] || 0;
               return (
                 <div
@@ -140,11 +115,17 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                       <h4 className="font-bold text-white mb-1">
                         {ticket.name}
                       </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {ticket.description}
-                      </p>
+                      {ticket?.description && ticket.description.length > 0 && (
+                        <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5">
+                          {ticket.description.map((desc, index) => (
+                            <li key={index}>{desc}</li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
-                    <div className="font-serif text-lg">${ticket.price}</div>
+                    <div className="font-serif text-lg">
+                      {event.currency} {ticket.price}
+                    </div>
                   </div>
 
                   {/* Quantity Control */}
@@ -178,7 +159,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
           {/* Line Items Summary */}
           {totalQuantity > 0 && (
             <div className="space-y-2 pb-4 border-b border-white/10 text-sm">
-              {ticketTypes.map((ticket) => {
+              {selectedLineUpTicketTypes?.map((ticket) => {
                 const qty = quantities[ticket.id] || 0;
                 if (qty === 0) return null;
                 return (
@@ -189,23 +170,20 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                     <span>
                       {qty}x {ticket.name}
                     </span>
-                    <span>${ticket.price * qty}</span>
+                    <span>
+                      {event.currency} {ticket.price * qty}
+                    </span>
                   </div>
                 );
               })}
             </div>
           )}
 
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Service fees (15%)</span>
-            <span>${fees}</span>
-          </div>
-
-          <div className="h-px bg-white/10" />
-
           <div className="flex justify-between text-xl font-serif text-white">
             <span>Total</span>
-            <span>${total}</span>
+            <span>
+              {event.currency} {total}
+            </span>
           </div>
 
           <Link

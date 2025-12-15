@@ -107,8 +107,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-accent/70" />
                     <span className="truncate max-w-[250px]">
-                      {event.nearest_lineup.custom_fields.venue_name},{" "}
-                      {event.nearest_lineup.addressable.city}
+                      {event.nearest_lineup.addressable.address}
                     </span>
                   </div>
                 </div>

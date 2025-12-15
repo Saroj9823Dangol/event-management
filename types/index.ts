@@ -384,8 +384,10 @@ export interface ILineup extends IBase {
   capacity: number;
   status: boolean;
   event_id: string;
+  ticketTypes: ITicketType[];
   addressable: IAddressable;
   performer_ids: string[];
+  performers: IPerformer[];
   custom_fields: ICustomFields;
 }
 
@@ -402,6 +404,7 @@ export interface IAddressable {
   country: string;
   latitude: number;
   longitude: number;
+  address: string;
 }
 
 export interface ITicketType extends IBase {

@@ -70,7 +70,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
             src={event.thumbnail.url || "/placeholder.svg"}
             alt={event.name}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
           />
         )}
@@ -144,7 +144,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-none tracking-tight">
             {event.name}
           </h1>
-          <p className="text-2xl md:text-4xl font-light text-white/90 mb-10 max-w-2xl leading-tight">
+          <p className="text-2xl md:text-4xl font-light text-white/90 mb-10 max-w-2xl leading-tight line-clamp-1">
             {event.description}
           </p>
 
@@ -162,7 +162,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-accent" />
-              <span>{event.nearest_lineup.addressable.city}</span>
+              <span>{event.nearest_lineup.addressable.address}</span>
             </div>
           </div>
 

@@ -1,38 +1,17 @@
 "use client";
 
 import { useBooking } from "@/components/event-detail/booking-context";
+import logger from "@/lib/logger/logger";
+import { formatDate, formatDateTime, formatTime } from "@/lib/utils";
+import { ILineup } from "@/types";
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
-// Mock Lineup Data - Represents Days or Sessions
-const lineups = [
-  {
-    id: "day1",
-    title: "Day 1: Opening Night",
-    date: "Fri, July 28",
-    time: "16:00 - 23:00",
-    location: "Main Stadium",
-    performers: [
-      { name: "Beyoncé", role: "Headliner", time: "21:00" },
-      { name: "Jay-Z", role: "Special Guest", time: "19:30" },
-      { name: "Local Support", role: "Opener", time: "18:00" },
-    ],
-  },
-  {
-    id: "day2",
-    title: "Day 2: The Finale",
-    date: "Sat, July 29",
-    time: "14:00 - 23:00",
-    location: "Main Stadium",
-    performers: [
-      { name: "Beyoncé", role: "Headliner", time: "20:30" },
-      { name: "Destiny's Child", role: "Reunion", time: "18:45" },
-      { name: "DJ Set", role: "Warmup", time: "16:00" },
-    ],
-  },
-];
+interface EventLineupProps {
+  lineups: ILineup[];
+}
 
-export function EventLineup() {
+export function EventLineup({ lineups }: EventLineupProps) {
   const { selectedLineupId, setSelectedLineupId } = useBooking();
 
   return (
@@ -68,19 +47,19 @@ export function EventLineup() {
                   <div className="flex items-center gap-3 text-accent mb-2">
                     <Calendar className="w-4 h-4" />
                     <span className="text-sm font-bold uppercase tracking-wider">
-                      {item.date}
+                      {formatDate(item.start_date)}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4">{item.name}</h3>
 
                   <div className="space-y-2 text-white/70 text-sm mb-6">
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4" />
-                      {item.time}
+                      {formatTime(item.start_date)}
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
-                      {item.location}
+                      {item.addressable.address}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -96,7 +75,9 @@ export function EventLineup() {
                   </div>
 
                   <button
-                    onClick={() => setSelectedLineupId(item.id)}
+                    onClick={() => {
+                      setSelectedLineupId(item.id);
+                    }}
                     className={`w-full lg:w-auto px-8 py-3 font-bold text-sm tracking-widest transition-all rounded-lg whitespace-nowrap ${
                       isSelected
                         ? "bg-accent text-white shadow-lg shadow-accent/20"
@@ -115,7 +96,7 @@ export function EventLineup() {
                   <div className="space-y-3">
                     {item.performers.map((act, index) => (
                       <div
-                        key={index}
+                        key={act.id}
                         className="flex items-center justify-between p-3 rounded-lg bg-black/20 hover:bg-black/40 transition-colors"
                       >
                         <div className="flex items-center gap-4">
@@ -125,7 +106,7 @@ export function EventLineup() {
                           <div>
                             <p className="font-bold text-sm">{act.name}</p>
                             <p className="text-[10px] text-white/50 uppercase tracking-wider">
-                              {act.role}
+                              {act.sub_name}
                             </p>
                           </div>
                         </div>

@@ -118,7 +118,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                     <div className="flex items-center gap-2 text-white text-sm">
                       <MapPin className="w-3 h-3" />
                       <span className="truncate">
-                        {event.nearest_lineup.addressable.city}
+                        {event.nearest_lineup.addressable.address}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-white text-xs uppercase tracking-wider font-bold">
