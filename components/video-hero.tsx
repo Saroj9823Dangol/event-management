@@ -225,7 +225,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
               </span>
             </motion.div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-[0.9] tracking-tight">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-[0.9] tracking-tight line-clamp-1">
               {currentEvent.name}
             </h1>
             <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light tracking-wide line-clamp-2">

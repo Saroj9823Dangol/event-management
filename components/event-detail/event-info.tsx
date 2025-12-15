@@ -16,19 +16,13 @@ export function EventInfo({ event }: EventInfoProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
-      {/* Description */}
-      <div className="mb-16">
-        <div className="prose prose-invert prose-lg max-w-none text-muted-foreground">
-          {event.description.split("\n\n").map((paragraph, i) => (
-            <p
-              key={i}
-              className="leading-relaxed mb-6 first:text-white first:text-xl first:font-light"
-            >
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </div>
+      {/* Title */}
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-serif mb-6 text-white leading-none tracking-tight line-clamp-1">
+        {event.name}
+      </h1>
+      <p className="text-base md:text-lg lg:text-xl font-light text-white/90 mb-10 max-w-2xl leading-tight line-clamp-1">
+        {event.description}
+      </p>
 
       {/* Quick Facts Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">

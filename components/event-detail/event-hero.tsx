@@ -140,14 +140,6 @@ export function EventDetailHero({ event }: EventHeroProps) {
             </span>
           </motion.div>
 
-          {/* Title */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-none tracking-tight">
-            {event.name}
-          </h1>
-          <p className="text-2xl md:text-4xl font-light text-white/90 mb-10 max-w-2xl leading-tight line-clamp-1">
-            {event.description}
-          </p>
-
           {/* Meta Info */}
           <div className="flex flex-wrap items-center gap-8 text-white/80 mb-12 text-sm tracking-widest uppercase font-medium">
             <div className="flex items-center gap-3">
