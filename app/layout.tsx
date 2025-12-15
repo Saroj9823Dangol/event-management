@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "UCNCEE | Where Experiences Find You",
   description:
     "Discover extraordinary events through a cinematic lens. Curated experiences for the discerning.",
-  generator: "v0.app",
+  generator: "https://apptechnologies.co",
   icons: {
     icon: "/favicon.ico",
   },
