@@ -74,7 +74,7 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
                 className="aspect-square block overflow-hidden mb-8 relative"
               >
                 <Image
-                  src={event.files[0].url}
+                  src={event.thumbnail.url}
                   alt={event.name}
                   fill
                   className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
