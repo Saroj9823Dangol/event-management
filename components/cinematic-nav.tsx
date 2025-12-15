@@ -30,11 +30,8 @@ export function CinematicNav() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="relative z-10 group">
-              <motion.div
-                className="flex items-center gap-3"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="relative w-40 h-10 transition-transform duration-500 group-hover:scale-110">
+              <motion.div className="flex items-center gap-3">
+                <div className="relative w-40 h-10">
                   <Image
                     src="/logo/dark-theme-logo.png"
                     alt="UCNCEE"
