@@ -201,7 +201,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
       <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-32 px-6 max-w-[1800px] mx-auto z-20">
+      <div className="relative h-full  flex flex-col justify-end pb-20 container mx-auto z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}

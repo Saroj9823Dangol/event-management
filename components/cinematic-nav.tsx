@@ -2,20 +2,31 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, User, Heart } from "lucide-react";
+import { Search, Menu, X, User, Heart, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export function CinematicNav() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      router.push(`/events?search=${encodeURIComponent(searchQuery)}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
 
   return (
     <>
@@ -120,14 +131,30 @@ export function CinematicNav() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1 }}
               >
-                <div className="relative group">
+                <div className="relative group flex items-center">
                   <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 text-muted-foreground group-focus-within:text-accent transition-colors" />
                   <input
                     type="text"
                     placeholder="Search events, artists, venues..."
                     autoFocus
-                    className="w-full bg-transparent border-b border-border/50 py-8 pl-14 text-4xl md:text-6xl font-serif text-white placeholder:text-muted-foreground/30 focus:border-accent outline-none transition-colors"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    className="w-full bg-transparent border-b border-border/50 py-8 pl-14 pr-16 text-4xl md:text-6xl font-serif text-white placeholder:text-muted-foreground/30 focus:border-accent outline-none transition-colors"
                   />
+                  <AnimatePresence>
+                    {searchQuery && (
+                      <motion.button
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        onClick={handleSearch}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-2 hover:text-accent transition-colors"
+                      >
+                        <ArrowRight className="w-8 h-8" />
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
                 </div>
                 <div className="mt-12">
                   <span className="text-sm font-light tracking-widest text-muted-foreground uppercase block mb-4">

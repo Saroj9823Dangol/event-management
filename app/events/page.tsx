@@ -11,8 +11,13 @@ import { getCategories } from "@/lib/api/categories";
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
-export default async function EventsPage() {
-  const events = await getFilteredEvents();
+export default async function EventsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const events = await getFilteredEvents(resolvedSearchParams);
   const categories = await getCategories();
 
   return (

@@ -119,22 +119,97 @@ export async function getEventDetail(slug: string): Promise<IEvent> {
   return response.data.data[0];
 }
 
-export async function getFilteredEvents(): Promise<IPaginatedResponse<IEvent>> {
-  const response = await http.get("/events", {
-    params: {
-      select: [
-        "description",
-        "name",
-        "slug",
-        "currency",
-        "category_id",
-        "lineups.addressable",
-      ],
-      sort: "-created_at",
-      includes: "category",
-      include_nearest_lineup: 1,
-      include_price_range: 1,
-    },
-  });
+export async function getFilteredEvents(
+  searchParams: { [key: string]: string | undefined } = {}
+): Promise<IPaginatedResponse<IEvent>> {
+  const {
+    search,
+    location,
+    sort,
+    minPrice,
+    maxPrice,
+    start,
+    end,
+    category,
+    page = 1,
+    per_page = 2,
+  } = searchParams;
+
+  const where: string[] = [];
+  const params: any = {
+    select: [
+      "description",
+      "name",
+      "slug",
+      "currency",
+      "category_id",
+      "lineups.addressable",
+      "start_date",
+      "end_date",
+      "thumbnail", // Ensure thumbnail is selected
+    ],
+    includes: "category",
+    include_nearest_lineup: 1,
+    include_price_range: 1,
+    page,
+    per_page,
+  };
+
+  // Search
+  if (search) {
+    params.search = search;
+  }
+
+  // Location (assuming backend supports search or we filter by address)
+  // If backend has specific location param, use it. usage of 'where' with addressable might be complex without knowing schema.
+  // For now, let's append location to search if search is empty, or rely on global search.
+  // Or if 'near' is supported. Let's assume 'search' covers location for now as per EventsHero logic using "search" and "location"
+  // but pushing both to URL.
+  if (location) {
+    params.locationSearch = location;
+  }
+
+  // Sort
+  if (sort === "Price: Low to High") {
+    params.sortByTicketPrice = "asc";
+  } else if (sort === "Price: High to Low") {
+    params.sortByTicketPrice = "desc";
+  } else if (sort === "Date: Soonest") {
+    params.sortByStartDate = "asc";
+  } else {
+    // Default or Relevance
+    params.sortByStartDate = "desc";
+  }
+
+  // Price Range
+  if (minPrice) {
+    where.push(`ticketTypes.price:>=:${minPrice}`);
+  }
+  if (maxPrice) {
+    where.push(`ticketTypes.price:<=:${maxPrice}`);
+  }
+
+  // Date Range
+  if (start) {
+    // events starting on or after start date
+    const formattedStart = moment(new Date(start)).format("YYYY-MM-DD");
+    where.push(`event_lineups.start_date:>=:${formattedStart}`);
+  }
+  if (end) {
+    // events starting on or before end date (to find events in the range)
+    const formattedEnd = moment(new Date(end)).format("YYYY-MM-DD");
+    where.push(`event_lineups.start_date:<=:${formattedEnd}`);
+  }
+
+  // Category
+  if (category && category !== "All" && category !== "all") {
+    params.category = category;
+  }
+
+  if (where.length > 0) {
+    params.where = where;
+  }
+
+  const response = await http.get("/events", { params });
   return response.data;
 }

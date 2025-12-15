@@ -2,14 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
-import { Search, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Search,
+  MapPin,
+  SlidersHorizontal,
+  ChevronDown,
+  X,
+} from "lucide-react";
 import { DateRangePicker } from "@heroui/react";
-import { parseDate } from "@internationalized/date";
+import { parseDate, getLocalTimeZone, today } from "@internationalized/date";
 
 export function EventsHero() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams.toString());
 
   // Initialize state from URL params
   const [searchQuery, setSearchQuery] = useState(
@@ -17,6 +24,11 @@ export function EventsHero() {
   );
   const [location, setLocation] = useState(searchParams.get("location") || "");
   const [dateRange, setDateRange] = useState<any>(null);
+
+  // Advanced Filters State
+  const [showFilters, setShowFilters] = useState(false);
+  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [sortBy, setSortBy] = useState("Date: Soonest");
 
   // Update state when URL params change (e.g. back button navigation)
   useEffect(() => {
@@ -40,16 +52,67 @@ export function EventsHero() {
   }, [searchParams]);
 
   const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (searchQuery) params.set("search", searchQuery);
-    if (location) params.set("location", location);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (searchQuery) {
+      params.set("search", searchQuery);
+    } else {
+      params.delete("search");
+    }
+
+    if (location) {
+      params.set("location", location);
+    } else {
+      params.delete("location");
+    }
 
     if (dateRange && dateRange.start && dateRange.end) {
       params.set("start", dateRange.start.toString());
       params.set("end", dateRange.end.toString());
+    } else {
+      params.delete("start");
+      params.delete("end");
     }
 
+    // Add advanced filters
+    if (priceRange[0] > 0 || priceRange[1] < 500) {
+      params.set("minPrice", priceRange[0].toString());
+      params.set("maxPrice", priceRange[1].toString());
+    } else {
+      params.delete("minPrice");
+      params.delete("maxPrice");
+    }
+
+    if (sortBy) {
+      params.set("sort", sortBy);
+    }
+
+    // We do NOT reset category here, so it persists from searchParams because we initialized with searchParams.toString()
+
     router.push(`/events?${params.toString()}`);
+  };
+
+  const handleQuickDate = (type: string) => {
+    const now = today(getLocalTimeZone());
+    switch (type) {
+      case "Today":
+        setDateRange({ start: now, end: now });
+        break;
+      case "Tomorrow":
+        setDateRange({
+          start: now.add({ days: 1 }),
+          end: now.add({ days: 1 }),
+        });
+        break;
+      case "This Week":
+        // localized start of week logic can be complex, simplifying to "next 7 days" for now or using standard helpers if available.
+        // for simplicity let's just do Today to Today+6 days for "This Week" perspective or just use the buttons as quick setters.
+        setDateRange({ start: now, end: now.add({ days: 6 }) });
+        break;
+      case "This Month":
+        setDateRange({ start: now, end: now.add({ months: 1 }) });
+        break;
+    }
   };
 
   return (
@@ -127,6 +190,7 @@ export function EventsHero() {
                     input: "text-foreground placeholder:text-muted-foreground",
                     segment:
                       "text-foreground hover:text-foreground group-data-[editable=true]:text-foreground",
+                    separator: "text-foreground mx-2",
                   }}
                   popoverProps={{
                     className: "border-border bg-background",
@@ -151,7 +215,138 @@ export function EventsHero() {
                 <Search className="w-4 h-4" />
                 <span className="hidden md:inline">SEARCH</span>
               </button>
+
+              {/* Clear Filters Button */}
+              {params.toString() && (
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setLocation("");
+                    setDateRange(null);
+                    setPriceRange([0, 500]);
+                    setSortBy("Date: Soonest");
+                    router.push("/events");
+                    setShowFilters(false);
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 border-l border-border bg-background hover:bg-accent/10 hover:text-accent transition-colors text-muted-foreground"
+                  title="Clear All Filters"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+
+              {/* Filters Toggle */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className={`flex items-center justify-center gap-2 px-4 py-3 border-l border-border transition-colors ${
+                  showFilters
+                    ? "bg-accent text-white"
+                    : "bg-background hover:bg-accent/10"
+                }`}
+              >
+                <SlidersHorizontal className="w-4 h-4" />
+              </button>
             </div>
+
+            {/* Expanded Filters */}
+            <AnimatePresence>
+              {showFilters && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="overflow-hidden border-t border-border mt-2"
+                >
+                  <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8 bg-background/50 backdrop-blur-sm">
+                    {/* Sort By */}
+                    <div className="space-y-3">
+                      <label className="text-xs tracking-widest text-muted-foreground font-semibold">
+                        SORT BY
+                      </label>
+                      <div className="space-y-1">
+                        {[
+                          "Date: Soonest",
+                          "Price: Low to High",
+                          "Price: High to Low",
+                        ].map((option) => (
+                          <button
+                            key={option}
+                            onClick={() => setSortBy(option)}
+                            className={`w-full text-left px-3 py-2 text-sm transition-colors border ${
+                              sortBy === option
+                                ? "border-accent text-accent bg-accent/5 font-medium"
+                                : "border-transparent hover:bg-white/5"
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range */}
+                    <div className="space-y-3">
+                      <label className="text-xs tracking-widest text-muted-foreground font-semibold">
+                        PRICE RANGE
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          value={priceRange[0]}
+                          onChange={(e) =>
+                            setPriceRange([+e.target.value, priceRange[1]])
+                          }
+                          className="w-full bg-background border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                          placeholder="Min"
+                        />
+                        <span className="text-muted-foreground">-</span>
+                        <input
+                          type="number"
+                          value={priceRange[1]}
+                          onChange={(e) =>
+                            setPriceRange([priceRange[0], +e.target.value])
+                          }
+                          className="w-full bg-background border border-border px-3 py-2 text-sm outline-none focus:border-accent"
+                          placeholder="Max"
+                        />
+                      </div>
+                      <div className="pt-2">
+                        <input
+                          type="range"
+                          min="0"
+                          max="1000"
+                          value={priceRange[1]}
+                          onChange={(e) =>
+                            setPriceRange([priceRange[0], +e.target.value])
+                          }
+                          className="w-full accent-accent h-1 bg-border rounded-lg appearance-none cursor-pointer"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Quick Dates */}
+                    <div className="space-y-3">
+                      <label className="text-xs tracking-widest text-muted-foreground font-semibold">
+                        QUICK DATES
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Today", "Tomorrow", "This Week", "This Month"].map(
+                          (date) => (
+                            <button
+                              key={date}
+                              onClick={() => handleQuickDate(date)}
+                              className="px-3 py-2 text-sm border border-border hover:border-accent hover:text-accent transition-colors text-left"
+                            >
+                              {date}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>

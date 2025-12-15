@@ -79,16 +79,17 @@ export function EventFilters() {
                 <DateRangePicker
                   label="Event Dates"
                   className="max-w-xs"
-                  variant="underlined"
+                  variant="bordered"
                   value={dateRange}
                   onChange={setDateRange}
                   classNames={{
-                    inputWrapper: "shadow-none border-b-0",
+                    inputWrapper:
+                      "bg-white/5 border-white/10 hover:border-white/20 data-[hover=true]:border-white/20 group-data-[focus=true]:border-white/30",
                     label: "text-white/50 text-xs",
                     input: "text-white placeholder:text-white/40",
                     segment:
                       "text-white hover:text-white group-data-[editable=true]:text-white",
-                    separator: "text-white",
+                    separator: "text-white mx-2",
                   }}
                   popoverProps={{
                     className: "border-white/20 bg-[#0a0a0a]",
@@ -114,24 +115,6 @@ export function EventFilters() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-          </div>
-
-          {/* Quick Filters */}
-          <div className="flex flex-wrap items-center gap-3 mt-6 justify-center">
-            <span className="text-sm text-white/60">Popular:</span>
-            {["Concerts", "Theater", "Sports", "Comedy", "Nightlife"].map(
-              (filter) => (
-                <button
-                  key={filter}
-                  onClick={() =>
-                    router.push(`/events?category=${filter.toLowerCase()}`)
-                  }
-                  className="px-4 py-1.5 text-sm border border-white/10 text-white/80 hover:bg-white hover:text-black transition-colors"
-                >
-                  {filter}
-                </button>
-              )
-            )}
           </div>
         </motion.div>
       </div>
