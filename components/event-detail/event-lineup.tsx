@@ -60,17 +60,13 @@ export function EventLineup({ lineups }: EventLineupProps) {
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       {item.addressable.address}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          document
-                            .getElementById("overview")
-                            ?.scrollIntoView({ behavior: "smooth" });
-                        }}
+                      <a
+                        href={item.custom_fields.google_map_link}
+                        target="_blank"
                         className="text-xs underline decoration-dotted underline-offset-4 text-white hover:text-accent ml-2"
                       >
                         (View Map)
-                      </button>
+                      </a>
                     </div>
                   </div>
 
