@@ -18,10 +18,12 @@ import {
   getHomeTrendingEvents,
   getUpcomingEvents,
   getTopSellingEvents,
+  getLiveEvents,
 } from "@/lib/api/events";
 import { UpcomingEvents } from "@/components/upcoming-events";
 import { TopSellingEvents } from "@/components/top-selling-events";
 import { getCategories } from "@/lib/api/categories";
+import logger from "@/lib/logger/logger";
 
 // Fix Vercel caching - force dynamic rendering
 export const revalidate = 0;
@@ -32,6 +34,9 @@ export default async function HomePage() {
   const trendingEvents = await getHomeTrendingEvents();
   const upcomingEvents = await getUpcomingEvents();
   const topSellingEvents = await getTopSellingEvents();
+  const liveEvents = await getLiveEvents();
+
+  logger.log(topSellingEvents);
 
   const categories = await getCategories();
 
@@ -56,7 +61,7 @@ export default async function HomePage() {
       <UpcomingEvents events={upcomingEvents} />
 
       {/* Engagement - Live Content strip */}
-      <LiveNowStrip />
+      {!!liveEvents.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
 
       {/* Curated/Featured Grid */}
       <FeaturedGrid featuredEvents={featuredEvents} />

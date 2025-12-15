@@ -59,7 +59,7 @@ export function EventTabs() {
 
   return (
     <div className="sticky top-18 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-12">
+      <div className="container mx-auto">
         <div className="flex items-center gap-8 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button

@@ -98,11 +98,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                 {/* Overlays */}
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
                 <div
-                  className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 md:p-8 flex flex-col justify-end transition-all duration-500 ${
-                    isHero
-                      ? "h-1/2"
-                      : "h-2/3 translate-y-4 group-hover:translate-y-0"
-                  }`}
+                  className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 md:p-8 flex flex-col justify-end transition-all duration-500 h-2/3 translate-y-4 group-hover:translate-y-0`}
                 >
                   <span className="text-accent text-xs font-bold tracking-widest uppercase mb-2 block">
                     {event.category.name}
@@ -117,34 +113,30 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                   </h3>
 
                   <div
-                    className={`flex flex-col gap-1 ${
-                      !isHero
-                        ? "opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
-                        : ""
-                    }`}
+                    className={`flex flex-col gap-1 transition-opacity duration-500 delay-100`}
                   >
                     <div className="flex items-center gap-2 text-white text-sm">
                       <MapPin className="w-3 h-3" />
                       <span className="truncate">
-                        {event.lineups[0].addressable.city}
+                        {event.nearest_lineup.addressable.city}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-white text-xs uppercase tracking-wider font-bold">
                       <Calendar className="w-3 h-3" />
-                      <span>{formatDateTime(event.lineups[0].start_date)}</span>
+                      <span>
+                        {formatDateTime(event.nearest_lineup.start_date)}
+                      </span>
                     </div>
                   </div>
 
-                  {isHero && (
-                    <div className="mt-6 pt-6 border-t border-white/20 flex justify-between items-end">
-                      <span className="text-2xl font-serif italic text-white">
-                        {event.currency} {event.low_price}
-                      </span>
-                      <div className="flex items-center gap-2 text-xs font-bold tracking-widest bg-white text-black px-4 py-2 rounded-full hover:bg-accent hover:text-white transition-colors">
-                        GET TICKETS
-                      </div>
+                  <div className="mt-6 pt-6 border-t border-white/20 flex justify-between items-end">
+                    <span className="text-2xl font-serif italic text-white">
+                      {event.currency} {event.low_price}
+                    </span>
+                    <div className="flex items-center gap-2 text-xs font-bold tracking-widest bg-white text-black px-4 py-2 rounded-full hover:bg-accent hover:text-white transition-colors">
+                      GET TICKETS
                     </div>
-                  )}
+                  </div>
                 </div>
               </Link>
             </motion.div>

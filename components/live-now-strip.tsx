@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Users, Radio } from "lucide-react";
+import { IPaginatedResponse } from "@/types/response";
+import { IEvent } from "@/types";
 
 const liveEvents = [
   {
@@ -21,7 +23,11 @@ const liveEvents = [
   },
 ];
 
-export function LiveNowStrip() {
+interface LiveNowStripProps {
+  liveEvents: IPaginatedResponse<IEvent>;
+}
+
+export function LiveNowStrip({ liveEvents }: LiveNowStripProps) {
   return (
     <section className="relative z-30 border-y border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
       <div className="flex items-center h-14">
@@ -55,27 +61,29 @@ export function LiveNowStrip() {
               }}
               className="flex items-center gap-12 px-6 w-max group-hover:[animation-play-state:paused]"
             >
-              {[...liveEvents, ...liveEvents, ...liveEvents].map((event, i) => (
-                <Link
-                  key={i}
-                  href={`/events/${event.id}`}
-                  className="flex items-center gap-4 group/item opacity-70 hover:opacity-100 transition-opacity"
-                >
-                  <span className="text-white font-serif text-lg tracking-wide whitespace-nowrap group-hover/item:text-accent transition-colors">
-                    {event.title}
-                  </span>
-                  <span className="text-white/30">|</span>
-                  <span className="text-xs font-medium tracking-widest uppercase text-white/60 whitespace-nowrap">
-                    {event.venue}
-                  </span>
-                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/5">
-                    <Users className="w-3 h-3 text-white/40" />
-                    <span className="text-[10px] font-mono text-white/60">
-                      {event.viewers}
+              {[...liveEvents.data, ...liveEvents.data, ...liveEvents.data].map(
+                (event, i) => (
+                  <Link
+                    key={i}
+                    href={`/events/${event.slug}`}
+                    className="flex items-center gap-4 group/item opacity-70 hover:opacity-100 transition-opacity"
+                  >
+                    <span className="text-white font-serif text-lg tracking-wide whitespace-nowrap group-hover/item:text-accent transition-colors">
+                      {event.name}
                     </span>
-                  </div>
-                </Link>
-              ))}
+                    <span className="text-white/30">|</span>
+                    <span className="text-xs font-medium tracking-widest uppercase text-white/60 whitespace-nowrap">
+                      {event.nearest_lineup.custom_fields.venue_name}
+                    </span>
+                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/5">
+                      <Users className="w-3 h-3 text-white/40" />
+                      <span className="text-[10px] font-mono text-white/60">
+                        {event.tickets_count}
+                      </span>
+                    </div>
+                  </Link>
+                )
+              )}
             </motion.div>
           </div>
         </div>

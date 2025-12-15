@@ -65,13 +65,13 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
               {/* Date Badge */}
               <div className="mb-6">
                 <span className="text-5xl font-serif text-white/20 group-hover:text-white transition-colors duration-500 block">
-                  {new Date(event.lineups[0].start_date)
+                  {new Date(event.nearest_lineup.start_date)
                     .getDate()
                     .toString()
                     .padStart(2, "0")}
                 </span>
                 <span className="text-sm font-bold text-accent tracking-widest uppercase">
-                  {new Date(event.lineups[0].start_date).toLocaleString(
+                  {new Date(event.nearest_lineup.start_date).toLocaleString(
                     "default",
                     { month: "long" }
                   )}
@@ -100,13 +100,15 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                 <div className="flex flex-col gap-2 pt-2 text-sm text-white/60">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-accent/70" />
-                    <span>{formatDateTime(event.lineups[0].start_date)}</span>
+                    <span>
+                      {formatDateTime(event.nearest_lineup.start_date)}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-accent/70" />
                     <span className="truncate max-w-[250px]">
-                      {event.lineups[0].custom_fields.venue_name},{" "}
-                      {event.lineups[0].addressable.city}
+                      {event.nearest_lineup.custom_fields.venue_name},{" "}
+                      {event.nearest_lineup.addressable.city}
                     </span>
                   </div>
                 </div>

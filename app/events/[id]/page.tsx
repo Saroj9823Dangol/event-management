@@ -48,8 +48,8 @@ export default function EventDetailPage() {
       <EventDetailHero event={event} />
       <EventTabs />
       <BookingProvider>
-        <div className="max-w-[1800px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-6 py-12">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 py-12">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-20">
               {/* Overview Section */}

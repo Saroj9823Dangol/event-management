@@ -344,6 +344,7 @@ export interface IEvent extends IBase {
   category: ICategory;
   performers: IPerformer[];
   lineups: ILineup[];
+  nearest_lineup: ILineup;
   ticketTypes: ITicketType[];
   promoCodes: IPromoCode[];
   policies: IPolicy[];

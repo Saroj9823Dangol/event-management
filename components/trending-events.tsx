@@ -63,14 +63,14 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {trendingEvents.data.map((event, index) => (
             <motion.div
-              key={event.id}
+              key={event.slug}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.15 }}
               className="group relative cursor-pointer"
             >
               <Link
-                href={`/events/${event.id}`}
+                href={`/events/${event.slug}`}
                 className="aspect-square block overflow-hidden mb-8 relative"
               >
                 <Image
@@ -90,9 +90,9 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
 
               <div className="space-y-4 pr-4">
                 <div className="flex items-center gap-4 text-xs tracking-widest uppercase text-muted-foreground/80 group-hover:text-accent transition-colors">
-                  <span>{formatDateTime(event.lineups[0].start_date)}</span>
+                  <span>{formatDateTime(event.nearest_lineup.start_date)}</span>
                   <span className="w-1 h-1 bg-white/20 rounded-full" />
-                  <span>{event.lineups[0].custom_fields.venue_name}</span>
+                  <span>{event.nearest_lineup.custom_fields.venue_name}</span>
                 </div>
                 <h3 className="text-3xl font-serif leading-none group-hover:text-white transition-colors">
                   {event.name}

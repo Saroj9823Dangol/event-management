@@ -130,7 +130,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
       )}
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 px-6 pb-16 max-w-[1800px] mx-auto z-10">
+      <div className="absolute bottom-0 left-0 right-0 px-6 pb-16 container mx-auto z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

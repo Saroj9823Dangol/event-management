@@ -2,6 +2,8 @@
 import { IEvent } from "@/types";
 import { http } from "./http";
 import { IPaginatedResponse } from "@/types/response";
+import logger from "../logger/logger";
+import moment from "moment";
 
 export async function getHomeFeaturedEvents(): Promise<
   IPaginatedResponse<IEvent>
@@ -38,13 +40,30 @@ export async function getUpcomingEvents(): Promise<IPaginatedResponse<IEvent>> {
   const response = await http.get("/events", {
     params: {
       select: ["description", "name", "slug", "currency", "category_id"],
-      sort: "start_date", // Ascending date for upcoming
       includes: "category",
       include_nearest_lineup: 1,
       include_price_range: 1,
-      // Assuming backend filters for future dates by default or we might need 'start_date_from': new Date()
-      // For now, relying on sort.
       limit: 6,
+      sortByStartDate: "asc",
+    },
+  });
+  return response.data;
+}
+
+export async function getLiveEvents(): Promise<IPaginatedResponse<IEvent>> {
+  const response = await http.get("/events", {
+    params: {
+      select: ["name", "slug"],
+      includes: "category",
+      include_nearest_lineup: 1,
+      include_price_range: 1,
+      limit: 6,
+      sortByStartDate: "asc",
+      where: [
+        `event_lineups.start_date:<=:${moment().format("YYYY-MM-DD")}`,
+        `event_lineups.end_date:>=:${moment().format("YYYY-MM-DD")}`,
+      ],
+      include_ticket_count: 1,
     },
   });
   return response.data;
@@ -62,6 +81,7 @@ export async function getTopSellingEvents(): Promise<
       include_price_range: 1,
       top_selling: 1,
       limit: 4,
+      include_ticket_count: 1,
     },
   });
   return response.data;
