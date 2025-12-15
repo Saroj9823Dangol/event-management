@@ -86,3 +86,15 @@ export async function getTopSellingEvents(): Promise<
   });
   return response.data;
 }
+
+export async function getEventDetail(slug: string): Promise<IEvent> {
+  const response = await http.get(`/events`, {
+    params: {
+      slug,
+      includes: "category,organizer,performers,lineups.performers",
+      include_nearest_lineup: 1,
+      include_price_range: 1,
+    },
+  });
+  return response.data.data[0];
+}

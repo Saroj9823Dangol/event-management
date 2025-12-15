@@ -5,14 +5,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Minus, Plus, Shield, CreditCard, Clock } from "lucide-react";
 import { useBooking } from "@/components/event-detail/booking-context";
+import { IEvent } from "@/types";
 
 interface TicketSelectionProps {
-  event: {
-    id: number;
-    priceRange: string;
-    date: string;
-    time: string;
-  };
+  event: IEvent;
 }
 
 const ticketTypes = [
@@ -113,7 +109,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                 Starting from
               </p>
               <p className="text-4xl font-serif text-white">
-                {event.priceRange.split(" - ")[0]}
+                {event.low_price}
               </p>
             </div>
             <div className="bg-accent/20 px-3 py-1 rounded text-accent text-xs font-bold uppercase tracking-wider">

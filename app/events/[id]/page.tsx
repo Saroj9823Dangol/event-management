@@ -9,39 +9,23 @@ import { SiteFooter } from "@/components/site-footer";
 import { EventTabs } from "@/components/event-detail/event-tabs";
 import { BookingProvider } from "@/components/event-detail/booking-context";
 import { EventLineup } from "@/components/event-detail/event-lineup";
+import logger from "@/lib/logger/logger";
+import { getEventDetail } from "@/lib/api/events";
 
-// Mock event data - in production this would come from API
-const event = {
-  id: 1,
-  title: "Beyoncé",
-  subtitle: "Renaissance World Tour",
-  category: "Concert",
-  date: "Saturday, July 29, 2025",
-  time: "8:00 PM",
-  doors: "6:00 PM",
-  location: "Wembley Stadium",
-  address: "London HA9 0WS, United Kingdom",
-  description: `Experience the Renaissance World Tour live as Beyoncé brings her groundbreaking album to life with an unforgettable performance. This once-in-a-lifetime concert features stunning visuals, incredible choreography, and all your favorite hits from the Renaissance album and beyond.
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
-Join millions of fans worldwide for what critics are calling "the most spectacular tour of the decade." With state-of-the-art production, surprise guests, and Beyoncé at the height of her powers, this is a show you simply cannot miss.`,
-  heroImage: "/beyonce-concert-stage-dramatic-lighting.jpg",
-  heroVideo:
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  gallery: [
-    "/concert-crowd-hands-up-stage-lights-dramatic.jpg",
-    "/concert-crowd-aerial-view-dramatic-lights.jpg",
-    "/stadium-crowd-cheering-sports-night-game.jpg",
-    "/edc-festival-colorful-lights-night-sky.jpg",
-  ],
-  rating: 4.9,
-  reviews: 2840,
-  priceRange: "$189 - $1,500",
-  duration: "3 hours",
-  ageRestriction: "All Ages",
-  organizer: "Live Nation Entertainment",
-};
+export default async function EventDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
-export default function EventDetailPage() {
+  const event = await getEventDetail(id);
+
+  logger.log(event, "event", id, "slugggg");
+
   return (
     <main className="min-h-screen bg-background">
       <CinematicNav />
@@ -130,7 +114,7 @@ export default function EventDetailPage() {
                 </div>
               </section>
 
-              <EventGallery images={event.gallery} />
+              <EventGallery images={event.files} />
             </div>
             {/* Sidebar - Sticky Ticket Selection */}
             <div className="lg:col-span-1">

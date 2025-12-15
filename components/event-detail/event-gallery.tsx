@@ -4,9 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { IFile } from "@/types";
 
 interface EventGalleryProps {
-  images: string[];
+  images: IFile[];
 }
 
 export function EventGallery({ images }: EventGalleryProps) {
@@ -48,7 +49,7 @@ export function EventGallery({ images }: EventGalleryProps) {
             transition={{ duration: 0.3 }}
           >
             <Image
-              src={image || "/placeholder.svg"}
+              src={image.url || "/placeholder.svg"}
               alt={`Gallery image ${i + 1}`}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -112,7 +113,7 @@ export function EventGallery({ images }: EventGalleryProps) {
             >
               <div className="relative w-full max-w-7xl aspect-[16/9] rounded-sm overflow-hidden shadow-2xl">
                 <Image
-                  src={images[selectedIndex] || "/placeholder.svg"}
+                  src={images[selectedIndex].url || "/placeholder.svg"}
                   alt={`Gallery image ${selectedIndex + 1}`}
                   fill
                   className="object-contain"

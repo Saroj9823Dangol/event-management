@@ -1,18 +1,12 @@
 "use client";
 
+import { calculateDuration } from "@/lib/utils";
+import { IEvent } from "@/types";
 import { motion } from "framer-motion";
 import { Star, Clock, Users, Shield, Info } from "lucide-react";
 
 interface EventInfoProps {
-  event: {
-    description: string;
-    rating: number;
-    reviews: number;
-    duration: string;
-    ageRestriction: string;
-    organizer: string;
-    doors: string;
-  };
+  event: IEvent;
 }
 
 export function EventInfo({ event }: EventInfoProps) {
@@ -22,29 +16,6 @@ export function EventInfo({ event }: EventInfoProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
-      {/* Rating & Quick Info */}
-      <div className="flex flex-wrap items-center gap-6 mb-12">
-        <h2 className="text-3xl font-serif">About The Event</h2>
-        <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/5">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(event.rating)
-                    ? "fill-accent text-accent"
-                    : "text-muted"
-                }`}
-              />
-            ))}
-          </div>
-          <span className="font-medium text-sm">{event.rating}/5.0</span>
-          <span className="text-xs text-muted-foreground uppercase tracking-wider">
-            ({event.reviews.toLocaleString()} verified reviews)
-          </span>
-        </div>
-      </div>
-
       {/* Description */}
       <div className="mb-16">
         <div className="prose prose-invert prose-lg max-w-none text-muted-foreground">
@@ -66,7 +37,12 @@ export function EventInfo({ event }: EventInfoProps) {
           <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">
             Duration
           </p>
-          <p className="font-serif text-lg text-white">{event.duration}</p>
+          <p className="font-serif text-lg text-white">
+            {calculateDuration(
+              event.nearest_lineup.start_date,
+              event.nearest_lineup.end_date
+            )}
+          </p>
         </div>
         <div className="group p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5">
           <Users className="w-6 h-6 text-accent mb-4 group-hover:scale-110 transition-transform" />
@@ -74,15 +50,17 @@ export function EventInfo({ event }: EventInfoProps) {
             Age
           </p>
           <p className="font-serif text-lg text-white">
-            {event.ageRestriction}
+            {event.is_adults_only ? "18+" : "All ages"}
           </p>
         </div>
         <div className="group p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5">
           <Info className="w-6 h-6 text-accent mb-4 group-hover:scale-110 transition-transform" />
           <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">
-            Doors
+            Venue
           </p>
-          <p className="font-serif text-lg text-white">{event.doors}</p>
+          <p className="font-serif text-lg text-white">
+            {event.nearest_lineup.custom_fields.venue_name}
+          </p>
         </div>
         <div className="group p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5">
           <Shield className="w-6 h-6 text-accent mb-4 group-hover:scale-110 transition-transform" />
@@ -91,9 +69,9 @@ export function EventInfo({ event }: EventInfoProps) {
           </p>
           <p
             className="font-serif text-lg text-white truncate"
-            title={event.organizer}
+            title={event.organizer.name}
           >
-            {event.organizer}
+            {event.organizer.name}
           </p>
         </div>
       </div>

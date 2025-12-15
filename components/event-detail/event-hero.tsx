@@ -16,20 +16,11 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { IEvent } from "@/types";
+import { formatDate, formatTime } from "@/lib/utils";
 
 interface EventHeroProps {
-  event: {
-    title: string;
-    subtitle: string;
-    category: string;
-    date: string;
-    time: string;
-    location: string;
-    heroImage: string;
-    heroVideo: string;
-    rating: number;
-    reviews: number;
-  };
+  event: IEvent;
 }
 
 export function EventDetailHero({ event }: EventHeroProps) {
@@ -72,12 +63,12 @@ export function EventDetailHero({ event }: EventHeroProps) {
             className="w-full h-full object-cover"
             onError={() => setShowVideo(false)}
           >
-            <source src={event.heroVideo} type="video/mp4" />
+            <source src={event.featured_banner.url} type="video/mp4" />
           </motion.video>
         ) : (
           <Image
-            src={event.heroImage || "/placeholder.svg"}
-            alt={event.title}
+            src={event.thumbnail.url || "/placeholder.svg"}
+            alt={event.name}
             fill
             className="object-cover"
             priority
@@ -145,50 +136,44 @@ export function EventDetailHero({ event }: EventHeroProps) {
             className="flex items-center gap-4 mb-8"
           >
             <span className="px-4 py-1.5 bg-accent text-white text-xs font-bold tracking-widest uppercase rounded-sm shadow-lg shadow-accent/20">
-              {event.category}
+              {event.category.name}
             </span>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/10">
-              <Heart className="w-3 h-3 text-red-500 fill-current" />
-              <span className="text-xs font-medium text-white">
-                {event.rating} ({event.reviews} reviews)
-              </span>
-            </div>
           </motion.div>
 
           {/* Title */}
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-none tracking-tight">
-            {event.title}
+            {event.name}
           </h1>
           <p className="text-2xl md:text-4xl font-light text-white/90 mb-10 max-w-2xl leading-tight">
-            {event.subtitle}
+            {event.description}
           </p>
 
           {/* Meta Info */}
           <div className="flex flex-wrap items-center gap-8 text-white/80 mb-12 text-sm tracking-widest uppercase font-medium">
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-accent" />
-              <span>{event.date}</span>
+              <span>{formatDate(event.nearest_lineup.start_date)}</span>
             </div>
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <Clock className="w-5 h-5 text-accent" />
-              <span>{event.time}</span>
+              <span>{formatTime(event.nearest_lineup.start_date)}</span>
             </div>
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-accent" />
-              <span>{event.location}</span>
+              <span>{event.nearest_lineup.addressable.city}</span>
             </div>
           </div>
 
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-6">
-            <button className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
+            {/* <button className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
               <Heart className="w-5 h-5 group-hover:text-red-500 transition-colors" />
               <span className="text-sm font-bold tracking-widest">
                 SAVE TO LIST
               </span>
-            </button>
+            </button> */}
             <button className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
               <Share2 className="w-5 h-5" />
               <span className="text-sm font-bold tracking-widest">

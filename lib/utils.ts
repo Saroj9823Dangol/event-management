@@ -26,3 +26,13 @@ export const formatDateTime = (date: string) => {
 export const formatTime = (date: string) => {
   return moment(date).format("hh:mm A");
 };
+
+export const calculateDuration = (
+  startTime: string,
+  endTime: string
+): string => {
+  const start = moment(startTime);
+  const end = moment(endTime);
+  const duration = moment.duration(end.diff(start));
+  return duration.humanize();
+};

@@ -36,7 +36,6 @@ export default async function HomePage() {
   const topSellingEvents = await getTopSellingEvents();
   const liveEvents = await getLiveEvents();
 
-  logger.log(topSellingEvents);
 
   const categories = await getCategories();
 
