@@ -124,7 +124,8 @@ export function EventsGrid({ events }: EventsGridProps) {
                   <div>
                     <span className="text-xs text-muted-foreground">From</span>
                     <span className="text-lg font-medium ml-1">
-                      {event.currency} {event.low_price}
+                      {event.currency}{" "}
+                      {Number(event.low_price).toLocaleString()}
                     </span>
                   </div>
 

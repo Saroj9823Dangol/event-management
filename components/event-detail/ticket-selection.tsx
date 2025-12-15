@@ -84,7 +84,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                 Starting from
               </p>
               <p className="text-4xl font-serif text-white">
-                {event.currency} {event.low_price}
+                {event.currency} {Number(event.low_price).toLocaleString()}
               </p>
             </div>
             <div className="bg-accent/20 px-3 py-1 rounded text-accent text-xs font-bold uppercase tracking-wider">
