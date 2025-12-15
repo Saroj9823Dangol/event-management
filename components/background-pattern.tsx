@@ -14,12 +14,12 @@ export function BackgroundPattern() {
 
       {/* Rectangular Grid */}
       <div
-        className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
         style={{
           backgroundSize: "50px 50px",
           backgroundImage: `
-            repeating-linear-gradient(0deg, #333 0, #333 1px, transparent 1px, transparent 50px),
-            repeating-linear-gradient(90deg, #333 0, #333 1px, transparent 1px, transparent 50px)
+            repeating-linear-gradient(0deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px),
+            repeating-linear-gradient(90deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px)
           `,
         }}
       ></div>
@@ -40,25 +40,31 @@ export function BackgroundPattern() {
         />
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style={{ stopColor: "#333", stopOpacity: 0 }} />
+            <stop
+              offset="0%"
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0 }}
+            />
             <stop
               offset="50%"
-              style={{ stopColor: "#666", stopOpacity: 0.5 }}
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0.5 }}
             />
-            <stop offset="100%" style={{ stopColor: "#333", stopOpacity: 0 }} />
+            <stop
+              offset="100%"
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0 }}
+            />
           </linearGradient>
           <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop
               offset="0%"
-              style={{ stopColor: "#1a1a1a", stopOpacity: 0 }}
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0 }}
             />
             <stop
               offset="50%"
-              style={{ stopColor: "#404040", stopOpacity: 0.3 }}
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0.3 }}
             />
             <stop
               offset="100%"
-              style={{ stopColor: "#1a1a1a", stopOpacity: 0 }}
+              style={{ stopColor: "hsl(var(--accent))", stopOpacity: 0 }}
             />
           </linearGradient>
         </defs>

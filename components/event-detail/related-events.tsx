@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { motion } from "framer-motion"
-import { Calendar, MapPin, ArrowRight } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, ArrowRight } from "lucide-react";
 
 const relatedEvents = [
   {
@@ -38,11 +38,11 @@ const relatedEvents = [
     image: "/broadway-theater-stage-curtains-dramatic-lighting.jpg",
     price: 350,
   },
-]
+];
 
 export function RelatedEvents() {
   return (
-    <section className="px-6 lg:px-12 py-16 border-t border-border">
+    <section className="px-6 py-16 border-t border-border">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl md:text-3xl font-serif">You Might Also Like</h2>
         <Link
@@ -71,7 +71,9 @@ export function RelatedEvents() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-              <h3 className="font-serif text-lg mb-2 group-hover:text-accent transition-colors">{event.title}</h3>
+              <h3 className="font-serif text-lg mb-2 group-hover:text-accent transition-colors">
+                {event.title}
+              </h3>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
@@ -91,5 +93,5 @@ export function RelatedEvents() {
         ))}
       </div>
     </section>
-  )
+  );
 }

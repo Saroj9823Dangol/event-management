@@ -25,7 +25,7 @@ export function CinematicNav() {
           scrolled ? "glass py-4" : "bg-transparent py-6"
         }`}
       >
-        <div className="max-w-[1800px] mx-auto px-6 lg:px-12">
+        <div className="container mx-auto">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="relative z-10 group">

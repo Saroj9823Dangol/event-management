@@ -6,7 +6,8 @@ import { CheckCircle2 } from "lucide-react";
 
 export function EnterpriseSection() {
   return (
-    <section className="py-24 bg-white text-black overflow-hidden relative">
+    <section className="py-20 bg-white text-black overflow-hidden relative">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">

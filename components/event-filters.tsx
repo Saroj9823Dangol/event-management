@@ -31,8 +31,8 @@ export function EventFilters() {
   };
 
   return (
-    <section className="relative px-6 py-12 bg-background">
-      <div className="mx-auto">
+    <section className="relative px-6 py-20 bg-background">
+      <div className="max-w-[1800px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

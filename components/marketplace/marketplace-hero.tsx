@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, Sparkles } from "lucide-react"
-import Link from "next/link"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const featuredDrops = [
   {
     id: 1,
     title: "Renaissance Tour Collection",
     artist: "Beyoncé",
-    description: "Exclusive limited edition merchandise from the Renaissance World Tour",
+    description:
+      "Exclusive limited edition merchandise from the Renaissance World Tour",
     image: "/concert-merch-premium-collection.jpg",
     dropDate: "Available Now",
     itemsLeft: 234,
@@ -34,19 +35,19 @@ const featuredDrops = [
     dropDate: "Available Now",
     itemsLeft: 89,
   },
-]
+];
 
 export function MarketplaceHero() {
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % featuredDrops.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+      setCurrent((prev) => (prev + 1) % featuredDrops.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
-  const featured = featuredDrops[current]
+  const featured = featuredDrops[current];
 
   return (
     <section className="relative pt-20 min-h-[80vh] flex items-center">
@@ -71,7 +72,7 @@ export function MarketplaceHero() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-24 lg:py-32 w-full">
+      <div className="max-w-[1800px] mx-auto px-6 py-24 lg:py-32 w-full">
         <div className="max-w-2xl">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -90,8 +91,12 @@ export function MarketplaceHero() {
               exit={{ opacity: 0, y: -20 }}
             >
               <p className="text-sm text-accent mb-2">{featured.artist}</p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{featured.title}</h1>
-              <p className="text-lg text-muted-foreground mb-6">{featured.description}</p>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">
+                {featured.title}
+              </h1>
+              <p className="text-lg text-muted-foreground mb-6">
+                {featured.description}
+              </p>
 
               <div className="flex items-center gap-6 mb-8">
                 <span
@@ -104,7 +109,9 @@ export function MarketplaceHero() {
                   {featured.dropDate.toUpperCase()}
                 </span>
                 {featured.itemsLeft && (
-                  <span className="text-sm text-muted-foreground">Only {featured.itemsLeft} items left</span>
+                  <span className="text-sm text-muted-foreground">
+                    Only {featured.itemsLeft} items left
+                  </span>
                 )}
               </div>
 
@@ -125,11 +132,13 @@ export function MarketplaceHero() {
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`h-1 transition-all ${i === current ? "w-12 bg-white" : "w-6 bg-white/30"}`}
+              className={`h-1 transition-all ${
+                i === current ? "w-12 bg-white" : "w-6 bg-white/30"
+              }`}
             />
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

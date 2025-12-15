@@ -53,7 +53,7 @@ export default function TicketDetailPage({
       <BackgroundPattern />
       <CinematicNav />
 
-      <main className="pt-32 pb-24 px-4 lg:px-12 max-w-7xl mx-auto">
+      <main className="pt-32 pb-24 px-4 max-w-7xl mx-auto">
         {/* Breadcrumb */}
         <Link
           href="/dashboard"

@@ -4,56 +4,23 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX, ArrowRight } from "lucide-react";
+import axios from "axios";
+import { use } from "react";
+import { IEvent } from "@/types";
+import { getMediaCategory } from "@/lib/mediaType";
+import { IPaginatedResponse } from "@/types/response";
+import { formatDateTime } from "@/lib/utils";
 
-type MediaType = "video" | "image";
-
-interface HeroEvent {
-  id: number;
-  title: string;
-  subtitle: string;
-  location: string;
-  date: string;
-  src: string;
-  type: MediaType;
-  category: string;
+interface VideoHeroProps {
+  featuredEvents: IPaginatedResponse<IEvent>;
 }
-
-const heroEvents: HeroEvent[] = [
-  {
-    id: 1,
-    title: "Coldplay",
-    subtitle: "Music of the Spheres World Tour",
-    location: "MetLife Stadium, NJ",
-    date: "Jun 15, 2025",
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    type: "video",
-    category: "Concert",
-  },
-  {
-    id: 2,
-    title: "Hamilton",
-    subtitle: "The Revolutionary Musical",
-    location: "Richard Rodgers Theatre, NYC",
-    date: "Now Playing",
-    src: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1800&q=80",
-    type: "image",
-    category: "Theater",
-  },
-  {
-    id: 3,
-    title: "NBA Finals",
-    subtitle: "Game 7 - Championship Decider",
-    location: "Madison Square Garden, NYC",
-    date: "Jun 22, 2025",
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    type: "video",
-    category: "Sports",
-  },
-];
 
 const IMAGE_DURATION = 6000; // 6 seconds for images
 
-export function VideoHero() {
+export function VideoHero({ featuredEvents }: VideoHeroProps) {
+  if (!featuredEvents || featuredEvents.data.length === 0) {
+    return null;
+  }
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -66,7 +33,7 @@ export function VideoHero() {
   const startTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number>(0);
 
-  const currentEvent = heroEvents[currentIndex];
+  const currentEvent = featuredEvents.data[currentIndex];
 
   // Reset state when slide changes
   useEffect(() => {
@@ -74,7 +41,7 @@ export function VideoHero() {
     // Note: Video play logic is now handled in the videoRef useEffect
     // when the new video element mounts
 
-    if (currentEvent.type !== "video") {
+    if (getMediaCategory(currentEvent.featured_banner.url) !== "video") {
       // For images, we just start the timer
       startTimeRef.current = Date.now();
       startImageTimer();
@@ -89,7 +56,7 @@ export function VideoHero() {
   }, [currentIndex]);
 
   const startImageTimer = () => {
-    if (currentEvent.type !== "image") return;
+    if (getMediaCategory(currentEvent.featured_banner.url) !== "image") return;
 
     // Clear existing
     if (imageTimeoutRef.current) clearTimeout(imageTimeoutRef.current);
@@ -128,7 +95,11 @@ export function VideoHero() {
   // Main Video Logic: Reacts to the video element mounting/unmounting
   useEffect(() => {
     // If no video node or not a video type, stop
-    if (!videoNode || currentEvent.type !== "video") return;
+    if (
+      !videoNode ||
+      getMediaCategory(currentEvent.featured_banner.url) !== "video"
+    )
+      return;
 
     const onTimeUpdate = () => {
       if (videoNode.duration) {
@@ -167,14 +138,14 @@ export function VideoHero() {
       videoNode.removeEventListener("pause", onPause);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoNode, currentEvent.type]); // Re-run when the DOM node changes (mounts)
+  }, [videoNode, currentEvent.featured_banner.url]); // Re-run when the DOM node changes (mounts)
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % heroEvents.length);
+    setCurrentIndex((prev) => (prev + 1) % featuredEvents.meta.total);
   };
 
   const togglePlay = () => {
-    if (currentEvent.type === "image") return;
+    if (getMediaCategory(currentEvent.featured_banner.url) !== "video") return;
     if (!videoNode) return;
 
     if (isPlaying) {
@@ -185,7 +156,7 @@ export function VideoHero() {
   };
 
   const toggleMute = () => {
-    if (currentEvent.type === "image") return;
+    if (getMediaCategory(currentEvent.featured_banner.url) !== "video") return;
     if (!videoNode) return;
 
     videoNode.muted = !isMuted;
@@ -204,21 +175,21 @@ export function VideoHero() {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          {currentEvent.type === "video" ? (
+          {getMediaCategory(currentEvent.featured_banner.url) === "video" ? (
             <video
               ref={setVideoNode} // Use state setter as ref callback
               playsInline
-              className="w-full h-full object-cover"
-              poster={currentEvent.src.replace(".mp4", ".jpg")} // Fallback if applicable
+              className="w-full h-full object-cover object-top"
+              poster={currentEvent.featured_banner.url.replace(".mp4", ".jpg")} // Fallback if applicable
             >
-              <source src={currentEvent.src} type="video/mp4" />
+              <source src={currentEvent.featured_banner.url} type="video/mp4" />
             </video>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={currentEvent.src}
-              alt={currentEvent.title}
-              className="w-full h-full object-cover"
+              src={currentEvent.featured_banner.url}
+              alt={currentEvent.name}
+              className="w-full h-full object-cover object-top"
             />
           )}
         </motion.div>
@@ -230,7 +201,7 @@ export function VideoHero() {
       <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-32 px-6 lg:px-12 max-w-[1800px] mx-auto z-20">
+      <div className="relative h-full flex flex-col justify-end pb-32 px-6 max-w-[1800px] mx-auto z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -247,7 +218,7 @@ export function VideoHero() {
               className="flex items-center gap-4 mb-6"
             >
               <span className="px-3 py-1 bg-accent text-white text-xs font-bold tracking-widest uppercase rounded-sm">
-                {currentEvent.category}
+                {currentEvent.category.name}
               </span>
               <span className="text-white/80 text-sm tracking-widest uppercase border-l border-white/20 pl-4">
                 Featured Event
@@ -255,20 +226,20 @@ export function VideoHero() {
             </motion.div>
 
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif mb-6 text-white leading-[0.9] tracking-tight">
-              {currentEvent.title}
+              {currentEvent.name}
             </h1>
             <p className="text-2xl md:text-3xl text-white/90 mb-4 font-light tracking-wide">
-              {currentEvent.subtitle}
+              {currentEvent.description}
             </p>
             <div className="flex items-center gap-6 text-white/60 mb-10 text-sm tracking-widest uppercase">
-              <span>{currentEvent.location}</span>
+              <span>{currentEvent.lineups[0].addressable.city}</span>
               <span className="w-1 h-1 bg-accent rounded-full" />
-              <span>{currentEvent.date}</span>
+              <span>{formatDateTime(currentEvent.lineups[0].start_date)}</span>
             </div>
 
             <div className="flex flex-wrap gap-6 relative z-30">
               <Link
-                href={`/events/${currentEvent.id}`}
+                href={`/events/${currentEvent.slug}`}
                 className="group relative px-10 py-5 bg-white text-black overflow-hidden inline-flex items-center"
               >
                 <span className="relative z-10 text-sm font-bold tracking-widest flex items-center gap-2">
@@ -282,7 +253,8 @@ export function VideoHero() {
                 </span>
               </Link>
 
-              {currentEvent.type === "video" && (
+              {getMediaCategory(currentEvent.featured_banner.url) ===
+                "video" && (
                 <button
                   onClick={toggleMute}
                   className="px-8 py-5 text-white text-sm font-bold tracking-widest hover:text-accent transition-colors flex items-center gap-2 group z-30 cursor-pointer"
@@ -316,10 +288,10 @@ export function VideoHero() {
           <div className="flex items-center gap-2 mr-2 text-white/60 text-xs tracking-widest">
             <span>{String(currentIndex + 1).padStart(2, "0")}</span>
             <div className="w-12 h-px bg-white/20" />
-            <span>{String(heroEvents.length).padStart(2, "0")}</span>
+            <span>{String(featuredEvents.meta.total).padStart(2, "0")}</span>
           </div>
 
-          {currentEvent.type === "video" && (
+          {getMediaCategory(currentEvent.featured_banner.url) === "video" && (
             <>
               <button
                 onClick={togglePlay}
@@ -347,15 +319,15 @@ export function VideoHero() {
 
         {/* Indicators */}
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-30">
-          {heroEvents.map((_, i) => (
+          {featuredEvents.data.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`transition-all duration-300 ${
+              className={`transition-all duration-300 h-4 ${
                 i === currentIndex
-                  ? "w-12 bg-white"
-                  : "w-2 bg-white/20 hover:bg-white/40"
-              } h-1 rounded-full cursor-pointer`}
+                  ? "w-12 h-4 bg-primary"
+                  : "w-2 h-4 bg-white/20 hover:bg-white/40"
+              } rounded-full cursor-pointer`}
             />
           ))}
         </div>

@@ -44,7 +44,7 @@ export function SiteFooter() {
     <footer className="bg-card border-t border-border">
       {/* Newsletter */}
       <div className="border-b border-border">
-        <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-16 lg:py-20">
+        <div className="container mx-auto py-20">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div>
               <h3 className="text-2xl md:text-3xl font-serif mb-2">
@@ -72,7 +72,7 @@ export function SiteFooter() {
       </div>
 
       {/* Links */}
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-16">
+      <div className="mx-auto container py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
@@ -129,7 +129,7 @@ export function SiteFooter() {
 
       {/* Bottom Bar */}
       <div className="border-t border-border">
-        <div className="max-w-[1800px] mx-auto px-6 lg:px-12 py-6">
+        <div className="max-w-[1800px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-muted-foreground">
             <p>© 2025 EventSphere. All rights reserved.</p>
             <div className="flex gap-6">

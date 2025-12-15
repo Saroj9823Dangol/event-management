@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Heart, Share2, Clock, Star } from "lucide-react";
+import logger from "@/lib/logger/logger";
 
 const events = [
   {
@@ -174,7 +175,7 @@ export function EventsGrid() {
             matchesDate = eventDateObj >= startDate && eventDateObj <= endDate;
           }
         } catch (e) {
-          console.log("Error parsing dates", e);
+          logger.log("Error parsing dates", e);
         }
       }
     }

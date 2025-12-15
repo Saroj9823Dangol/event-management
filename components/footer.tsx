@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer className="bg-secondary border-t border-border">
       {/* Newsletter */}
-      <div className="00px] mx-auto px-6 lg:px-12 py-16 md:py-24">
+      <div className="00px] mx-auto px-6 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-end">
           <div>
             <h3 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
@@ -42,7 +42,7 @@ export function Footer() {
 
       {/* Links */}
       <div className="border-t border-border">
-        <div className="00px] mx-auto px-6 lg:px-12 py-16">
+        <div className="00px] mx-auto px-6 py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {/* Brand */}
             <div>
@@ -80,7 +80,7 @@ export function Footer() {
 
       {/* Bottom */}
       <div className="border-t border-border">
-        <div className="00px] mx-auto px-6 lg:px-12 py-6">
+        <div className="00px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
               © 2025 EventSphere. All rights reserved.

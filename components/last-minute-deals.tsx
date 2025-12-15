@@ -44,7 +44,7 @@ export function LastMinuteDeals() {
   return (
     <section
       ref={containerRef}
-      className="py-24 bg-background border-t border-border/30"
+      className="py-20 bg-background border-t border-border/30"
     >
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

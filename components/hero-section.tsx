@@ -73,7 +73,7 @@ export function HeroSection() {
 
       {/* Stats Bar */}
       <div className="relative z-10 border-t border-border bg-background/80 backdrop-blur-sm">
-        <div className="00px] mx-auto px-6 lg:px-12 py-6">
+        <div className="00px] mx-auto px-6 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { value: "12,000+", label: "Live Events" },

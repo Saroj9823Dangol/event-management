@@ -5,68 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, MapPin, ArrowUpRight } from "lucide-react";
+import { IPaginatedResponse } from "@/types/response";
+import { IEvent } from "@/types";
+import { formatDate, formatDateTime } from "@/lib/utils";
 
-// Mock Data - In a real app, this would be passed as props
-const featuredEvents = [
-  {
-    id: 1,
-    title: "Beyoncé Renaissance Tour",
-    category: "Concert",
-    date: "Jul 29, 2025",
-    location: "Wembley Stadium",
-    image:
-      "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?q=80&w=2070&auto=format&fit=crop",
-    price: "From $189",
-    featured: true,
-  },
+interface IFeaturedGridProps {
+  featuredEvents: IPaginatedResponse<IEvent>;
+}
 
-  {
-    id: 2,
-    title: "The Phantom of the Opera",
-    category: "Theater",
-    date: "Running Daily",
-    location: "Her Majesty's Theatre",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop",
-    price: "From $79",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Formula 1 Monaco Grand Prix",
-    category: "Sports",
-    date: "May 25, 2025",
-    location: "Circuit de Monaco",
-    image:
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop",
-    price: "From $450",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Dave Chappelle Live",
-    category: "Comedy",
-    date: "Aug 15, 2025",
-    location: "Radio City Music Hall",
-    image:
-      "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?q=80&w=2070&auto=format&fit=crop",
-    price: "From $125",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Electric Daisy Carnival",
-    category: "Festival",
-    date: "Jun 20-22, 2025",
-    location: "Las Vegas Motor Speedway",
-    image:
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop",
-    price: "From $299",
-    featured: false,
-  },
-];
-
-export function FeaturedGrid() {
+export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -78,25 +25,22 @@ export function FeaturedGrid() {
   return (
     <section
       ref={containerRef}
-      className="py-24 lg:py-32 px-4 lg:px-8 max-w-[1800px] mx-auto"
+      className="py-20 px-4 lg:px-8 mx-auto container"
     >
       {/* Section Header */}
-      <div className="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 lg:px-4">
+      <div className="mx-auto relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
         <div>
           <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="text-xs font-bold tracking-[0.3em] text-accent uppercase block mb-6"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="text-accent font-bold tracking-[0.2em] uppercase block mb-6 text-sm"
           >
-            Curated For You
+            CURATED FOR YOU
           </motion.span>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9]"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif max-w-2xl"
           >
             Featured Events
           </motion.h2>
@@ -117,7 +61,7 @@ export function FeaturedGrid() {
          - On tablet, it spans 2 cols (full width) to properly lead the section.
       */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
-        {featuredEvents.map((event, index) => {
+        {featuredEvents.data.map((event, index) => {
           const isHero = index === 0;
 
           return (
@@ -138,16 +82,16 @@ export function FeaturedGrid() {
               }`}
             >
               <Link
-                href={`/events/${event.id}`}
+                href={`/events/${event.slug}`}
                 className="block w-full h-full relative"
               >
                 {/* Image Container */}
                 <div className="absolute inset-0 w-full h-full">
                   <Image
-                    src={event.image || "/placeholder.svg"}
-                    alt={event.title}
+                    src={event.thumbnail.url || "/placeholder.svg"}
+                    alt={event.name}
                     fill
-                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110 object-top"
                   />
                 </div>
 
@@ -161,7 +105,7 @@ export function FeaturedGrid() {
                   }`}
                 >
                   <span className="text-accent text-xs font-bold tracking-widest uppercase mb-2 block">
-                    {event.category}
+                    {event.category.name}
                   </span>
 
                   <h3
@@ -169,7 +113,7 @@ export function FeaturedGrid() {
                       isHero ? "text-3xl lg:text-5xl" : "text-xl lg:text-2xl"
                     }`}
                   >
-                    {event.title}
+                    {event.name}
                   </h3>
 
                   <div
@@ -179,20 +123,22 @@ export function FeaturedGrid() {
                         : ""
                     }`}
                   >
-                    <div className="flex items-center gap-2 text-white/80 text-sm">
+                    <div className="flex items-center gap-2 text-white text-sm">
                       <MapPin className="w-3 h-3" />
-                      <span className="truncate">{event.location}</span>
+                      <span className="truncate">
+                        {event.lineups[0].addressable.city}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 text-white/60 text-xs uppercase tracking-wider">
+                    <div className="flex items-center gap-2 text-white text-xs uppercase tracking-wider font-bold">
                       <Calendar className="w-3 h-3" />
-                      <span>{event.date}</span>
+                      <span>{formatDateTime(event.lineups[0].start_date)}</span>
                     </div>
                   </div>
 
                   {isHero && (
                     <div className="mt-6 pt-6 border-t border-white/20 flex justify-between items-end">
                       <span className="text-2xl font-serif italic text-white">
-                        {event.price}
+                        {event.currency} {event.low_price}
                       </span>
                       <div className="flex items-center gap-2 text-xs font-bold tracking-widest bg-white text-black px-4 py-2 rounded-full hover:bg-accent hover:text-white transition-colors">
                         GET TICKETS

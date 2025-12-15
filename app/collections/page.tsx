@@ -75,7 +75,7 @@ export default function CollectionsPage() {
       <CinematicNav />
 
       {/* Hero Section */}
-      <section className="py-32 px-6 lg:px-12 max-w-[1800px] mx-auto text-center">
+      <section className="py-32 px-6 max-w-[1800px] mx-auto text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ export default function CollectionsPage() {
       </section>
 
       {/* Collections Grid */}
-      <section className="pb-24 px-6 lg:px-12 max-w-[1800px] mx-auto">
+      <section className="pb-24 px-6 max-w-[1800px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {allCollections.map((collection, index) => (
             <motion.div

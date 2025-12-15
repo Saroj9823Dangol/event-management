@@ -119,7 +119,7 @@ export default function LivePage() {
       </section>
 
       {/* Live Grid */}
-      <section className="py-24 px-6 lg:px-12 max-w-[1800px] mx-auto">
+      <section className="py-24 px-6 max-w-[1800px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {liveEvents.map((event, index) => (
             <motion.div
@@ -130,7 +130,7 @@ export default function LivePage() {
               className="group relative h-[400px] overflow-hidden border border-white/10"
             >
               <Link
-              href={`/events/${event.id}`}
+                href={`/events/${event.id}`}
                 className="block w-full h-full"
               >
                 <Image
