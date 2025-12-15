@@ -53,7 +53,7 @@ export function EventsHero() {
   };
 
   return (
-    <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24">
+    <section className="relative pt-32 lg:pt-40">
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
@@ -83,7 +83,7 @@ export function EventsHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="max-w-4xl mx-auto"
+          className="mx-auto container"
         >
           <div className="bg-card border border-border p-2">
             <div className="flex flex-col md:flex-row gap-2">
@@ -152,28 +152,6 @@ export function EventsHero() {
                 <span className="hidden md:inline">SEARCH</span>
               </button>
             </div>
-          </div>
-
-          {/* Quick Filters */}
-          <div className="flex flex-wrap items-center gap-3 mt-6 justify-center">
-            <span className="text-sm text-muted-foreground">Popular:</span>
-            {["This Weekend", "Concerts", "Comedy", "Sports", "Family"].map(
-              (filter) => (
-                <button
-                  key={filter}
-                  onClick={() =>
-                    router.push(
-                      `/events?category=${filter
-                        .toLowerCase()
-                        .replace(" ", "-")}`
-                    )
-                  }
-                  className="px-4 py-2 text-sm border border-border hover:bg-white hover:text-black transition-colors"
-                >
-                  {filter}
-                </button>
-              )
-            )}
           </div>
         </motion.div>
       </div>

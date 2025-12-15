@@ -3,6 +3,9 @@ import LiveNowComponent from "@/components/live-now/live-now-component";
 import { SiteFooter } from "@/components/site-footer";
 import { getLiveEvents } from "@/lib/api/events";
 
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 export default async function LivePage() {
   const liveEvents = await getLiveEvents();
 

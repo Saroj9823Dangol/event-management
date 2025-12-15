@@ -24,8 +24,6 @@ export default async function EventDetailPage({
 
   const event = await getEventDetail(id);
 
-  logger.log(event, "event performers", id);
-
   return (
     <main className="min-h-screen bg-background">
       <CinematicNav />
