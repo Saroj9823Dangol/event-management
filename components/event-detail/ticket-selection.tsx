@@ -187,14 +187,29 @@ export function TicketSelection({ event }: TicketSelectionProps) {
           </div>
 
           <Link
-            href={`/events/${event.id}/book`} // In real app, this would pass quantities as query params or context
+            href={`/events/${event.slug}/book`}
             className={`block w-full py-4 bg-white text-black text-center font-bold tracking-widest uppercase rounded-lg shadow-lg shadow-white/10 mt-6 transition-all duration-300 ${
               totalQuantity === 0
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-accent hover:text-white"
             }`}
             onClick={(e) => {
-              if (totalQuantity === 0) e.preventDefault();
+              if (totalQuantity === 0) {
+                e.preventDefault();
+                return;
+              }
+
+              const bookingSession = {
+                eventId: event.id,
+                lineupId: selectedLineupId,
+                quantities,
+                timestamp: Date.now(),
+              };
+
+              localStorage.setItem(
+                "booking_session",
+                JSON.stringify(bookingSession)
+              );
             }}
           >
             Get Tickets

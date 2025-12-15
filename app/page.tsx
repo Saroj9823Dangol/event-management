@@ -12,6 +12,7 @@ import { StatsSection } from "@/components/stats-section";
 import { TicketCategories } from "@/components/ticket-categories";
 import { TrendingEvents } from "@/components/trending-events";
 import { VideoHero } from "@/components/video-hero";
+import { DownloadAppSection } from "@/components/download-app-section";
 import { CinematicNav } from "@/components/cinematic-nav";
 import {
   getHomeFeaturedEvents,
@@ -76,6 +77,9 @@ export default async function HomePage() {
 
       {/* B2B / Secondary Audience */}
       <EnterpriseSection />
+
+      {/* Mobile App Promo */}
+      <DownloadAppSection />
 
       {/* Final Calls to Action */}
       <CTASection />
