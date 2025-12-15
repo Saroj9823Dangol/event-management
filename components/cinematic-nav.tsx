@@ -47,26 +47,24 @@ export function CinematicNav() {
 
             {/* Center Nav */}
             <nav className="hidden lg:flex items-center gap-12">
-              {["Discover", "Collections", "Live Now", "Enterprise"].map(
-                (item) => (
-                  <Link
-                    key={item}
-                    href={
-                      item === "Discover"
-                        ? "/events"
-                        : item === "Enterprise"
-                        ? "/enterprise"
-                        : item === "Live Now"
-                        ? "/live-now"
-                        : `/${item.toLowerCase().replace(" ", "-")}`
-                    }
-                    className="text-sm tracking-[0.1em] font-bold hover:text-white transition-colors relative group"
-                  >
-                    {item.toUpperCase()}
-                    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-px bg-accent group-hover:w-full transition-all duration-500" />
-                  </Link>
-                )
-              )}
+              {["Discover", "Live Now", "Enterprise"].map((item) => (
+                <Link
+                  key={item}
+                  href={
+                    item === "Discover"
+                      ? "/events"
+                      : item === "Enterprise"
+                      ? "/enterprise"
+                      : item === "Live Now"
+                      ? "/live-now"
+                      : `/${item.toLowerCase().replace(" ", "-")}`
+                  }
+                  className="text-sm tracking-[0.1em] font-bold hover:text-white transition-colors relative group"
+                >
+                  {item.toUpperCase()}
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-px bg-accent group-hover:w-full transition-all duration-500" />
+                </Link>
+              ))}
             </nav>
 
             {/* Right Actions */}
@@ -78,15 +76,9 @@ export function CinematicNav() {
               >
                 <Search className="w-5 h-5" />
               </button>
+
               <Link
-                href="/saved"
-                className="p-2 hover:text-accent transition-colors hidden sm:block"
-                aria-label="Saved Items"
-              >
-                <Heart className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/account"
+                href="/dashboard"
                 className="p-2 hover:text-accent transition-colors hidden sm:block"
                 aria-label="Account"
               >
@@ -195,7 +187,7 @@ export function CinematicNav() {
               <nav className="flex-1 flex flex-col justify-center px-8 gap-8">
                 {[
                   "Discover",
-                  "Collections",
+                  // "Collections",
                   "Live Now",
                   "Enterprise",
                   "Account",

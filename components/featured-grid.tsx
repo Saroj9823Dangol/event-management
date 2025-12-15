@@ -107,7 +107,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                   <h3
                     className={`font-serif mb-3 leading-tight ${
                       isHero ? "text-3xl lg:text-5xl" : "text-xl lg:text-2xl"
-                    }`}
+                    } text-ellipsis line-clamp-1`}
                   >
                     {event.name}
                   </h3>

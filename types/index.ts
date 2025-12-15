@@ -362,6 +362,7 @@ export interface ICustomFields extends IBase {
   venue_name: string;
   google_map_link?: string;
   youtube_link?: string;
+  embed_url?: string;
 }
 
 export interface IPolicy extends IBase {

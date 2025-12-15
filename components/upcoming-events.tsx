@@ -93,7 +93,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                 <span className="text-xs font-bold text-white/40 tracking-widest uppercase">
                   {event.category.name}
                 </span>
-                <h3 className="text-2xl font-serif text-white group-hover:text-accent transition-colors duration-300">
+                <h3 className="text-2xl font-serif text-white group-hover:text-accent transition-colors duration-300 line-clamp-2">
                   <Link href={`/events/${event.slug}`}>{event.name}</Link>
                 </h3>
 

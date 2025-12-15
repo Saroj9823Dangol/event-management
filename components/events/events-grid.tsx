@@ -194,7 +194,7 @@ export function EventsGrid() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
       {filteredEvents.map((event, i) => (
         <motion.div
           key={event.id}
@@ -247,23 +247,6 @@ export function EventsGrid() {
               {/* Quick Actions */}
               <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleSave(event.id);
-                  }}
-                  className={`p-2.5 backdrop-blur-sm transition-colors ${
-                    savedEvents.includes(event.id)
-                      ? "bg-accent text-white"
-                      : "bg-black/70 hover:bg-black"
-                  }`}
-                >
-                  <Heart
-                    className={`w-4 h-4 ${
-                      savedEvents.includes(event.id) ? "fill-current" : ""
-                    }`}
-                  />
-                </button>
-                <button
                   onClick={(e) => e.preventDefault()}
                   className="p-2.5 bg-black/70 backdrop-blur-sm hover:bg-black transition-colors"
                 >
@@ -274,17 +257,6 @@ export function EventsGrid() {
 
             {/* Content */}
             <div>
-              {/* Rating */}
-              <div className="flex items-center gap-2 mb-2">
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-accent text-accent" />
-                  <span className="text-sm font-medium">{event.rating}</span>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  ({event.reviews.toLocaleString()} reviews)
-                </span>
-              </div>
-
               {/* Title */}
               <h3 className="text-lg font-serif mb-2 group-hover:text-accent transition-colors line-clamp-2">
                 {event.title}

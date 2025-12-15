@@ -50,10 +50,29 @@ export async function getUpcomingEvents(): Promise<IPaginatedResponse<IEvent>> {
   return response.data;
 }
 
-export async function getLiveEvents(): Promise<IPaginatedResponse<IEvent>> {
+export async function getHomeLiveEvents(): Promise<IPaginatedResponse<IEvent>> {
   const response = await http.get("/events", {
     params: {
       select: ["name", "slug"],
+      includes: "category",
+      include_nearest_lineup: 1,
+      include_price_range: 1,
+      limit: 6,
+      sortByStartDate: "asc",
+      where: [
+        `event_lineups.start_date:<=:${moment().format("YYYY-MM-DD")}`,
+        `event_lineups.end_date:>=:${moment().format("YYYY-MM-DD")}`,
+      ],
+      include_ticket_count: 1,
+    },
+  });
+  return response.data;
+}
+
+export async function getLiveEvents(): Promise<IPaginatedResponse<IEvent>> {
+  const response = await http.get("/events", {
+    params: {
+      select: ["name", "slug", "custom_fields"],
       includes: "category",
       include_nearest_lineup: 1,
       include_price_range: 1,

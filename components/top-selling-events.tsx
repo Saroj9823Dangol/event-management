@@ -56,7 +56,7 @@ export function TopSellingEvents({ events }: TopSellingEventsProps) {
                   Popular
                 </div>
 
-                <h3 className="text-xl font-bold mb-2 leading-tight group-hover:text-accent transition-colors">
+                <h3 className="text-xl font-bold mb-2 leading-tight group-hover:text-accent transition-colors line-clamp-2">
                   {event.name}
                 </h3>
                 <p className="text-sm text-zinc-600 mb-4 line-clamp-2">

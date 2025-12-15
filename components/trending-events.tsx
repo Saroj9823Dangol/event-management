@@ -94,7 +94,7 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
                   <span className="w-1 h-1 bg-white/20 rounded-full" />
                   <span>{event.nearest_lineup.custom_fields.venue_name}</span>
                 </div>
-                <h3 className="text-3xl font-serif leading-none group-hover:text-white transition-colors">
+                <h3 className="text-2xl font-serif leading-none group-hover:text-white transition-colors line-clamp-3">
                   {event.name}
                 </h3>
                 <div className="h-px w-0 bg-accent group-hover:w-full transition-all duration-700 delay-100" />

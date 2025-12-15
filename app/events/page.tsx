@@ -10,7 +10,7 @@ export default function EventsPage() {
     <main className="min-h-screen bg-background">
       <CinematicNav />
       <EventsHero />
-      <div className="max-w-[1800px] mx-auto px-6 py-12">
+      <div className="mx-auto container py-20">
         <EventsFilter />
         <EventsGrid />
       </div>

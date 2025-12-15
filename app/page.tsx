@@ -19,6 +19,7 @@ import {
   getUpcomingEvents,
   getTopSellingEvents,
   getLiveEvents,
+  getHomeLiveEvents,
 } from "@/lib/api/events";
 import { UpcomingEvents } from "@/components/upcoming-events";
 import { TopSellingEvents } from "@/components/top-selling-events";
@@ -34,8 +35,7 @@ export default async function HomePage() {
   const trendingEvents = await getHomeTrendingEvents();
   const upcomingEvents = await getUpcomingEvents();
   const topSellingEvents = await getTopSellingEvents();
-  const liveEvents = await getLiveEvents();
-
+  const liveEvents = await getHomeLiveEvents();
 
   const categories = await getCategories();
 
