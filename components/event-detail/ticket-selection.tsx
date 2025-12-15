@@ -124,7 +124,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                       )}
                     </div>
                     <div className="font-serif text-lg">
-                      {event.currency} {ticket.price}
+                      {event.currency} {Number(ticket.price).toLocaleString()}
                     </div>
                   </div>
 
@@ -171,7 +171,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                       {qty}x {ticket.name}
                     </span>
                     <span>
-                      {event.currency} {ticket.price * qty}
+                      {event.currency} {(ticket.price * qty).toLocaleString()}
                     </span>
                   </div>
                 );
@@ -182,7 +182,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
           <div className="flex justify-between text-xl font-serif text-white">
             <span>Total</span>
             <span>
-              {event.currency} {total}
+              {event.currency} {total.toLocaleString()}
             </span>
           </div>
 
