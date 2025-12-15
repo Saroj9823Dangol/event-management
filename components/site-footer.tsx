@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = {
   Discover: [
@@ -77,14 +78,14 @@ export function SiteFooter() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-white flex items-center justify-center">
-                <span className="text-black font-serif text-xl font-bold">
-                  E
-                </span>
+              <div className="relative w-40 h-10">
+                <Image
+                  src="/logo/dark-theme-logo.png"
+                  alt="UCNCEE"
+                  fill
+                  className="w-40 h-10 object-cover"
+                />
               </div>
-              <span className="text-lg tracking-[0.15em] font-light">
-                EVENTSPHERE
-              </span>
             </Link>
             <p className="text-sm text-muted-foreground mb-6">
               Where experiences find you. Discover, book, and live extraordinary
@@ -131,7 +132,7 @@ export function SiteFooter() {
       <div className="border-t border-border">
         <div className="max-w-[1800px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-muted-foreground">
-            <p>© 2025 EventSphere. All rights reserved.</p>
+            <p>© 2025 UCNCEE. All rights reserved.</p>
             <div className="flex gap-6">
               <span>USD ($)</span>
               <span>English</span>

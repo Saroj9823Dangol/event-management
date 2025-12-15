@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, User, Heart } from "lucide-react";
+import Image from "next/image";
 
 export function CinematicNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -33,14 +34,14 @@ export function CinematicNav() {
                 className="flex items-center gap-3"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="w-10 h-10 bg-white flex items-center justify-center transition-all duration-500 group-hover:bg-accent group-hover:text-white">
-                  <span className="text-black group-hover:text-white font-serif text-xl font-bold transition-colors">
-                    E
-                  </span>
+                <div className="relative w-40 h-10 transition-transform duration-500 group-hover:scale-110">
+                  <Image
+                    src="/logo/dark-theme-logo.png"
+                    alt="UCNCEE"
+                    fill
+                    className="w-40 h-10 object-cover"
+                  />
                 </div>
-                <span className="text-xl tracking-[0.2em] font-light hidden sm:block group-hover:text-accent transition-colors duration-500">
-                  EVENTSPHERE
-                </span>
               </motion.div>
             </Link>
 
@@ -182,7 +183,7 @@ export function CinematicNav() {
             <div className="h-full flex flex-col">
               <div className="flex items-center justify-between p-6 border-b border-white/5">
                 <span className="text-xl tracking-[0.2em] font-light">
-                  EVENTSPHERE
+                  UCNCEE
                 </span>
                 <button
                   onClick={() => setMenuOpen(false)}
@@ -220,9 +221,7 @@ export function CinematicNav() {
                 ))}
               </nav>
               <div className="p-8 border-t border-white/5">
-                <p className="text-muted-foreground text-sm">
-                  © 2025 EventSphere
-                </p>
+                <p className="text-muted-foreground text-sm">© 2025 UCNCEE</p>
               </div>
             </div>
           </motion.div>
