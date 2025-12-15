@@ -11,39 +11,50 @@ export const http = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  // timeout: 10000, // optional: fail fast on slow APIs
-  withCredentials: false, // set true if you use cookies
+  timeout: 10000,
+  withCredentials: false,
 });
 
-// Request interceptor: attach token, etc.
+// ✅ SERVER-SIDE HEADERS (fixes 403 on Vercel)
+if (typeof window === "undefined") {
+  http.defaults.headers.common["User-Agent"] =
+    "EventSphere/1.0 (+https://event-management-omega-virid.vercel.app)";
+  http.defaults.headers.common["Origin"] =
+    "https://event-management-omega-virid.vercel.app";
+  http.defaults.headers.common["Referer"] =
+    "https://event-management-omega-virid.vercel.app/";
+}
+
+// Request interceptor
 http.interceptors.request.use(
   (config) => {
-    // Example token from localStorage; swap for cookies/NextAuth/etc.
+    // Client-side auth (localStorage)
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("access_token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
+
+    // Debug logging
+    console.log("🌐 API:", config.method?.toUpperCase(), config.url);
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// Response interceptor: normalize and log errors
+// Response interceptor
 http.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<any>) => {
-    // Example: global handling for 401/403/500
+  (error: AxiosError) => {
     const status = error.response?.status;
+    console.error("❌ API Error:", status, error.response?.statusText);
 
     if (status === 401) {
-      // e.g. redirect to login, clear storage, etc.
-      // window.location.href = "/login"; // if desired
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("access_token");
+      }
     }
-
-    // Optionally map to a standard error shape for UI
-    // console.error(error);
 
     return Promise.reject(error);
   }
