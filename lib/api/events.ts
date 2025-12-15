@@ -132,7 +132,7 @@ export async function getFilteredEvents(
     end,
     category,
     page = 1,
-    per_page = 2,
+    per_page = 20,
   } = searchParams;
 
   const where: string[] = [];
