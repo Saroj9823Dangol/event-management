@@ -36,7 +36,7 @@ export function TopSellingEvents({ events }: TopSellingEventsProps) {
             >
               <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
-                  src={event.files?.[0]?.url || "/placeholder.svg"}
+                  src={event.thumbnail?.url || "/placeholder.svg"}
                   alt={event.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

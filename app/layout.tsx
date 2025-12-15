@@ -19,6 +19,10 @@ export const viewport: Viewport = {
   themeColor: "#0a0a0a",
 };
 
+// Fix Vercel caching - force dynamic rendering
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 import { BackgroundPattern } from "@/components/background-pattern";
 import { Providers } from "./providers";
 

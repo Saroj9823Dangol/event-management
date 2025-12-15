@@ -1,8 +1,34 @@
 "use client";
+import { useEffect, useRef } from "react";
 
 export function BackgroundPattern() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateMousePosition = (ev: MouseEvent) => {
+      if (!containerRef.current) return;
+      const { clientX, clientY } = ev;
+      containerRef.current.style.setProperty("--x", `${clientX}px`);
+      containerRef.current.style.setProperty("--y", `${clientY}px`);
+    };
+
+    window.addEventListener("mousemove", updateMousePosition);
+    return () => {
+      window.removeEventListener("mousemove", updateMousePosition);
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+    <div
+      ref={containerRef}
+      className="fixed inset-0 pointer-events-none z-20 overflow-hidden"
+      style={
+        {
+          "--x": "0px",
+          "--y": "0px",
+        } as React.CSSProperties
+      }
+    >
       {/* Noise Texture - Increased opacity for a rougher surface feel */}
       <div
         className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
@@ -12,7 +38,7 @@ export function BackgroundPattern() {
         }}
       ></div>
 
-      {/* Rectangular Grid */}
+      {/* Rectangular Grid - Base Layer */}
       <div
         className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
         style={{
@@ -21,6 +47,22 @@ export function BackgroundPattern() {
             repeating-linear-gradient(0deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px),
             repeating-linear-gradient(90deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px)
           `,
+        }}
+      ></div>
+
+      {/* Rectangular Grid - Spotlight Layer */}
+      <div
+        className="absolute inset-0 opacity-[0.15] mix-blend-overlay will-change-[mask-image]"
+        style={{
+          backgroundSize: "50px 50px",
+          backgroundImage: `
+            repeating-linear-gradient(0deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px),
+            repeating-linear-gradient(90deg, hsl(var(--accent)) 0, hsl(var(--accent)) 1px, transparent 1px, transparent 50px)
+          `,
+          maskImage:
+            "radial-gradient(circle 300px at var(--x) var(--y), black, transparent)",
+          WebkitMaskImage:
+            "radial-gradient(circle 300px at var(--x) var(--y), black, transparent)",
         }}
       ></div>
 

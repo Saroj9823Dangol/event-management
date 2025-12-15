@@ -22,7 +22,7 @@ export function CinematicNav() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          scrolled ? "glass py-4" : "bg-transparent py-6"
+          scrolled ? "glass py-4 !border-0 border-b" : "bg-transparent py-6"
         }`}
       >
         <div className="container mx-auto">
