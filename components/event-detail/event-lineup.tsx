@@ -24,7 +24,7 @@ export function EventLineup({ lineups }: EventLineupProps) {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        {lineups.map((item) => {
+        {lineups?.map((item) => {
           const isSelected = selectedLineupId === item.id;
           return (
             <motion.div
@@ -55,13 +55,13 @@ export function EventLineup({ lineups }: EventLineupProps) {
                   <div className="space-y-2 text-white/70 text-sm mb-6">
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4" />
-                      {formatTime(item.start_date)}
+                      {formatTime(item?.start_date)}
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
-                      {item.addressable.address}
+                      {item?.addressable?.address}
                       <a
-                        href={item.custom_fields.google_map_link}
+                        href={item?.custom_fields?.google_map_link}
                         target="_blank"
                         className="text-xs underline decoration-dotted underline-offset-4 text-white hover:text-accent ml-2"
                       >

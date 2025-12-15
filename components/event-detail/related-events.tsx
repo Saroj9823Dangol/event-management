@@ -4,43 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
+import { IPaginatedResponse } from "@/types/response";
+import { IEvent } from "@/types";
+import { formatDate, formatDateTime } from "@/lib/utils";
 
-const relatedEvents = [
-  {
-    id: 10,
-    title: "Taylor Swift - Eras Tour",
-    date: "Aug 15, 2025",
-    location: "Wembley Stadium",
-    image: "/concert-crowd-hands-up-stage-lights-dramatic.jpg",
-    price: 175,
-  },
-  {
-    id: 11,
-    title: "Ed Sheeran World Tour",
-    date: "Sep 5, 2025",
-    location: "O2 Arena",
-    image: "/concert-crowd-aerial-view-dramatic-lights.jpg",
-    price: 125,
-  },
-  {
-    id: 12,
-    title: "Coldplay - Music of the Spheres",
-    date: "Jun 15, 2025",
-    location: "MetLife Stadium",
-    image: "/stadium-crowd-cheering-sports-night-game.jpg",
-    price: 145,
-  },
-  {
-    id: 13,
-    title: "Adele Weekends",
-    date: "Jul 1, 2025",
-    location: "Las Vegas Residency",
-    image: "/broadway-theater-stage-curtains-dramatic-lighting.jpg",
-    price: 350,
-  },
-];
+interface RelatedEventsProps {
+  relatedEvents: IPaginatedResponse<IEvent>;
+}
 
-export function RelatedEvents() {
+export function RelatedEvents({ relatedEvents }: RelatedEventsProps) {
   return (
     <section className="px-6 py-16 border-t border-border">
       <div className="flex items-center justify-between mb-8">
@@ -55,38 +27,40 @@ export function RelatedEvents() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {relatedEvents.map((event, i) => (
+        {relatedEvents.data.map((event, i) => (
           <motion.div
             key={event.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
           >
-            <Link href={`/events/${event.id}`} className="group block">
+            <Link href={`/events/${event.slug}`} className="group block">
               <div className="relative aspect-[4/5] overflow-hidden mb-4">
                 <Image
-                  src={event.image || "/placeholder.svg"}
-                  alt={event.title}
+                  src={event.thumbnail.url || "/placeholder.svg"}
+                  alt={event.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <h3 className="font-serif text-lg mb-2 group-hover:text-accent transition-colors">
-                {event.title}
+                {event.name}
               </h3>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  {event.date}
+                  {formatDateTime(event.nearest_lineup.start_date)}
                 </span>
               </div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                 <MapPin className="w-4 h-4" />
-                {event.location}
+                {event.nearest_lineup.addressable.address}
               </div>
               <p className="mt-2">
                 <span className="text-xs text-muted-foreground">From </span>
-                <span className="font-medium">${event.price}</span>
+                <span className="font-medium">
+                  {event.currency} {Number(event.low_price).toLocaleString()}
+                </span>
               </p>
             </Link>
           </motion.div>

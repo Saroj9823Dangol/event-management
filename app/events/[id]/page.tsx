@@ -10,7 +10,7 @@ import { EventTabs } from "@/components/event-detail/event-tabs";
 import { BookingProvider } from "@/components/event-detail/booking-context";
 import { EventLineup } from "@/components/event-detail/event-lineup";
 import logger from "@/lib/logger/logger";
-import { getEventDetail } from "@/lib/api/events";
+import { getEventDetail, getRelatedEvents } from "@/lib/api/events";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -23,6 +23,10 @@ export default async function EventDetailPage({
   const { id } = await params;
 
   const event = await getEventDetail(id);
+
+  const relatedEvents = await getRelatedEvents({
+    categoryId: event?.category?.slug,
+  });
 
   return (
     <main className="min-h-screen bg-background">
@@ -47,7 +51,7 @@ export default async function EventDetailPage({
               >
                 <h2 className="text-3xl font-serif">Artists</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {event.performers.map((artist) => {
+                  {event?.performers?.map((artist) => {
                     return (
                       <div
                         key={artist.id}
@@ -70,14 +74,14 @@ export default async function EventDetailPage({
                 </div>
               </section>
 
-              <EventLineup lineups={event.lineups} />
+              <EventLineup lineups={event?.lineups} />
 
               {/* Policies Section with HTML Parsing */}
               <section
                 id="info"
                 className="space-y-8 pt-8 border-t border-white/10"
               >
-                {event.policies.map((policy: any, index: number) => (
+                {event?.policies?.map((policy: any, index: number) => (
                   <div key={index} className="space-y-4">
                     <h2 className="text-3xl font-serif">
                       {policy.policy_name}
@@ -92,14 +96,14 @@ export default async function EventDetailPage({
                 ))}
               </section>
 
-              <EventGallery images={event.files} />
+              <EventGallery images={event?.files} />
             </div>
             {/* Sidebar - Sticky Ticket Selection */}
             <div className="lg:col-span-1">
               <TicketSelection event={event} />
             </div>
           </div>
-          <RelatedEvents />
+          <RelatedEvents relatedEvents={relatedEvents} />
         </div>
       </BookingProvider>
       <SiteFooter />

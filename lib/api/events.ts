@@ -119,6 +119,26 @@ export async function getEventDetail(slug: string): Promise<IEvent> {
   return response.data.data[0];
 }
 
+export async function getRelatedEvents({
+  categoryId,
+}: {
+  categoryId: string;
+}): Promise<IPaginatedResponse<IEvent>> {
+  const response = await http.get("/events", {
+    params: {
+      select: ["name", "slug", "currency"],
+      includes: "category",
+      include_nearest_lineup: 1,
+      include_price_range: 1,
+      limit: 6,
+      sortByStartDate: "asc",
+      include_ticket_count: 1,
+      category: categoryId,
+    },
+  });
+  return response.data;
+}
+
 export async function getFilteredEvents(
   searchParams: { [key: string]: string | undefined } = {}
 ): Promise<IPaginatedResponse<IEvent>> {

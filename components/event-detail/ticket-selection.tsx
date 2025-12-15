@@ -19,7 +19,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
 
   const isLineupSelected = !!selectedLineupId;
 
-  const selectedLineUpTicketTypes = event.lineups.find(
+  const selectedLineUpTicketTypes = event?.lineups?.find(
     (lineup) => lineup.id === selectedLineupId
   )?.ticketTypes;
 

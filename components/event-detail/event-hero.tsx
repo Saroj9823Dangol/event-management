@@ -63,12 +63,12 @@ export function EventDetailHero({ event }: EventHeroProps) {
             className="w-full h-full object-cover"
             onError={() => setShowVideo(false)}
           >
-            <source src={event.featured_banner.url} type="video/mp4" />
+            <source src={event?.featured_banner?.url} type="video/mp4" />
           </motion.video>
         ) : (
           <Image
-            src={event.thumbnail.url || "/placeholder.svg"}
-            alt={event.name}
+            src={event?.thumbnail?.url || "/placeholder.svg"}
+            alt={event?.name}
             fill
             className="object-cover object-top"
             priority
@@ -136,7 +136,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
             className="flex items-center gap-4 mb-8"
           >
             <span className="px-4 py-1.5 bg-accent text-white text-xs font-bold tracking-widest uppercase rounded-sm shadow-lg shadow-accent/20">
-              {event.category.name}
+              {event?.category?.name}
             </span>
           </motion.div>
 
@@ -144,17 +144,17 @@ export function EventDetailHero({ event }: EventHeroProps) {
           <div className="flex flex-wrap items-center gap-8 text-white/80 mb-12 text-sm tracking-widest uppercase font-medium">
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-accent" />
-              <span>{formatDate(event.nearest_lineup.start_date)}</span>
+              <span>{formatDate(event?.nearest_lineup?.start_date)}</span>
             </div>
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <Clock className="w-5 h-5 text-accent" />
-              <span>{formatTime(event.nearest_lineup.start_date)}</span>
+              <span>{formatTime(event?.nearest_lineup?.start_date)}</span>
             </div>
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-accent" />
-              <span>{event.nearest_lineup.addressable.address}</span>
+              <span>{event?.nearest_lineup?.addressable?.address}</span>
             </div>
           </div>
 

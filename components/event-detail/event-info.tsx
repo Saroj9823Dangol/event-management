@@ -18,10 +18,10 @@ export function EventInfo({ event }: EventInfoProps) {
     >
       {/* Title */}
       <h1 className="text-xl md:text-2xl lg:text-3xl font-serif mb-6 text-white leading-none tracking-tight line-clamp-1">
-        {event.name}
+        {event?.name}
       </h1>
       <p className="text-base md:text-lg lg:text-xl font-light text-white/90 mb-10 max-w-2xl leading-tight line-clamp-1">
-        {event.description}
+        {event?.description}
       </p>
 
       {/* Quick Facts Grid */}
@@ -33,8 +33,8 @@ export function EventInfo({ event }: EventInfoProps) {
           </p>
           <p className="font-serif text-lg text-white">
             {calculateDuration(
-              event.nearest_lineup.start_date,
-              event.nearest_lineup.end_date
+              event?.nearest_lineup?.start_date,
+              event?.nearest_lineup?.end_date
             )}
           </p>
         </div>
@@ -44,7 +44,7 @@ export function EventInfo({ event }: EventInfoProps) {
             Age
           </p>
           <p className="font-serif text-lg text-white">
-            {event.is_adults_only ? "18+" : "All ages"}
+            {event?.is_adults_only ? "18+" : "All ages"}
           </p>
         </div>
         <div className="group p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5">
@@ -53,7 +53,7 @@ export function EventInfo({ event }: EventInfoProps) {
             Venue
           </p>
           <p className="font-serif text-lg text-white">
-            {event.nearest_lineup.custom_fields.venue_name}
+            {event?.nearest_lineup?.custom_fields?.venue_name}
           </p>
         </div>
         <div className="group p-6 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5">
@@ -63,9 +63,9 @@ export function EventInfo({ event }: EventInfoProps) {
           </p>
           <p
             className="font-serif text-lg text-white truncate"
-            title={event.organizer.name}
+            title={event?.organizer?.name}
           >
-            {event.organizer.name}
+            {event?.organizer?.name}
           </p>
         </div>
       </div>

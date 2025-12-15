@@ -38,7 +38,7 @@ export function EventGallery({ images }: EventGalleryProps) {
 
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {images.map((image, i) => (
+        {images?.map((image, i) => (
           <motion.button
             key={i}
             onClick={() => openLightbox(i)}
