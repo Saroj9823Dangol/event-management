@@ -11,24 +11,20 @@ import {
   ChevronRight,
   X,
 } from "lucide-react";
+import { IPaginatedResponse } from "@/types/response";
+import { ICategory } from "@/types";
 
-const categories = [
-  "All",
-  "Concerts",
-  "Theater",
-  "Sports",
-  "Comedy",
-  "Festivals",
-  "Arts",
-  "Family",
-];
+interface EventsFilterProps {
+  categories: IPaginatedResponse<ICategory>;
+}
+
 const sortOptions = [
   "Date: Soonest",
   "Price: Low to High",
   "Price: High to Low",
 ];
 
-export function EventsFilter() {
+export function EventsFilter({ categories }: EventsFilterProps) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Date: Soonest");
   const [showFilters, setShowFilters] = useState(false);
@@ -62,17 +58,17 @@ export function EventsFilter() {
             ref={scrollContainerRef}
             className="flex gap-2 overflow-x-auto scrollbar-hide pb-2 lg:pb-0 px-8"
           >
-            {categories.map((category) => (
+            {categories.data.map((category) => (
               <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
+                key={category.id}
+                onClick={() => setActiveCategory(category.slug)}
                 className={`px-5 py-2.5 text-sm tracking-wider whitespace-nowrap transition-colors flex-shrink-0 ${
-                  activeCategory === category
+                  activeCategory === category.slug
                     ? "bg-white text-black font-bold"
                     : "border border-border hover:bg-white/10 text-muted-foreground hover:text-white"
                 }`}
               >
-                {category.toUpperCase()}
+                {category.name.toUpperCase()}
               </button>
             ))}
           </div>
