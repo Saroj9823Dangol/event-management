@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description:
     "Discover extraordinary events through a cinematic lens. Curated experiences for the discerning.",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export const viewport: Viewport = {
