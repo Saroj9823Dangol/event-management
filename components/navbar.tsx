@@ -40,7 +40,7 @@ export function Navbar() {
             {/* Logo */}
             <a href="/" className="relative z-10">
               <span className="font-serif text-2xl tracking-tight text-foreground">
-                EventSphere
+                UCNCEE
               </span>
             </a>
 
@@ -158,7 +158,7 @@ export function Navbar() {
           >
             <div className="px-6 py-6">
               <div className="flex items-center justify-between mb-16">
-                <span className="font-serif text-2xl">EventSphere</span>
+                <span className="font-serif text-2xl">UCNCEE</span>
                 <button onClick={() => setMobileMenuOpen(false)}>
                   <X className="w-6 h-6" strokeWidth={1.5} />
                 </button>

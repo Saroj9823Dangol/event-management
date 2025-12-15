@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const testimonials = [
   {
     quote:
-      "EventSphere transformed how we manage our festival. The real-time analytics alone have increased our revenue by 40%.",
+      "UCNCEE transformed how we manage our festival. The real-time analytics alone have increased our revenue by 40%.",
     author: "Sarah Chen",
     role: "Director of Operations",
     company: "Coachella",
@@ -23,23 +23,24 @@ const testimonials = [
     image: "/professional-man-headshot.png",
   },
   {
-    quote: "We've seen a 60% reduction in check-in times and our attendee satisfaction scores are at an all-time high.",
+    quote:
+      "We've seen a 60% reduction in check-in times and our attendee satisfaction scores are at an all-time high.",
     author: "Emma Rodriguez",
     role: "Event Manager",
     company: "Madison Square Garden",
     image: "/professional-woman-latina-headshot.jpg",
   },
-]
+];
 
 export function EnterpriseTestimonials() {
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % testimonials.length)
-    }, 6000)
-    return () => clearInterval(timer)
-  }, [])
+      setCurrent((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="py-24 lg:py-32 bg-card">
@@ -50,8 +51,12 @@ export function EnterpriseTestimonials() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-sm tracking-[0.3em] text-muted-foreground block mb-4">TESTIMONIALS</span>
-          <h2 className="text-4xl md:text-5xl font-serif">Trusted by Industry Leaders</h2>
+          <span className="text-sm tracking-[0.3em] text-muted-foreground block mb-4">
+            TESTIMONIALS
+          </span>
+          <h2 className="text-4xl md:text-5xl font-serif">
+            Trusted by Industry Leaders
+          </h2>
         </motion.div>
 
         <div className="relative">
@@ -79,7 +84,8 @@ export function EnterpriseTestimonials() {
                 <div className="text-left">
                   <p className="font-medium">{testimonials[current].author}</p>
                   <p className="text-sm text-muted-foreground">
-                    {testimonials[current].role}, {testimonials[current].company}
+                    {testimonials[current].role},{" "}
+                    {testimonials[current].company}
                   </p>
                 </div>
               </div>
@@ -89,7 +95,12 @@ export function EnterpriseTestimonials() {
           {/* Navigation */}
           <div className="flex items-center justify-center gap-4 mt-12">
             <button
-              onClick={() => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+              onClick={() =>
+                setCurrent(
+                  (prev) =>
+                    (prev - 1 + testimonials.length) % testimonials.length
+                )
+              }
               className="p-2 border border-border hover:bg-white/10 transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -99,12 +110,16 @@ export function EnterpriseTestimonials() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`w-2 h-2 transition-colors ${i === current ? "bg-accent" : "bg-muted"}`}
+                  className={`w-2 h-2 transition-colors ${
+                    i === current ? "bg-accent" : "bg-muted"
+                  }`}
                 />
               ))}
             </div>
             <button
-              onClick={() => setCurrent((prev) => (prev + 1) % testimonials.length)}
+              onClick={() =>
+                setCurrent((prev) => (prev + 1) % testimonials.length)
+              }
               className="p-2 border border-border hover:bg-white/10 transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
@@ -113,5 +128,5 @@ export function EnterpriseTestimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }

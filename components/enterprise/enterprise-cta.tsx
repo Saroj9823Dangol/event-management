@@ -1,25 +1,31 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Calendar, Phone } from "lucide-react"
+import { useRef } from "react";
+import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, Calendar, Phone } from "lucide-react";
 
 export function EnterpriseCTA() {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section ref={containerRef} className="py-24 lg:py-32 bg-card overflow-hidden">
+    <section
+      ref={containerRef}
+      className="py-24 lg:py-32 bg-card overflow-hidden"
+    >
       <div className="max-w-[1200px] mx-auto px-6 lg:px-12">
         <div className="relative">
           {/* Background Pattern */}
-          <motion.div style={{ y }} className="absolute inset-0 -z-10 opacity-10">
+          <motion.div
+            style={{ y }}
+            className="absolute inset-0 -z-10 opacity-10"
+          >
             <div
               className="absolute inset-0"
               style={{
@@ -35,9 +41,12 @@ export function EnterpriseCTA() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Ready to Elevate Your Events?</h2>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">
+              Ready to Elevate Your Events?
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12">
-              Join thousands of event organizers who trust EventSphere to deliver exceptional experiences.
+              Join thousands of event organizers who trust UCNCEE to deliver
+              exceptional experiences.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -61,15 +70,17 @@ export function EnterpriseCTA() {
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground">
               <span className="text-sm">Trusted by:</span>
-              {["Live Nation", "AEG", "Ticketmaster", "MSG", "Coachella"].map((brand) => (
-                <span key={brand} className="text-sm font-medium">
-                  {brand}
-                </span>
-              ))}
+              {["Live Nation", "AEG", "Ticketmaster", "MSG", "Coachella"].map(
+                (brand) => (
+                  <span key={brand} className="text-sm font-medium">
+                    {brand}
+                  </span>
+                )
+              )}
             </div>
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }

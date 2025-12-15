@@ -14,9 +14,7 @@ export default function RegisterPage() {
     >
       <div className="text-center mb-8">
         <h1 className="text-3xl font-serif mb-2">Create Account</h1>
-        <p className="text-white/60 text-sm">
-          Start your journey with EventSphere
-        </p>
+        <p className="text-white/60 text-sm">Start your journey with UCNCEE</p>
       </div>
 
       <form className="space-y-4">

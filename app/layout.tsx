@@ -9,7 +9,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "EventSphere | Where Experiences Find You",
+  title: "UCNCEE | Where Experiences Find You",
   description:
     "Discover extraordinary events through a cinematic lens. Curated experiences for the discerning.",
   generator: "v0.app",

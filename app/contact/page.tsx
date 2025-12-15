@@ -57,10 +57,10 @@ export default function ContactPage() {
                         General Inquiries
                       </p>
                       <a
-                        href="mailto:hello@eventsphere.com"
+                        href="mailto:hello@UCNCEE.com"
                         className="text-lg hover:text-accent transition-colors"
                       >
-                        hello@eventsphere.com
+                        hello@UCNCEE.com
                       </a>
                     </div>
                   </div>
@@ -101,7 +101,7 @@ export default function ContactPage() {
               </div>
 
               <div className="p-8 rounded-2xl bg-accent/5 border border-accent/10">
-                <h4 className="font-bold mb-2">Partner with EventSphere</h4>
+                <h4 className="font-bold mb-2">Partner with UCNCEE</h4>
                 <p className="text-white/60 text-sm mb-4">
                   Interested in listing your events or becoming a venue partner?
                   We'd love to hear from you.

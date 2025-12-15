@@ -23,10 +23,10 @@ export default function TermsPage() {
             <p>
               These Terms of Service constitute a legally binding agreement made
               between you, whether personally or on behalf of an entity (“you”)
-              and EventSphere (“we,” “us” or “our”), concerning your access to
-              and use of the EventSphere website as well as any other media
-              form, media channel, mobile website or mobile application related,
-              linked, or otherwise connected thereto.
+              and UCNCEE (“we,” “us” or “our”), concerning your access to and
+              use of the UCNCEE website as well as any other media form, media
+              channel, mobile website or mobile application related, linked, or
+              otherwise connected thereto.
             </p>
 
             <h3>1. Agreement to Terms</h3>
@@ -72,10 +72,10 @@ export default function TermsPage() {
             <h3>4. Ticket Purchases</h3>
             <p>
               All ticket purchases are final and non-refundable except as
-              expressly set forth in our Refund Policy. EventSphere acts as an
-              agent for those who are promoting or otherwise providing the
-              events for which you purchase tickets ("Event Organizers"). We do
-              not set the ticket prices or determine seating locations.
+              expressly set forth in our Refund Policy. UCNCEE acts as an agent
+              for those who are promoting or otherwise providing the events for
+              which you purchase tickets ("Event Organizers"). We do not set the
+              ticket prices or determine seating locations.
             </p>
 
             <h3>5. Contact Us</h3>
@@ -85,13 +85,13 @@ export default function TermsPage() {
               at:
               <br />
               <br />
-              <strong>EventSphere</strong>
+              <strong>UCNCEE</strong>
               <br />
               123 Event Horizon Blvd
               <br />
               Los Angeles, CA 90012
               <br />
-              hello@eventsphere.com
+              hello@UCNCEE.com
             </p>
           </div>
         </div>

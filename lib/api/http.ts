@@ -18,7 +18,7 @@ export const http = axios.create({
 // ✅ SERVER-SIDE HEADERS (fixes 403 on Vercel)
 if (typeof window === "undefined") {
   http.defaults.headers.common["User-Agent"] =
-    "EventSphere/1.0 (+https://event-management-omega-virid.vercel.app)";
+    "UCNCEE/1.0 (+https://event-management-omega-virid.vercel.app)";
   http.defaults.headers.common["Origin"] =
     "https://event-management-omega-virid.vercel.app";
   http.defaults.headers.common["Referer"] =

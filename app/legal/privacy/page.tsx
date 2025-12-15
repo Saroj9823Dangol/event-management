@@ -21,11 +21,11 @@ export default function PrivacyPage() {
 
           <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-a:text-accent font-light">
             <p>
-              At EventSphere, we take your privacy seriously. This Privacy
-              Policy explains how we collect, use, disclosure, and safeguard
-              your information when you visit our website including any other
-              media form, media channel, mobile website, or mobile application
-              related or connected thereto.
+              At UCNCEE, we take your privacy seriously. This Privacy Policy
+              explains how we collect, use, disclosure, and safeguard your
+              information when you visit our website including any other media
+              form, media channel, mobile website, or mobile application related
+              or connected thereto.
             </p>
 
             <h3>1. Collection of Your Information</h3>

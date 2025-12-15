@@ -14,7 +14,7 @@ const partners = [
 const testimonials = [
   {
     quote:
-      "EventSphere has transformed how we connect with our audience. The platform's curation is unmatched.",
+      "UCNCEE has transformed how we connect with our audience. The platform's curation is unmatched.",
     author: "Sarah Chen",
     role: "Director of Programming",
     organization: "Lincoln Center",

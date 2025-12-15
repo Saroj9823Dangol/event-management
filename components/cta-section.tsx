@@ -47,7 +47,7 @@ export function CTASection() {
             className="text-lg text-white/70 mb-12 max-w-2xl mx-auto"
           >
             Join millions of experience seekers who discover their next
-            unforgettable moment on EventSphere.
+            unforgettable moment on UCNCEE.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
