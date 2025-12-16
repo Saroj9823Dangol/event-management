@@ -220,30 +220,6 @@ export function CinematicNav() {
                     )}
                   </AnimatePresence>
                 </div>
-                <div className="mt-12">
-                  <span className="text-sm font-light tracking-widest text-muted-foreground uppercase block mb-4">
-                    Trending Searches
-                  </span>
-                  <div className="flex flex-wrap gap-3">
-                    {[
-                      "Concerts",
-                      "Immersive Theater",
-                      "Electronic",
-                      "Food Festivals",
-                      "Art Galleries",
-                    ].map((tag, i) => (
-                      <motion.button
-                        key={tag}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 + i * 0.05 }}
-                        className="px-6 py-2.5 rounded-full border border-white/10 text-sm hover:border-accent hover:text-accent transition-all duration-300"
-                      >
-                        {tag}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
               </motion.div>
             </div>
           </motion.div>
