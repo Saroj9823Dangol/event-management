@@ -127,7 +127,7 @@ export default function BookingComponent({ event }: BookingProps) {
         };
 
         if (!session) {
-          console.log("No session found");
+          logger.log("No session found");
           handleRedirect();
           return;
         }
@@ -141,7 +141,7 @@ export default function BookingComponent({ event }: BookingProps) {
         const isCurrentEvent = data.eventId === event.id;
 
         if (!isCurrentEvent || !hasValidQuantities) {
-          console.log("Invalid session");
+          logger.log("Invalid session");
           localStorage.removeItem("booking_session"); // Clear invalid session
           handleRedirect();
           return;

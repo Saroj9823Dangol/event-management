@@ -37,8 +37,8 @@ export default function TicketDetailPage({
 
   const fetchOrder = async () => {
     try {
-      const response = await getOrderById((await params).id, user?.id || "");
-      setOrder(response.data.data?.[0] || response.data.data || response.data);
+      const response = await getOrderById((await params).id);
+      setOrder(response.data.data[0]);
     } catch (error) {
       console.error("Failed to fetch order", error);
       toast.error("Failed to load ticket details");

@@ -72,7 +72,7 @@ export function TicketCard({
           </div>
         </div>
         <Link
-          href={`/dashboard/tickets/${eventId}`}
+          href={`/dashboard/tickets/${ticket.id}`}
           className="flex items-center justify-center gap-2 w-full py-4 border border-white/20 text-white font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all group/btn"
         >
           <QrCode className="w-4 h-4" />

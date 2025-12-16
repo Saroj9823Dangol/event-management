@@ -23,10 +23,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
   const y1 = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
-    <section
-      ref={containerRef}
-      className="py-20 px-4 lg:px-8 mx-auto container"
-    >
+    <section ref={containerRef} className="py-20 mx-auto container">
       {/* Section Header */}
       <div className="mx-auto relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
         <div>

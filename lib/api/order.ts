@@ -19,10 +19,10 @@ export const getUserOrders = (params?: {
   return http.get("/user/orders", { params });
 };
 
-export const getOrderById = (id: string, userId: string) => {
+export const getOrderById = (id: string) => {
   return http.get(`/user/orders`, {
     params: {
-      event: id,
+      order_id: id,
     },
   });
 };
