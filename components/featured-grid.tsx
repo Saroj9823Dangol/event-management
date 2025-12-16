@@ -57,7 +57,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
          - The first item (index 0) will span 2 cols and 2 rows on desktop to act as the "Hero".
          - On tablet, it spans 2 cols (full width) to properly lead the section.
       */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[400px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[350px]">
         {featuredEvents.data.map((event, index) => {
           const isHero = index === 0;
 
@@ -97,14 +97,14 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                 <div
                   className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 md:p-8 flex flex-col justify-end transition-all duration-500 h-2/3 translate-y-4 group-hover:translate-y-0`}
                 >
-                  <span className="text-accent text-xs font-bold tracking-widest uppercase mb-2 block">
+                  <span className="text-accent text-xs font-extrabold tracking-widest uppercase mb-2 block">
                     {event.category.name}
                   </span>
 
                   <h3
-                    className={`font-serif mb-3 leading-tight ${
+                    className={`font-serif mb-3 leading-tight font-bold ${
                       isHero ? "text-3xl lg:text-5xl" : "text-xl lg:text-2xl"
-                    } text-ellipsis line-clamp-1`}
+                    } truncate`}
                   >
                     {event.name}
                   </h3>
@@ -115,18 +115,18 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                     <div className="flex items-center gap-2 text-white text-sm">
                       <MapPin className="w-3 h-3" />
                       <span className="truncate">
-                        {event.nearest_lineup.addressable.address}
+                        {event?.nearest_lineup?.addressable.address}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-white text-xs uppercase tracking-wider font-bold">
                       <Calendar className="w-3 h-3" />
                       <span>
-                        {formatDateTime(event.nearest_lineup.start_date)}
+                        {formatDateTime(event?.nearest_lineup?.start_date)}
                       </span>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-white/20 flex justify-between items-end">
+                  <div className="mt-3 pt-2 border-t border-white/20 flex justify-between items-end">
                     <span className="text-2xl font-serif italic text-white">
                       {event.currency}{" "}
                       {Number(event.low_price).toLocaleString()}

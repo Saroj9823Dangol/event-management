@@ -123,7 +123,7 @@ export function EventsHero() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-[1800px] mx-auto px-6 lg:px-12">
+      <div className="mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -177,10 +177,10 @@ export function EventsHero() {
               </div>
 
               {/* Date Range Picker */}
-              <div className="flex items-center gap-3 px-4 py-1 bg-background md:border-l border-border min-w-[280px]">
+              <div className="flex items-center gap-3 bg-background md:border-l border-border md:min-w-[280px] w-full md:w-auto min-w-0">
                 <DateRangePicker
                   aria-label="Filter by date range"
-                  className="max-w-xs"
+                  className="w-full md:max-w-xs"
                   variant="underlined"
                   value={dateRange}
                   onChange={setDateRange}

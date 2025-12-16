@@ -49,12 +49,12 @@ export function RelatedEvents({ relatedEvents }: RelatedEventsProps) {
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  {formatDateTime(event.nearest_lineup.start_date)}
+                  {formatDateTime(event?.nearest_lineup?.start_date)}
                 </span>
               </div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                 <MapPin className="w-4 h-4" />
-                {event.nearest_lineup.addressable.address}
+                {event?.nearest_lineup?.addressable.address}
               </div>
               <p className="mt-2">
                 <span className="text-xs text-muted-foreground">From </span>

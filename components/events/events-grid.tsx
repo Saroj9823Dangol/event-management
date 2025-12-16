@@ -106,15 +106,15 @@ export function EventsGrid({ events }: EventsGridProps) {
                 <div className="space-y-1.5 text-sm text-muted-foreground mb-3">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 shrink-0" />
-                    <span>{formatDate(event.nearest_lineup.start_date)}</span>
+                    <span>{formatDate(event?.nearest_lineup?.start_date)}</span>
                     <span className="text-border">|</span>
                     <Clock className="w-4 h-4 shrink-0" />
-                    <span>{formatTime(event.nearest_lineup.start_date)}</span>
+                    <span>{formatTime(event?.nearest_lineup?.start_date)}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 shrink-0" />
                     <span className="truncate">
-                      {event.nearest_lineup.addressable.address}
+                      {event?.nearest_lineup?.addressable.address}
                     </span>
                   </div>
                 </div>

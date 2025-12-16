@@ -158,3 +158,9 @@ html {
 .group:hover .group-hover-zoom {
   transform: scale(1.05);
 }
+
+html {
+  .container {
+    width: 90% !important;
+  }
+}

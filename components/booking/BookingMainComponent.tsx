@@ -530,7 +530,7 @@ export default function BookingComponent({ event }: BookingProps) {
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Date</span>
                           <span>
-                            {formatDateTime(event.nearest_lineup.start_date)}
+                            {formatDateTime(event?.nearest_lineup?.start_date)}
                           </span>
                         </div>
                         <div className="flex justify-between">

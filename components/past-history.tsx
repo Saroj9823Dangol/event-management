@@ -39,7 +39,7 @@ export function PastHistory({ events }: PastHistoryProps) {
 
   return (
     <section className="py-20 text-white overflow-hidden">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 mb-10">
           <div className="bg-white text-black p-2 rounded-full">

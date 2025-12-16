@@ -83,19 +83,23 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
 
                 <div className="absolute top-4 right-4 z-20">
                   <span className="px-3 py-1 bg-white text-black text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                    {event.category.name}
+                    {event?.category.name}
                   </span>
                 </div>
               </Link>
 
               <div className="space-y-4 pr-4">
                 <div className="flex items-center gap-4 text-xs tracking-widest uppercase text-muted-foreground/80 group-hover:text-accent transition-colors">
-                  <span>{formatDateTime(event.nearest_lineup.start_date)}</span>
+                  <span>
+                    {formatDateTime(event?.nearest_lineup?.start_date)}
+                  </span>
                   <span className="w-1 h-1 bg-white/20 rounded-full" />
-                  <span>{event.nearest_lineup.custom_fields.venue_name}</span>
+                  <span>
+                    {event?.nearest_lineup?.custom_fields?.venue_name}
+                  </span>
                 </div>
                 <h3 className="text-2xl font-serif leading-none group-hover:text-white transition-colors line-clamp-3">
-                  {event.name}
+                  {event?.name}
                 </h3>
                 <div className="h-px w-0 bg-accent group-hover:w-full transition-all duration-700 delay-100" />
               </div>

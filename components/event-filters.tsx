@@ -31,13 +31,13 @@ export function EventFilters() {
   };
 
   return (
-    <section className="relative px-6 py-20 bg-background">
-      <div className="max-w-[1800px] mx-auto">
+    <section className="relative py-20 bg-background">
+      <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="glass-card p-8 md:p-10"
+          className="glass-card p-0 md:p-10"
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-3">
@@ -75,10 +75,10 @@ export function EventFilters() {
               </div>
 
               {/* Date Range Picker */}
-              <div className="flex items-center gap-3 px-4 py-1 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent">
+              <div className="flex items-center gap-3 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent w-full md:w-auto min-w-0">
                 <DateRangePicker
                   label="Event Dates"
-                  className="max-w-xs"
+                  className="w-full md:max-w-xs"
                   variant="bordered"
                   value={dateRange}
                   onChange={setDateRange}

@@ -73,7 +73,7 @@ export function LiveNowStrip({ liveEvents }: LiveNowStripProps) {
                     </span>
                     <span className="text-white/30">|</span>
                     <span className="text-xs font-medium tracking-widest uppercase text-white/60 whitespace-nowrap">
-                      {event.nearest_lineup.custom_fields.venue_name}
+                      {event?.nearest_lineup?.custom_fields.venue_name}
                     </span>
                     <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/5">
                       <Users className="w-3 h-3 text-white/40" />

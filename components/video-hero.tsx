@@ -232,10 +232,10 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
               {currentEvent.description}
             </p>
             <div className="flex items-center gap-6 text-white/60 mb-10 text-sm tracking-widest uppercase">
-              <span>{currentEvent.nearest_lineup.addressable.address}</span>
+              <span>{currentEvent?.nearest_lineup?.addressable?.address}</span>
               <span className="w-1 h-1 bg-accent rounded-full" />
               <span>
-                {formatDateTime(currentEvent.nearest_lineup.start_date)}
+                {formatDateTime(currentEvent?.nearest_lineup?.start_date)}
               </span>
             </div>
 

@@ -44,7 +44,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-card border-t border-border">
       {/* Newsletter */}
-      <div className="border-b border-border">
+      {/* <div className="border-b border-border">
         <div className="container mx-auto py-20">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div>
@@ -70,7 +70,7 @@ export function SiteFooter() {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Links */}
       <div className="mx-auto container py-16">
