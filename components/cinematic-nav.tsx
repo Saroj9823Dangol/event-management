@@ -161,7 +161,7 @@ export function CinematicNav() {
                 href="/events"
                 className="hidden lg:block px-6 py-2.5 bg-white text-black text-sm tracking-wider font-medium hover:bg-accent hover:text-white transition-all duration-300 rounded-sm"
               >
-                EXPLORE
+                Whispering Willow
               </Link>
             </div>
           </div>
