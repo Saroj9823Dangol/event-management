@@ -27,7 +27,7 @@ export function RelatedEvents({ relatedEvents }: RelatedEventsProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {relatedevents?.data.map((event, i) => (
+        {relatedEvents?.data.map((event, i) => (
           <motion.div
             key={event.id}
             initial={{ opacity: 0, y: 20 }}

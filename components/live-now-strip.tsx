@@ -62,9 +62,9 @@ export function LiveNowStrip({ liveEvents }: LiveNowStripProps) {
               className="flex items-center gap-12 px-6 w-max group-hover:[animation-play-state:paused]"
             >
               {[
-                ...liveevents?.data,
-                ...liveevents?.data,
-                ...liveevents?.data,
+                ...liveEvents?.data,
+                ...liveEvents?.data,
+                ...liveEvents?.data,
               ].map((event, i) => (
                 <Link
                   key={i}

@@ -61,7 +61,7 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {trendingevents?.data.map((event, index) => (
+          {trendingEvents?.data.map((event, index) => (
             <motion.div
               key={event.slug}
               initial={{ opacity: 0, y: 50 }}
