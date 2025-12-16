@@ -67,7 +67,17 @@ export function LoginModal({
       toast.success("OTP sent successfully!");
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Failed to send OTP");
+
+      const errorData = error.response?.data;
+      let errorMessage = "Invalid code. Please try again.";
+
+      if (errorData?.errors?.[0]?.detail) {
+        errorMessage = errorData.errors[0].detail;
+      } else if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -88,7 +98,17 @@ export function LoginModal({
       handleClose();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Login failed");
+
+      const errorData = error.response?.data;
+      let errorMessage = "Login failed. Please try again.";
+
+      if (errorData?.errors?.[0]?.detail) {
+        errorMessage = errorData.errors[0].detail;
+      } else if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

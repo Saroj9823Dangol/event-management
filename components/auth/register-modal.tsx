@@ -116,7 +116,17 @@ export function RegisterModal({
       handleClose();
     } catch (error: any) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Registration failed");
+
+      const errorData = error.response?.data;
+      let errorMessage = "Registration failed. Please try again.";
+
+      if (errorData?.errors?.[0]?.detail) {
+        errorMessage = errorData.errors[0].detail;
+      } else if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

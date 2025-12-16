@@ -1,6 +1,6 @@
 "use client";
 
-import logger from "@/lib/logger/logger";
+// import logger from "@/lib/logger/logger";
 import { formatDate, formatDateTime, formatTime } from "@/lib/utils";
 import { IEvent } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,12 +21,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth/auth-context";
 
 interface BookingProps {
   event: IEvent;
 }
 
 export default function Booking({ event }: BookingProps) {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -35,14 +37,41 @@ export default function Booking({ event }: BookingProps) {
   >({});
   const [selectedLineupId, setSelectedLineupId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   // Load from localStorage
   useEffect(() => {
+    let mounted = true;
+
     const loadBookingSession = () => {
+      // Wait for auth check to complete
+      if (authLoading) return;
+
+      if (!isAuthenticated) {
+        if (mounted) {
+          setIsRedirecting(true);
+          setTimeout(() => {
+            router.replace(`/events/${event.slug}`);
+          }, 100);
+        }
+        return;
+      }
+
       try {
         const session = localStorage.getItem("booking_session");
+
+        const handleRedirect = () => {
+          if (!mounted) return;
+          setIsRedirecting(true);
+          // Small delay to ensure state updates before routing
+          setTimeout(() => {
+            router.replace(`/events/${event.slug}`);
+          }, 100);
+        };
+
         if (!session) {
-          router.replace(`/events/${event.slug}`);
+          console.log("No session found");
+          handleRedirect();
           return;
         }
 
@@ -55,21 +84,43 @@ export default function Booking({ event }: BookingProps) {
         const isCurrentEvent = data.eventId === event.id;
 
         if (!isCurrentEvent || !hasValidQuantities) {
-          router.replace(`/events/${event.slug}`);
+          console.log("Invalid session");
+          localStorage.removeItem("booking_session"); // Clear invalid session
+          handleRedirect();
           return;
         }
 
-        setSelectedQuantities(data.quantities);
-        setSelectedLineupId(data.lineupId);
-        setLoading(false);
+        if (mounted) {
+          setSelectedQuantities(data.quantities);
+          setSelectedLineupId(data.lineupId);
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error loading booking session:", error);
-        router.replace(`/events/${event.slug}`);
+        localStorage.removeItem("booking_session"); // Clear potentially corrupted session
+        if (mounted) {
+          setIsRedirecting(true);
+          router.replace(`/events/${event.slug}`);
+        }
       }
     };
 
-    loadBookingSession();
-  }, [event.id, event.slug, router]);
+    if (loading && !isRedirecting) {
+      loadBookingSession();
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [
+    event.id,
+    event.slug,
+    router,
+    loading,
+    isRedirecting,
+    authLoading,
+    isAuthenticated,
+  ]);
 
   // Warning on page leave
   useEffect(() => {
@@ -159,7 +210,7 @@ export default function Booking({ event }: BookingProps) {
 
   const steps = ["Payment", "Confirmation"];
 
-  if (loading) {
+  if (loading || isRedirecting || authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         Loading...

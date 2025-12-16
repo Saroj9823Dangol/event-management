@@ -35,9 +35,6 @@ http.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
-
-    // Debug logging
-    console.log("🌐 API:", config.method?.toUpperCase(), config.url);
     return config;
   },
   (error) => Promise.reject(error)
@@ -48,7 +45,6 @@ http.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     const status = error.response?.status;
-    console.error("❌ API Error:", status, error.response?.statusText);
 
     if (status === 401) {
       if (typeof window !== "undefined") {

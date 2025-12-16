@@ -39,7 +39,7 @@ export default function RootLayout({
           <AuthProvider>
             <BackgroundPattern />
             <div className="relative z-10">{children}</div>
-            <Toaster />
+            <Toaster position="bottom-right" richColors theme="dark" />
           </AuthProvider>
         </Providers>
       </body>
