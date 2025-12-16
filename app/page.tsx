@@ -21,9 +21,11 @@ import {
   getTopSellingEvents,
   getLiveEvents,
   getHomeLiveEvents,
+  getPastEvents,
 } from "@/lib/api/events";
 import { UpcomingEvents } from "@/components/upcoming-events";
 import { TopSellingEvents } from "@/components/top-selling-events";
+import { PastHistory } from "@/components/past-history";
 import { getCategories } from "@/lib/api/categories";
 import logger from "@/lib/logger/logger";
 
@@ -37,6 +39,7 @@ export default async function HomePage() {
   const upcomingEvents = await getUpcomingEvents();
   const topSellingEvents = await getTopSellingEvents();
   const liveEvents = await getHomeLiveEvents();
+  const pastEvents = await getPastEvents();
 
   const categories = await getCategories();
 
@@ -68,6 +71,9 @@ export default async function HomePage() {
 
       {/* Popular/Sales Driven */}
       <TopSellingEvents events={topSellingEvents} />
+
+      {/* Past History */}
+      <PastHistory events={pastEvents} />
 
       {/* Urgency/Deals */}
       {/* <LastMinuteDeals /> */}

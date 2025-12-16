@@ -106,6 +106,29 @@ export async function getTopSellingEvents(): Promise<
   return response.data;
 }
 
+export async function getPastEvents(): Promise<IPaginatedResponse<IEvent>> {
+  const response = await http.get("/events", {
+    params: {
+      select: [
+        "name",
+        "slug",
+        "custom_fields",
+        "thumbnail",
+        "description",
+        "featured_banner",
+        "category_id",
+      ],
+      includes: "category",
+      // Filter for past events: end_date < today
+      where: [`event_lineups.end_date:<:${moment().format("YYYY-MM-DD")}`],
+      // Sort by most recent past event
+      sort: "-event_lineups.end_date",
+      limit: 5,
+    },
+  });
+  return response.data;
+}
+
 export async function getEventDetail(slug: string): Promise<IEvent> {
   const response = await http.get(`/events`, {
     params: {
