@@ -34,12 +34,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfair.variable} dark`}>
-      <body className="font-sans bg-background text-foreground min-h-screen antialiased selection:bg-accent selection:text-accent-foreground">
+      <body
+        suppressHydrationWarning
+        className="font-sans bg-background text-foreground min-h-screen antialiased selection:bg-accent selection:text-accent-foreground"
+      >
         <Providers>
           <AuthProvider>
             <BackgroundPattern />
             <div className="relative z-10">{children}</div>
-            <Toaster position="bottom-right" richColors theme="dark" />
+            <Toaster richColors />
           </AuthProvider>
         </Providers>
       </body>

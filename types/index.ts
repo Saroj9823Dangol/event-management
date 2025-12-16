@@ -122,6 +122,7 @@ export interface IOrder extends IBase {
 export interface IPaymentResponsePaypal {
   id: string;
   paypal_order_id: string;
+  redirect_url: string;
   status: string;
   intent: string;
   payer: {
@@ -167,6 +168,7 @@ export interface IPaymentResponseStripe {
   order: null | string;
   amount: number;
   object: string;
+  redirect_url: string;
   review: null | string;
   source: {
     id: string;
