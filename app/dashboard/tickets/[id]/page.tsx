@@ -13,6 +13,11 @@ import { toast } from "sonner";
 import { useAuth } from "@/components/auth/auth-context";
 import { Loader } from "@/components/loader";
 import NoData from "@/components/ui/no-data";
+import { toCanvas } from "html-to-image";
+import jsPDF from "jspdf";
+import logger from "@/lib/logger/logger";
+import { renderToStaticMarkup } from "react-dom/server";
+import { TicketPrintTemplate } from "@/components/tickets/ticket-print-template";
 
 export default function TicketDetailPage({
   params,
@@ -42,11 +47,54 @@ export default function TicketDetailPage({
     }
   };
 
-  const handleDownloadAll = () => {
-    // Logic to download all tickets or PDF
-    toast.success("Download started...");
-  };
+  const handlePrint = async () => {
+    try {
+      setLoading(true);
+      const receiptHtml = renderToStaticMarkup(
+        <TicketPrintTemplate order={order} />
+      );
 
+      const styles = Array.from(
+        document.querySelectorAll("link[rel='stylesheet'], style")
+      )
+        .map((node) => node.outerHTML)
+        .join("");
+
+      const printWindow = window.open("", "", "width=800,height=600");
+      if (printWindow) {
+        printWindow.document.write(`
+           <html>
+             <head>
+               <title>Print Tickets - ${order.event?.name || "Event"}</title>
+               ${styles}
+               <style>
+                 body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                 @page { margin: 20mm; }
+               </style>
+             </head>
+             <body>
+               ${receiptHtml}
+               <script>
+                 window.onload = () => {
+                   window.focus();
+                   window.print();
+                   window.close();
+                 };
+               </script>
+             </body>
+           </html>
+         `);
+        printWindow.document.close();
+      } else {
+        toast.error("Popup blocked. Please allow popups for this site.");
+      }
+    } catch (error) {
+      logger.error("Failed to print tickets:", error);
+      toast.error("Failed to initiate printing.");
+    } finally {
+      setLoading(false);
+    }
+  };
   if (loading) {
     return <Loader />;
   }
@@ -148,139 +196,134 @@ export default function TicketDetailPage({
                 Your Passes
               </h2>
               <button
-                onClick={handleDownloadAll}
+                onClick={handlePrint}
                 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-accent hover:text-white transition-colors"
               >
-                <Download className="w-4 h-4" /> Download All
+                <Download className="w-4 h-4" /> Print / PDF
               </button>
             </div>
 
-            {order_items?.map((item: any, index: number) => {
-              const ticket = item.ticket;
-              // Handle missing ticket or QR
-              const qrValue =
-                ticket?.qr_code && ticket.qr_code.startsWith("http")
-                  ? ticket.qr_code
-                  : JSON.stringify({ id: ticket?.id || item.id });
+            <div id="ticket-pass-section" className="space-y-6">
+              {order_items?.map((item: any, index: number) => {
+                const ticket = item.ticket;
+                // Handle missing ticket or QR
+                const qrValue =
+                  ticket?.qr_code && ticket.qr_code.startsWith("http")
+                    ? ticket.qr_code
+                    : JSON.stringify({ id: ticket?.id || item.id });
 
-              const ticketTypeName =
-                typeof item.ticket_type === "string"
-                  ? item.ticket_type
-                  : item.ticket_type?.name;
-              const holderName = orderUser?.name || "Guest";
+                const ticketTypeName =
+                  typeof item.ticket_type === "string"
+                    ? item.ticket_type
+                    : item.ticket_type?.name;
+                const holderName = orderUser?.name || "Guest";
 
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white text-black flex flex-col md:flex-row shadow-2xl relative"
-                >
-                  {/* Ticket Stub (Left) */}
-                  <div className="flex-1 p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-dashed border-gray-300 relative">
-                    {/* Punch holes visual */}
-                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-background rounded-r-full md:block hidden" />
-                    <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-background rounded-l-full md:block hidden" />
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white text-black flex flex-col md:flex-row shadow-2xl relative"
+                  >
+                    {/* Ticket Stub (Left) */}
+                    <div className="flex-1 p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-dashed border-gray-300 relative">
+                      {/* Punch holes visual */}
+                      <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-background rounded-r-full md:block hidden" />
+                      <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-8 bg-background rounded-l-full md:block hidden" />
 
-                    <div>
-                      <div className="flex justify-between items-start mb-6">
-                        <div className="space-y-1">
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
-                            Event
-                          </span>
-                          <span className="font-bold text-lg uppercase leading-none">
-                            {eventName}
-                          </span>
-                        </div>
-                        <div className="text-right">
-                          <span className="bg-black text-white px-2 py-1 text-xs font-bold uppercase">
-                            {ticketTypeName || "Standard"}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-8">
-                        <div>
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
-                            Date & Time
-                          </span>
-                          <span className="font-mono text-sm font-bold">
-                            {date} <br /> {time}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
-                            Location
-                          </span>
-                          <span className="font-mono text-sm font-bold block">
-                            {venue}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between items-end">
                       <div>
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
-                          Ticketholder
-                        </span>
-                        <span className="font-bold uppercase">
-                          {holderName}
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        {item.quantity > 1 && (
-                          <div className="mb-1">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest inline-block mr-2">
-                              Qty
+                        <div className="flex justify-between items-start mb-6">
+                          <div className="space-y-1">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
+                              Event
                             </span>
-                            <span className="font-bold">{item.quantity}</span>
+                            <span className="font-bold text-lg uppercase leading-none">
+                              {eventName}
+                            </span>
                           </div>
-                        )}
-                        <div>
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest inline-block mr-2">
-                            Price
-                          </span>
-                          <span className="font-bold">
-                            {Number(item.total_price) > 0
-                              ? `$${item.total_price}`
-                              : "Free"}
-                          </span>
+                          <div className="text-right">
+                            <span className="bg-black text-white px-2 py-1 text-xs font-bold uppercase">
+                              {ticketTypeName || "Standard"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-8">
+                          <div>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                              Date & Time
+                            </span>
+                            <span className="font-mono text-sm font-bold">
+                              {date} <br /> {time}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                              Location
+                            </span>
+                            <span className="font-mono text-sm font-bold block">
+                              {venue}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end items-end">
+                        <div className="text-right">
+                          {item.quantity > 1 && (
+                            <div className="mb-1">
+                              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest inline-block mr-2">
+                                Qty
+                              </span>
+                              <span className="font-bold">{item.quantity}</span>
+                            </div>
+                          )}
+                          <div>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest inline-block mr-2">
+                              Price
+                            </span>
+                            <span className="font-bold">
+                              {Number(item.total_price) > 0
+                                ? `${order.currency} ${item.total_price}`
+                                : "Free"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* QR Section (Right) */}
-                  <div className="w-full md:w-64 bg-gray-50 p-6 flex flex-col items-center justify-center border-l border-dashed border-gray-200 relative">
-                    <div className="bg-white p-2 shadow-sm border border-gray-100 mb-4 mix-blend-multiply">
-                      {/* Use Ticket QR Code URL if available, else Generate SVG */}
-                      {ticket?.qr_code && ticket.qr_code.startsWith("http") ? (
-                        <img
-                          src={ticket.qr_code}
-                          alt="QR Code"
-                          className="w-full h-auto"
-                        />
-                      ) : (
-                        <QRCodeSVG
-                          value={qrValue}
-                          size={120}
-                          level="H"
-                          className="w-full h-auto"
-                        />
-                      )}
+                    {/* QR Section (Right) */}
+                    <div className="w-full md:w-64 bg-gray-50 p-6 flex flex-col items-center justify-center border-l border-dashed border-gray-200 relative">
+                      <div className="bg-white p-2 shadow-sm border border-gray-100 mb-4 mix-blend-multiply">
+                        {/* Use Ticket QR Code URL if available, else Generate SVG */}
+                        {ticket?.qr_code &&
+                        ticket.qr_code.startsWith("http") ? (
+                          <img
+                            src={ticket.qr_code}
+                            alt="QR Code"
+                            className="w-full h-auto"
+                          />
+                        ) : (
+                          <QRCodeSVG
+                            value={qrValue}
+                            size={120}
+                            level="H"
+                            className="w-full h-auto"
+                          />
+                        )}
+                      </div>
+                      <span className="font-mono text-xs text-gray-400 tracking-widest w-full text-center px-4">
+                        {ticket?.ticket_number || "N/A"}
+                      </span>
+                      <span className="text-[10px] text-gray-400 uppercase mt-1">
+                        Scan for Entry
+                      </span>
                     </div>
-                    <span className="font-mono text-xs text-gray-400 tracking-widest truncate w-full text-center px-4">
-                      {ticket?.ticket_number || "N/A"}
-                    </span>
-                    <span className="text-[10px] text-gray-400 uppercase mt-1">
-                      Scan for Entry
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </main>
