@@ -57,21 +57,26 @@ export function CinematicNav() {
         <div className="container mx-auto">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="relative z-10 group cursor-pointer">
-              <motion.div className="flex items-center gap-3">
-                <div className="relative w-40 h-10">
-                  <Image
-                    src="/logo/dark-theme-logo.png"
-                    alt="UCNCEE"
-                    fill
-                    className="w-40 h-10 object-cover"
-                  />
-                </div>
-              </motion.div>
-            </Link>
+            <div className="flex-1">
+              <Link
+                href="/"
+                className="block relative z-10 group cursor-pointer w-fit"
+              >
+                <motion.div className="flex items-center gap-3">
+                  <div className="relative w-40 h-10">
+                    <Image
+                      src="/logo/dark-theme-logo.png"
+                      alt="UCNCEE"
+                      fill
+                      className="w-40 h-10 object-cover"
+                    />
+                  </div>
+                </motion.div>
+              </Link>
+            </div>
 
             {/* Center Nav */}
-            <nav className="hidden lg:flex items-center gap-12">
+            <nav className="hidden lg:flex items-center gap-12 justify-center flex-1">
               {["Discover", "Live Now", "Enterprise"].map((item) => (
                 <Link
                   key={item}
@@ -93,7 +98,7 @@ export function CinematicNav() {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 flex-1 justify-end">
               <button
                 onClick={() => setSearchOpen(true)}
                 className="p-2 hover:text-accent transition-colors"
