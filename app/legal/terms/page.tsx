@@ -7,7 +7,6 @@ import { BackgroundPattern } from "@/components/background-pattern";
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background relative selection:bg-accent selection:text-white">
-      <BackgroundPattern />
       <CinematicNav />
 
       <main className="pt-32 pb-24 px-6 lg:px-12">

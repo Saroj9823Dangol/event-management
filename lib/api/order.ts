@@ -10,3 +10,19 @@ export const checkPromoCode = (data: {
 }) => {
   return http.post("/admin/promo-codes/validity-check", data);
 };
+
+export const getUserOrders = (params?: {
+  page?: number;
+  per_page?: number;
+  sorts?: string;
+}) => {
+  return http.get("/user/orders", { params });
+};
+
+export const getOrderById = (id: string, userId: string) => {
+  return http.get(`/user/orders`, {
+    params: {
+      event: id,
+    },
+  });
+};

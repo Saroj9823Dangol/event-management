@@ -9,7 +9,6 @@ import { Mail, MapPin, Phone, Send } from "lucide-react";
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background relative selection:bg-accent selection:text-white">
-      <BackgroundPattern />
       <CinematicNav />
 
       <main className="pt-32 pb-24 px-6 lg:px-12">

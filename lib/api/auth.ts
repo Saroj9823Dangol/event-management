@@ -1,3 +1,4 @@
+import { IUser } from "@/types";
 import { http } from "./http";
 import { AxiosResponse } from "axios";
 
@@ -18,20 +19,12 @@ export interface OtpPayload {
   phone: string;
 }
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  // Add other fields as per API response
-}
-
 export interface AuthResponse {
   status: number;
   message: string;
   data: {
     token: string;
-    user: User;
+    user: IUser;
   };
 }
 
@@ -49,7 +42,7 @@ export const authApi = {
   },
 
   getMe: async () => {
-    return http.get<User>("/me");
+    return http.get<IUser>("/me");
   },
 
   logout: async () => {

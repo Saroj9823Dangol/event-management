@@ -7,16 +7,17 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { User, authApi } from "@/lib/api/auth";
+import { authApi } from "@/lib/api/auth";
 import { LoginModal } from "./login-modal";
 import { RegisterModal } from "./register-modal";
 import { toast } from "sonner";
+import { IUser } from "@/types";
 
 interface AuthContextType {
-  user: User | null;
+  user: IUser | null;
   loading: boolean;
   isAuthenticated: boolean;
-  login: (user: User, token: string) => void;
+  login: (user: IUser, token: string) => void;
   logout: () => void;
   openLoginModal: () => void;
   openRegisterModal: () => void;
@@ -25,7 +26,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const login = (userData: User, token: string) => {
+  const login = (userData: IUser, token: string) => {
     localStorage.setItem("access_token", token);
     setUser(userData);
     setIsLoginOpen(false);
