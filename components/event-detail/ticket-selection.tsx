@@ -7,6 +7,7 @@ import { Minus, Plus, Shield, CreditCard, Clock } from "lucide-react";
 import { useBooking } from "@/components/event-detail/booking-context";
 import { IEvent } from "@/types";
 import logger from "@/lib/logger/logger";
+import { useAuth } from "@/components/auth/auth-context";
 
 interface TicketSelectionProps {
   event: IEvent;
@@ -16,6 +17,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
   // State to track quantity for each ticket type: { [ticketId]: quantity }
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { selectedLineupId } = useBooking();
+  const { isAuthenticated, openLoginModal } = useAuth();
 
   const isLineupSelected = !!selectedLineupId;
 
@@ -196,6 +198,12 @@ export function TicketSelection({ event }: TicketSelectionProps) {
             onClick={(e) => {
               if (totalQuantity === 0) {
                 e.preventDefault();
+                return;
+              }
+
+              if (!isAuthenticated) {
+                e.preventDefault();
+                openLoginModal();
                 return;
               }
 

@@ -4,11 +4,28 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, User, Heart, ArrowRight } from "lucide-react";
+import {
+  Search,
+  Menu,
+  X,
+  User,
+  ArrowRight,
+  LogOut,
+  Settings,
+} from "lucide-react";
 import Image from "next/image";
+import { useAuth } from "@/components/auth/auth-context";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function CinematicNav() {
   const router = useRouter();
+  const { isAuthenticated, user, logout, openLoginModal } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -85,13 +102,55 @@ export function CinematicNav() {
                 <Search className="w-5 h-5" />
               </button>
 
-              <Link
-                href="/dashboard"
-                className="p-2 hover:text-accent transition-colors hidden sm:block"
-                aria-label="Account"
-              >
-                <User className="w-5 h-5" />
-              </Link>
+              <div className="hidden sm:block">
+                {isAuthenticated ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="outline-none">
+                      <Avatar className="h-9 w-9 border border-white/10 hover:border-accent transition-colors cursor-pointer">
+                        <AvatarImage src={(user as any)?.avatar?.url} />
+                        <AvatarFallback className="bg-white/10 text-white text-xs">
+                          {user?.name?.slice(0, 2).toUpperCase() || "KV"}
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-48 bg-black/90 backdrop-blur-xl border-white/10 text-white"
+                    >
+                      <DropdownMenuItem
+                        className="cursor-pointer focus:bg-white/10 focus:text-white"
+                        onClick={() => router.push("/dashboard")}
+                      >
+                        <User className="mr-2 h-4 w-4" />
+                        Dashboard
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer focus:bg-white/10 focus:text-white"
+                        onClick={() => router.push("/settings")}
+                      >
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer text-red-500 focus:bg-red-500/10 focus:text-red-500"
+                        onClick={logout}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <button
+                    onClick={openLoginModal}
+                    className="flex items-center gap-2 p-2 hover:text-accent transition-colors font-medium text-sm"
+                  >
+                    <User className="w-5 h-5" />
+                    <span className="hidden sm:inline">Log in</span>
+                  </button>
+                )}
+              </div>
+
               <button
                 onClick={() => setMenuOpen(true)}
                 className="p-2 hover:text-accent transition-colors lg:hidden"
@@ -209,13 +268,8 @@ export function CinematicNav() {
                 </button>
               </div>
               <nav className="flex-1 flex flex-col justify-center px-8 gap-8">
-                {[
-                  "Discover",
-                  // "Collections",
-                  "Live Now",
-                  "Enterprise",
-                  "Account",
-                ].map((item, i) => (
+                {/* Regular Nav Links */}
+                {["Discover", "Live Now", "Enterprise"].map((item, i) => (
                   <motion.div
                     key={item}
                     initial={{ x: 50, opacity: 0 }}
@@ -235,6 +289,46 @@ export function CinematicNav() {
                     </Link>
                   </motion.div>
                 ))}
+
+                {/* Auth Links for Mobile */}
+                <motion.div
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="pt-8 border-t border-white/10"
+                >
+                  {isAuthenticated ? (
+                    <>
+                      <Link
+                        href="/dashboard"
+                        onClick={() => setMenuOpen(false)}
+                        className="text-3xl font-serif hover:text-accent transition-colors block mb-6"
+                      >
+                        My Dashboard
+                      </Link>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setMenuOpen(false);
+                        }}
+                        className="text-xl text-red-500 hover:text-red-400 transition-colors flex items-center gap-2"
+                      >
+                        <LogOut className="w-5 h-5" />
+                        Log out
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        openLoginModal();
+                      }}
+                      className="text-4xl font-serif text-accent hover:text-white transition-colors"
+                    >
+                      Login / Register
+                    </button>
+                  )}
+                </motion.div>
               </nav>
               <div className="p-8 border-t border-white/5">
                 <p className="text-muted-foreground text-sm">© 2025 UCNCEE</p>

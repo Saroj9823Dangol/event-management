@@ -24,6 +24,8 @@ export const viewport: Viewport = {
 
 import { BackgroundPattern } from "@/components/background-pattern";
 import { Providers } from "./providers";
+import { AuthProvider } from "@/components/auth/auth-context";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({
   children,
@@ -34,8 +36,11 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} dark`}>
       <body className="font-sans bg-background text-foreground min-h-screen antialiased selection:bg-accent selection:text-accent-foreground">
         <Providers>
-          <BackgroundPattern />
-          <div className="relative z-10">{children}</div>
+          <AuthProvider>
+            <BackgroundPattern />
+            <div className="relative z-10">{children}</div>
+            <Toaster />
+          </AuthProvider>
         </Providers>
       </body>
     </html>
