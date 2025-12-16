@@ -15,7 +15,7 @@ import { VideoHero } from "@/components/video-hero";
 import { DownloadAppSection } from "@/components/download-app-section";
 import { CinematicNav } from "@/components/cinematic-nav";
 import {
-  getHomeFeaturedEvents,
+  getHomefeaturedEvents,
   getHomeTrendingEvents,
   getUpcomingEvents,
   getTopSellingEvents,
@@ -34,7 +34,7 @@ export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const featuredEvents = await getHomeFeaturedEvents();
+  const featuredEvents = await getHomefeaturedEvents();
   const trendingEvents = await getHomeTrendingEvents();
   const upcomingEvents = await getUpcomingEvents();
   const topSellingEvents = await getTopSellingEvents();
@@ -56,7 +56,7 @@ export default async function HomePage() {
       <CategoryShowcase categories={categories} />
 
       {/* Social Proof - What's Popular */}
-      {!!trendingEvents.meta.total && (
+      {!!trendingevents?.meta.total && (
         <TrendingEvents trendingEvents={trendingEvents} />
       )}
 
@@ -64,7 +64,7 @@ export default async function HomePage() {
       <UpcomingEvents events={upcomingEvents} />
 
       {/* Engagement - Live Content strip */}
-      {!!liveEvents.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
+      {!!liveevents?.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
 
       {/* Curated/Featured Grid */}
       <FeaturedGrid featuredEvents={featuredEvents} />

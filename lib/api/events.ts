@@ -1,11 +1,11 @@
-// lib/api/events.ts
+// lib/api/events?.ts
 import { IEvent } from "@/types";
 import { http } from "./http";
 import { IPaginatedResponse } from "@/types/response";
 import logger from "../logger/logger";
 import moment from "moment";
 
-export async function getHomeFeaturedEvents(): Promise<
+export async function getHomefeaturedEvents(): Promise<
   IPaginatedResponse<IEvent>
 > {
   const response = await http.get("/events", {

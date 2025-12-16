@@ -24,7 +24,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
-  if (!events || events.data.length === 0) return null;
+  if (!events || events?.data.length === 0) return null;
 
   return (
     <section
@@ -53,7 +53,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.data.map((event, index) => (
+          {events?.data?.map((event, index) => (
             <motion.div
               key={event.id}
               initial={{ opacity: 0, y: 30 }}

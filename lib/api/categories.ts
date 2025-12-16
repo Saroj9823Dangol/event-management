@@ -1,4 +1,4 @@
-// lib/api/events.ts
+// lib/api/events?.ts
 import { ICategory } from "@/types";
 import { http } from "./http";
 import { IPaginatedResponse } from "@/types/response";

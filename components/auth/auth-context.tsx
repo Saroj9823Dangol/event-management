@@ -50,8 +50,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Assuming response.data is User or { data: User }
       // I'll assume response.data is the User object for now, or check generic response type.
       // If it follows the pattern `data: { ... }`, I might need to access `response.data.data` or just `response.data`.
-      // Based on `getEventDetail` in `events.ts`, it accesses `response.data.data[0]`.
-      // `getHomeFeaturedEvents` touches `response.data` which is `IPaginatedResponse`.
+      // Based on `getEventDetail` in `events?.ts`, it accesses `response.data.data[0]`.
+      // `getHomefeaturedEvents` touches `response.data` which is `IPaginatedResponse`.
       // Usually `/me` returns a single object.
       // I'll log it just in case, but assume `response.data` is the user.
       // Or `response.data.data` if wrapper exists.

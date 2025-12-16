@@ -27,7 +27,7 @@ export function RelatedEvents({ relatedEvents }: RelatedEventsProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {relatedEvents.data.map((event, i) => (
+        {relatedevents?.data.map((event, i) => (
           <motion.div
             key={event.id}
             initial={{ opacity: 0, y: 20 }}
@@ -37,7 +37,7 @@ export function RelatedEvents({ relatedEvents }: RelatedEventsProps) {
             <Link href={`/events/${event.slug}`} className="group block">
               <div className="relative aspect-[4/5] overflow-hidden mb-4">
                 <Image
-                  src={event.thumbnail.url || "/placeholder.svg"}
+                  src={event?.thumbnail?.url || "/placeholder.svg"}
                   alt={event.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

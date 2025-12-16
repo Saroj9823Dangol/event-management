@@ -18,7 +18,7 @@ interface VideoHeroProps {
 const IMAGE_DURATION = 6000; // 6 seconds for images
 
 export function VideoHero({ featuredEvents }: VideoHeroProps) {
-  if (!featuredEvents || featuredEvents.data.length === 0) {
+  if (!featuredEvents || featuredEvents?.data.length === 0) {
     return null;
   }
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,7 +33,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
   const startTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number>(0);
 
-  const currentEvent = featuredEvents.data[currentIndex];
+  const currentEvent = featuredEvents?.data[currentIndex];
 
   // Reset state when slide changes
   useEffect(() => {
@@ -141,7 +141,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
   }, [videoNode, currentEvent.featured_banner.url]); // Re-run when the DOM node changes (mounts)
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % featuredEvents.meta.total);
+    setCurrentIndex((prev) => (prev + 1) % featuredEvents?.meta.total);
   };
 
   const togglePlay = () => {
@@ -290,7 +290,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
           <div className="flex items-center gap-2 mr-2 text-white/60 text-xs tracking-widest">
             <span>{String(currentIndex + 1).padStart(2, "0")}</span>
             <div className="w-12 h-px bg-white/20" />
-            <span>{String(featuredEvents.meta.total).padStart(2, "0")}</span>
+            <span>{String(featuredEvents?.meta.total).padStart(2, "0")}</span>
           </div>
 
           {getMediaCategory(currentEvent.featured_banner.url) === "video" && (
@@ -321,7 +321,7 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
 
         {/* Indicators */}
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-30">
-          {featuredEvents.data.map((_, i) => (
+          {featuredEvents?.data.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}

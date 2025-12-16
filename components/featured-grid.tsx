@@ -58,7 +58,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
          - On tablet, it spans 2 cols (full width) to properly lead the section.
       */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-[350px]">
-        {featuredEvents.data.map((event, index) => {
+        {featuredEvents?.data.map((event, index) => {
           const isHero = index === 0;
 
           return (
@@ -85,7 +85,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
                 {/* Image Container */}
                 <div className="absolute inset-0 w-full h-full">
                   <Image
-                    src={event.thumbnail.url || "/placeholder.svg"}
+                    src={event?.thumbnail?.url || "/placeholder.svg"}
                     alt={event.name}
                     fill
                     className="object-cover transition-transform duration-1000 group-hover:scale-110 object-top"

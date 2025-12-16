@@ -24,7 +24,7 @@ export function EnterpriseSection() {
               </h2>
               <p className="text-xl text-black/60 max-w-xl leading-relaxed">
                 The premium suite for companies to host, manage, and scale their
-                events. From intimate gatherings to global summits.
+                events?. From intimate gatherings to global summits.
               </p>
             </motion.div>
 

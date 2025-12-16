@@ -13,10 +13,10 @@ interface PastHistoryProps {
 }
 
 export function PastHistory({ events }: PastHistoryProps) {
-  if (!events || events.data.length === 0) return null;
+  if (!events || events?.data.length === 0) return null;
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedEvent = events.data[selectedIndex];
+  const selectedEvent = events?.data[selectedIndex];
 
   // Extract YouTube ID if possible, or use as direct link
   const getEmbedUrl = (url?: string) => {
@@ -55,7 +55,7 @@ export function PastHistory({ events }: PastHistoryProps) {
           {/* Scrollable Thumbnails */}
           <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
             <div className="flex gap-4 min-w-max">
-              {events.data.map((event, index) => (
+              {events?.data.map((event, index) => (
                 <button
                   key={event.id}
                   onClick={() => setSelectedIndex(index)}

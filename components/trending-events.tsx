@@ -61,7 +61,7 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {trendingEvents.data.map((event, index) => (
+          {trendingevents?.data.map((event, index) => (
             <motion.div
               key={event.slug}
               initial={{ opacity: 0, y: 50 }}
@@ -74,7 +74,7 @@ export function TrendingEvents({ trendingEvents }: ITrendingEventsProps) {
                 className="aspect-square block overflow-hidden mb-8 relative"
               >
                 <Image
-                  src={event.thumbnail.url}
+                  src={event?.thumbnail?.url}
                   alt={event.name}
                   fill
                   className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"

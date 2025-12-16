@@ -30,7 +30,7 @@ export function EventsGrid({ events }: EventsGridProps) {
     router.push(`/events?${params.toString()}`);
   };
 
-  if (events.meta.total === 0) {
+  if (events?.meta.total === 0) {
     return (
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-black">
         <NoData
@@ -44,7 +44,7 @@ export function EventsGrid({ events }: EventsGridProps) {
   return (
     <div className="flex flex-col gap-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-        {events.data.map((event, i) => (
+        {events?.data.map((event, i) => (
           <motion.div
             key={event.id}
             initial={{ opacity: 0, y: 20 }}
@@ -140,12 +140,12 @@ export function EventsGrid({ events }: EventsGridProps) {
       </div>
 
       {/* Pagination */}
-      {events.meta.total > events.meta.per_page && (
+      {events?.meta.total > events?.meta.per_page && (
         <div className="flex justify-center mt-12">
           <Pagination
-            total={events.meta.last_page}
-            initialPage={events.meta.current_page}
-            page={events.meta.current_page}
+            total={events?.meta.last_page}
+            initialPage={events?.meta.current_page}
+            page={events?.meta.current_page}
             onChange={handlePageChange}
             showControls
             variant="light"

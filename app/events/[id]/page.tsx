@@ -84,12 +84,12 @@ export default async function EventDetailPage({
                 {event?.policies?.map((policy: any, index: number) => (
                   <div key={index} className="space-y-4">
                     <h2 className="text-3xl font-serif">
-                      {policy.policy_name}
+                      {policy?.policy_name}
                     </h2>
                     <div
                       className="prose prose-invert max-w-none prose-headings:font-serif prose-a:text-accent"
                       dangerouslySetInnerHTML={{
-                        __html: policy.policy_description,
+                        __html: policy?.policy_description,
                       }}
                     />
                   </div>

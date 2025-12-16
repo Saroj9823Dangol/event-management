@@ -13,7 +13,7 @@ interface TopSellingEventsProps {
 }
 
 export function TopSellingEvents({ events }: TopSellingEventsProps) {
-  if (!events || events.data.length === 0) return null;
+  if (!events || events?.data.length === 0) return null;
 
   return (
     <section className="py-20 bg-white text-black relative">
@@ -28,7 +28,7 @@ export function TopSellingEvents({ events }: TopSellingEventsProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {events.data.map((event, index) => (
+          {events?.data.map((event, index) => (
             <Link
               href={`/events/${event.slug}`}
               key={event.id}

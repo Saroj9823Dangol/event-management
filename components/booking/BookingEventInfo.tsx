@@ -18,7 +18,7 @@ const BookingEventInfo = ({
       <div className="flex gap-4">
         <div className="relative w-20 h-20 shrink-0">
           <Image
-            src={event.thumbnail.url || "/placeholder.svg"}
+            src={event?.thumbnail?.url || "/placeholder.svg"}
             alt={event.name}
             fill
             className="object-cover"

@@ -507,7 +507,7 @@ export default function BookingComponent({ event }: BookingProps) {
                       <div className="flex items-center gap-4 mb-6 pb-6 border-b border-border">
                         <div className="relative w-20 h-20 shrink-0">
                           <Image
-                            src={event.thumbnail.url || "/placeholder.svg"}
+                            src={event?.thumbnail?.url || "/placeholder.svg"}
                             alt={event.name}
                             fill
                             className="object-cover"
