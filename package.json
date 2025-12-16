@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "source ~/.nvm/nvm.sh && nvm use 20 && next build",
+    "build": "next build",
     "dev": "source ~/.nvm/nvm.sh && nvm use 20 && next dev",
     "lint": "eslint .",
     "start": "next start"
