@@ -56,7 +56,7 @@ export default async function HomePage() {
       <CategoryShowcase categories={categories} />
 
       {/* Social Proof - What's Popular */}
-      {!!trendingevents?.meta.total && (
+      {!!trendingEvents?.meta.total && (
         <TrendingEvents trendingEvents={trendingEvents} />
       )}
 
@@ -64,7 +64,7 @@ export default async function HomePage() {
       <UpcomingEvents events={upcomingEvents} />
 
       {/* Engagement - Live Content strip */}
-      {!!liveevents?.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
+      {!!liveEvents?.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
 
       {/* Curated/Featured Grid */}
       <FeaturedGrid featuredEvents={featuredEvents} />
