@@ -9,6 +9,7 @@ import { formatDate, formatTime } from "@/lib/utils";
 import moment from "moment";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/loader";
 
 export default function DashboardPage() {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -69,11 +70,7 @@ export default function DashboardPage() {
   };
 
   if (loading && orders.length === 0) {
-    return (
-      <div className="flex justify-center py-24">
-        <Loader2 className="w-8 h-8 animate-spin text-accent" />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
