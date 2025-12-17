@@ -76,6 +76,10 @@ export default async function EventDetailPage({
 
               <EventLineup lineups={event?.lineups} />
 
+              {/* Sidebar - Sticky Ticket Selection */}
+              <div className="lg:col-span-1 block lg:hidden">
+                <TicketSelection event={event} />
+              </div>
               {/* Policies Section with HTML Parsing */}
               <section
                 id="info"
@@ -99,7 +103,7 @@ export default async function EventDetailPage({
               <EventGallery images={event?.files} />
             </div>
             {/* Sidebar - Sticky Ticket Selection */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 hidden lg:block">
               <TicketSelection event={event} />
             </div>
           </div>
