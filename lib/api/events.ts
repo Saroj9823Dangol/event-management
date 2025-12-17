@@ -253,6 +253,10 @@ export async function getFilteredEvents(
     params.where = where;
   }
 
-  const response = await http.get("/events", { params });
+  logger.log("params in event page", params);
+
+  const response = await http.get("/events", {
+    params: { ...params },
+  });
   return response.data;
 }

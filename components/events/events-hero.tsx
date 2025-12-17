@@ -149,7 +149,7 @@ export function EventsHero() {
           className="mx-auto container"
         >
           <div className="bg-card border border-border p-2">
-            <div className="flex flex-col md:flex-row gap-2">
+            <div className="flex flex-wrap gap-2">
               {/* Search Input */}
               <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-background">
                 <Search className="w-5 h-5 text-muted-foreground shrink-0" />

@@ -6,6 +6,7 @@ import { EventsGrid } from "@/components/events/events-grid";
 import { SiteFooter } from "@/components/site-footer";
 import { getFilteredEvents } from "@/lib/api/events";
 import { getCategories } from "@/lib/api/categories";
+import logger from "@/lib/logger/logger";
 
 // Fix Vercel caching - force dynamic rendering
 export const revalidate = 0;
@@ -19,6 +20,8 @@ export default async function EventsPage({
   const resolvedSearchParams = await searchParams;
   const events = await getFilteredEvents(resolvedSearchParams);
   const categories = await getCategories();
+
+  logger.log(events.data, "events");
 
   return (
     <main className="min-h-screen bg-background">
