@@ -456,13 +456,13 @@ export default function BookingComponent({ event }: BookingProps) {
                           <h5 className="font-semibold">Enter Card Details</h5>
                         </div>
                         <div>
-                          <div className="p-3 border rounded-lg bg-gray-50">
+                          <div className="p-3 border rounded-lg">
                             <CardElement
                               options={{
                                 style: {
                                   base: {
                                     fontSize: "16px",
-                                    color: "#1f2937",
+                                    color: "#fff",
                                     "::placeholder": { color: "#9ca3af" },
                                   },
                                 },
