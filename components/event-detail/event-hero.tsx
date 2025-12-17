@@ -19,6 +19,7 @@ import {
   Linkedin,
   Link2,
   MessageCircle,
+  Ticket,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -178,12 +179,19 @@ export function EventDetailHero({ event }: EventHeroProps) {
 
           {/* Actions */}
           <div className="flex flex-wrap items-center gap-6">
-            {/* <button className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
-              <Heart className="w-5 h-5 group-hover:text-red-500 transition-colors" />
+            <button
+              onClick={() =>
+                document
+                  .getElementById("lineup")
+                  ?.scrollIntoView({ behavior: "smooth", block: "center" })
+              }
+              className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg"
+            >
+              <Ticket className="w-5 h-5" />
               <span className="text-sm font-bold tracking-widest">
-                SAVE TO LIST
+                BOOK NOW
               </span>
-            </button> */}
+            </button>
             <ShareButton
               title={event.name}
               url={process.env.NEXT_PUBLIC_APP_URL + "/events/" + event.slug}

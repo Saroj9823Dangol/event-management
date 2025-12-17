@@ -142,6 +142,9 @@ export default async function EventDetailPage({
               <div className="lg:col-span-1 block lg:hidden">
                 <TicketSelection event={event} />
               </div>
+
+              <EventGallery images={event?.files} />
+
               {/* Policies Section with HTML Parsing */}
               <section
                 id="info"
@@ -161,8 +164,6 @@ export default async function EventDetailPage({
                   </div>
                 ))}
               </section>
-
-              <EventGallery images={event?.files} />
             </div>
             {/* Sidebar - Sticky Ticket Selection */}
             <div className="lg:col-span-1 hidden lg:block">
