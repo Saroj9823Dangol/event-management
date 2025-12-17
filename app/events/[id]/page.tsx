@@ -11,9 +11,71 @@ import { BookingProvider } from "@/components/event-detail/booking-context";
 import { EventLineup } from "@/components/event-detail/event-lineup";
 import logger from "@/lib/logger/logger";
 import { getEventDetail, getRelatedEvents } from "@/lib/api/events";
+import { Metadata } from "next";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
+
+// Define Props interface compatible with Next.js PageProps
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params; // Await the params Promise
+  const event = await getEventDetail(id);
+
+  logger.log("canonical", `${process.env.NEXT_PUBLIC_APP_URL}/events/${id}`);
+
+  if (event) {
+    return {
+      title: `${event.name}`,
+      description: event.description,
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_APP_URL}/events/${id}`,
+      },
+      openGraph: {
+        title: event.name,
+        description: event.description,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/events/${id}`,
+        type: "article",
+        publishedTime: event.created_at,
+        modifiedTime: event.updated_at,
+        authors: ["Saroj Dangol"],
+        images: [
+          {
+            url: event.thumbnail?.url,
+            width: 1200,
+            height: 630,
+            alt: event.name,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: event.name,
+        description: event.description,
+        images: [event.thumbnail?.url],
+      },
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+          noimageindex: false,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+    };
+  } else {
+    return {};
+  }
+}
 
 export default async function EventDetailPage({
   params,

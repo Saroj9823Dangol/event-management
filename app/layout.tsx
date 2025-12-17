@@ -17,14 +17,65 @@ const montserrat = Montserrat({
 const font =
   process.env.NEXT_PUBLIC_FONT_FAMILY === "montserrat" ? montserrat : playfair;
 
+// Dynamic metadata
 export const metadata: Metadata = {
-  title: "UCNCEE | Where Experiences Find You",
-  description:
-    "Discover extraordinary events through a cinematic lens. Curated experiences for the discerning.",
-  generator: "https://apptechnologies.co",
-  icons: {
-    icon: "/favicon.ico",
+  title: {
+    default: siteConfig.metadata.title.default,
+    template: siteConfig.metadata.title.template,
   },
+  description: siteConfig.metadata.description,
+  applicationName: siteConfig.metadata.applicationName,
+  generator: siteConfig.metadata.generator,
+  referrer: siteConfig.metadata.referrer,
+  keywords: siteConfig.metadata.keywords,
+  authors: [
+    {
+      name: siteConfig.metadata.author.name,
+      url: siteConfig.metadata.author.url,
+    },
+  ],
+  creator: siteConfig.metadata.creator,
+  publisher: siteConfig.metadata.publisher,
+  formatDetection: siteConfig.metadata.formatDetection,
+  metadataBase: siteConfig.metadata.metadataBase,
+  alternates: siteConfig.metadata.alternates,
+  openGraph: {
+    title: siteConfig.metadata.openGraph.title,
+    description: siteConfig.metadata.openGraph.description,
+    url: siteConfig.metadata.openGraph.url,
+    siteName: siteConfig.metadata.openGraph.siteName,
+    images: [
+      {
+        url: siteConfig.metadata.openGraph.images.url,
+        width: siteConfig.metadata.openGraph.images.width,
+        height: siteConfig.metadata.openGraph.images.height,
+        alt: siteConfig.metadata.openGraph.images.alt,
+      },
+    ],
+    locale: siteConfig.metadata.openGraph.locale,
+    type: siteConfig.metadata.openGraph.type,
+    emails: siteConfig.metadata.openGraph.emails,
+  },
+  twitter: {
+    card: siteConfig.metadata.twitter.card,
+    site: siteConfig.metadata.twitter.site,
+    creator: siteConfig.metadata.twitter.creator,
+    title: siteConfig.metadata.twitter.title,
+    description: siteConfig.metadata.twitter.description,
+    images: siteConfig.metadata.twitter.images.map((img) => img.url),
+  },
+  icons: {
+    icon: siteConfig.metadata.icons.icon,
+    shortcut: siteConfig.metadata.icons.shortcut,
+    apple: siteConfig.metadata.icons.apple,
+    other: siteConfig.metadata.icons.other,
+  },
+  manifest: siteConfig.metadata.manifest,
+  robots: siteConfig.metadata.robots,
+  verification: {
+    google: siteConfig.metadata.verification.google,
+  },
+  other: siteConfig.metadata.other,
 };
 
 export const viewport: Viewport = {
@@ -35,6 +86,7 @@ import { BackgroundPattern } from "@/components/background-pattern";
 import { Providers } from "./providers";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/site-config";
 
 export default function RootLayout({
   children,

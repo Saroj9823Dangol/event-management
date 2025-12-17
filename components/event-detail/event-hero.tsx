@@ -186,7 +186,7 @@ export function EventDetailHero({ event }: EventHeroProps) {
             </button> */}
             <ShareButton
               title={event.name}
-              url={process.env.NEXT_PUBLIC_WEB_URL + "/events/" + event.slug}
+              url={process.env.NEXT_PUBLIC_APP_URL + "/events/" + event.slug}
               excerpt={event.description}
             />
           </div>
