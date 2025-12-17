@@ -142,14 +142,14 @@ export default async function EventDetailPage({
               <div className="lg:col-span-1 block lg:hidden">
                 <TicketSelection event={event} />
               </div>
-
-              <EventGallery images={event?.files} />
-
-              {/* Policies Section with HTML Parsing */}
               <section
                 id="info"
                 className="space-y-8 pt-8 border-t border-white/10"
               >
+                <EventGallery images={event?.files} />
+
+                {/* Policies Section with HTML Parsing */}
+
                 {event?.policies?.map((policy: any, index: number) => (
                   <div key={index} className="space-y-4">
                     <h2 className="text-3xl font-serif">
