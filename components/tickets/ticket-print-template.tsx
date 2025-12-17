@@ -91,7 +91,7 @@ export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
 
               <div className="mt-8 pt-6 border-t border-gray-200 flex justify-end items-end">
                 <div className="text-right">
-                  {item.quantity > 1 && (
+                  {item.quantity >= 1 && (
                     <div className="mb-1">
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest inline-block mr-2">
                         Qty
