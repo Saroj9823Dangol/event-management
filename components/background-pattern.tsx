@@ -40,7 +40,7 @@ export function BackgroundPattern() {
 
       {/* Rectangular Grid - Base Layer */}
       <div
-        className="absolute inset-0 opacity-[0.05] mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.02] mix-blend-overlay"
         style={{
           backgroundSize: "50px 50px",
           backgroundImage: `
@@ -52,7 +52,7 @@ export function BackgroundPattern() {
 
       {/* Rectangular Grid - Spotlight Layer */}
       <div
-        className="absolute inset-0 opacity-[0.15] mix-blend-overlay will-change-[mask-image]"
+        className="absolute inset-0 opacity-[0.07] mix-blend-overlay will-change-[mask-image]"
         style={{
           backgroundSize: "50px 50px",
           backgroundImage: `
