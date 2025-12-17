@@ -44,8 +44,8 @@
 }
 
 @theme inline {
-  --font-sans: "Playfair Display", system-ui, sans-serif;
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-main), system-ui, sans-serif;
+  --font-serif: var(--font-main), Georgia, serif;
 
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -79,7 +79,7 @@
 /* Utilities for the new aesthetic */
 
 html {
-  font-family: var(--font-playfair) !important;
+  font-family: var(--font-main) !important;
 }
 
 /* Glassmorphism */

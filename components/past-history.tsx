@@ -28,7 +28,7 @@ export function PastHistory({ events }: PastHistoryProps) {
     const match = url.match(regExp);
 
     if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}?autoplay=1&mute=0`;
+      return `https://www.youtube.com/embed/${match[2]}?autoplay=0&mute=1`;
     }
 
     return url;
@@ -120,6 +120,7 @@ export function PastHistory({ events }: PastHistoryProps) {
                       className="w-full h-full object-cover"
                       controls
                       autoPlay
+                      muted
                     />
                   )
                 ) : (

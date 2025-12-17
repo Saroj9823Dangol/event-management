@@ -74,7 +74,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
               // Desktop (lg): Hero spans 2 cols & 2 rows (Big box)
               className={`relative group overflow-hidden rounded-lg ${
                 isHero
-                  ? "md:col-span-2 lg:col-span-2 md:row-span-2 lg:row-span-2 min-h-[500px] md:min-h-auto"
+                  ? "md:col-span-2 lg:col-span-2 md:row-span-2 lg:row-span-2 md:min-h-[500px] md:min-h-auto"
                   : "col-span-1"
               }`}
             >
@@ -103,7 +103,7 @@ export function FeaturedGrid({ featuredEvents }: IFeaturedGridProps) {
 
                   <h3
                     className={`font-serif mb-3 leading-tight font-bold ${
-                      isHero ? "text-3xl lg:text-5xl" : "text-xl lg:text-2xl"
+                      isHero ? "md:text-3xl lg:text-5xl" : "text-xl lg:text-2xl"
                     } truncate`}
                   >
                     {event.name}

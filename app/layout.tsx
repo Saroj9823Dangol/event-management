@@ -1,12 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display } from "next/font/google";
+import { Playfair_Display, Montserrat } from "next/font/google"; // Import Montserrat
 import type React from "react";
 import "./globals.css";
 
+// Configure both fonts to use the same variable name so globals.css doesn't need to change logic
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-main", // Changed from --font-playfair
 });
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-main",
+});
+
+const font =
+  process.env.NEXT_PUBLIC_FONT_FAMILY === "montserrat" ? montserrat : playfair;
 
 export const metadata: Metadata = {
   title: "UCNCEE | Where Experiences Find You",
@@ -33,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} dark`}>
+    <html lang="en" className={`${font.variable} dark`}>
       <body
         suppressHydrationWarning
         className="font-sans bg-background text-foreground min-h-screen antialiased selection:bg-accent selection:text-accent-foreground"

@@ -233,7 +233,14 @@ export function CinematicNav() {
             <div className="h-full flex flex-col">
               <div className="flex items-center justify-between p-6 border-b border-white/5">
                 <span className="text-xl tracking-[0.2em] font-light">
-                  UCNCEE
+                  <div className="relative w-40 h-10">
+                    <Image
+                      src="/logo/dark-theme-logo.png"
+                      alt="UCNCEE"
+                      fill
+                      className="w-40 h-10 object-cover"
+                    />
+                  </div>
                 </span>
                 <button
                   onClick={() => setMenuOpen(false)}
@@ -244,26 +251,28 @@ export function CinematicNav() {
               </div>
               <nav className="flex-1 flex flex-col justify-center px-8 gap-8">
                 {/* Regular Nav Links */}
-                {["Discover", "Live Now", "Enterprise"].map((item, i) => (
-                  <motion.div
-                    key={item}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 + i * 0.1 }}
-                  >
-                    <Link
-                      href={
-                        item === "Discover"
-                          ? "/events"
-                          : `/${item.toLowerCase().replace(" ", "-")}`
-                      }
-                      onClick={() => setMenuOpen(false)}
-                      className="text-5xl font-serif hover:text-accent transition-colors block"
+                {["Get The App", "Wishpering Willow", "Contact"].map(
+                  (item, i) => (
+                    <motion.div
+                      key={item}
+                      initial={{ x: 50, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 + i * 0.1 }}
                     >
-                      {item}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={
+                          item === "Get The App"
+                            ? "/events"
+                            : `/${item.toLowerCase().replace(" ", "-")}`
+                        }
+                        onClick={() => setMenuOpen(false)}
+                        className="text-5xl font-serif hover:text-accent transition-colors block"
+                      >
+                        {item}
+                      </Link>
+                    </motion.div>
+                  )
+                )}
 
                 {/* Auth Links for Mobile */}
                 <motion.div

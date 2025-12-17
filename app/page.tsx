@@ -35,7 +35,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const featuredEvents = await getHomefeaturedEvents();
-  const trendingEvents = await getHomeTrendingEvents();
+  // const trendingEvents = await getHomeTrendingEvents();
   const upcomingEvents = await getUpcomingEvents();
   const topSellingEvents = await getTopSellingEvents();
   const liveEvents = await getHomeLiveEvents();
@@ -56,9 +56,9 @@ export default async function HomePage() {
       <CategoryShowcase categories={categories} />
 
       {/* Social Proof - What's Popular */}
-      {!!trendingEvents?.meta.total && (
+      {/* {!!trendingEvents?.meta.total && (
         <TrendingEvents trendingEvents={trendingEvents} />
-      )}
+      )} */}
 
       {/* Timeline - Planning Ahead */}
       <UpcomingEvents events={upcomingEvents} />
