@@ -31,7 +31,7 @@ export function BackgroundPattern() {
     >
       {/* Noise Texture - Increased opacity for a rougher surface feel */}
       <div
-        className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.2] mix-blend-overlay"
         style={{
           backgroundImage:
             'url("https://grainy-gradients.vercel.app/noise.svg")',
@@ -111,10 +111,6 @@ export function BackgroundPattern() {
           </linearGradient>
         </defs>
       </svg>
-
-      {/* Decorative Circles */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-gray-800/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-gray-700/10 rounded-full blur-3xl"></div>
     </div>
   );
 }

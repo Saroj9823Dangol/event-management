@@ -16,29 +16,29 @@
   --popover: 240 10% 5%;
   --popover-foreground: 0 0% 98%;
 
-  /* Premium White Primary -> New Regal Purple */
-  --primary: 258 23% 34%;
+  /* Brand: Violet / Purple */
+  --primary: 270 76% 53%;
   --primary-foreground: 0 0% 98%;
 
-  /* Sophisticated Secondary */
-  --secondary: 240 3.7% 15.9%;
+  /* Brand: Electric Blue */
+  --secondary: 225 100% 50%;
   --secondary-foreground: 0 0% 98%;
 
   /* Muted tones for subtle text */
   --muted: 240 3.7% 15.9%;
   --muted-foreground: 240 5% 64.9%;
 
-  /* Vibrant Accent - keeping the purple theme */
-  --accent: 258 50% 60%; /* Lighter Purple */
+  /* Brand: Turquoise */
+  --accent: 175 80% 40%;
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
 
-  /* Border is extremely subtle, almost invisible */
+  /* Brand: Blue-Violet / Iridescent Orchid */
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --ring: 255 80% 60%;
 
   --radius: 0rem;
 }
