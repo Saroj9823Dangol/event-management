@@ -271,7 +271,7 @@ export default function TicketDetailPage({
 
                       <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end items-end">
                         <div className="text-right">
-                          {item.quantity > 1 && (
+                          {item.quantity >= 1 && (
                             <div className="mb-1">
                               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest inline-block mr-2">
                                 Qty

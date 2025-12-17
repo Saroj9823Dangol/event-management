@@ -17,11 +17,11 @@
   --popover-foreground: 0 0% 98%;
 
   /* Brand: Violet / Purple */
-  --primary: 270 76% 53%;
+  --primary: 270 85% 57%;
   --primary-foreground: 0 0% 98%;
 
   /* Brand: Electric Blue */
-  --secondary: 225 100% 50%;
+  --secondary: 210 100% 60%;
   --secondary-foreground: 0 0% 98%;
 
   /* Muted tones for subtle text */
@@ -29,7 +29,7 @@
   --muted-foreground: 240 5% 64.9%;
 
   /* Brand: Turquoise */
-  --accent: 175 80% 40%;
+  --accent: 175 90% 45%;
   --accent-foreground: 0 0% 98%;
 
   --destructive: 0 62.8% 30.6%;
@@ -38,7 +38,7 @@
   /* Brand: Blue-Violet / Iridescent Orchid */
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
-  --ring: 255 80% 60%;
+  --ring: 285 85% 65%;
 
   --radius: 0rem;
 }

@@ -60,7 +60,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               .getElementById("lineup")
               ?.scrollIntoView({ behavior: "smooth", block: "center" })
           }
-          className="px-6 py-2 bg-white text-black text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-gray-200 transition-colors mt-4"
+          className="px-6 py-2 cursor-pointer bg-white text-black text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-gray-200 transition-colors mt-4"
         >
           View Schedule
         </button>
