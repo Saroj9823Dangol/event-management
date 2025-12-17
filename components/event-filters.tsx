@@ -49,7 +49,7 @@ export function EventFilters() {
           </div>
 
           <div className="bg-white/5 border border-white/10 p-2">
-            <div className="flex flex-col md:flex-row gap-2">
+            <div className="flex flex-wrap gap-2">
               {/* Search Input */}
               <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-white/5 border border-white/5 md:border-none md:bg-transparent">
                 <Search className="w-5 h-5 text-white/50 shrink-0" />
