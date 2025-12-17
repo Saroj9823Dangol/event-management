@@ -14,10 +14,23 @@ import {
   MapPin,
   Clock,
   ArrowLeft,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Link2,
+  MessageCircle,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { IEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
+import { toast } from "sonner";
+import { ShareButton } from "../common/share-button";
 
 interface EventHeroProps {
   event: IEvent;
@@ -28,6 +41,11 @@ export function EventDetailHero({ event }: EventHeroProps) {
   const [isMuted, setIsMuted] = useState(true);
   const [showVideo, setShowVideo] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [shareUrl, setShareUrl] = useState("");
+
+  useEffect(() => {
+    setShareUrl(window.location.href);
+  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -166,12 +184,11 @@ export function EventDetailHero({ event }: EventHeroProps) {
                 SAVE TO LIST
               </span>
             </button> */}
-            <button className="group flex items-center gap-3 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white hover:text-black transition-all duration-300 rounded-lg">
-              <Share2 className="w-5 h-5" />
-              <span className="text-sm font-bold tracking-widest">
-                SHARE EVENT
-              </span>
-            </button>
+            <ShareButton
+              title={event.name}
+              url={process.env.NEXT_PUBLIC_WEB_URL + "/events/" + event.slug}
+              excerpt={event.description}
+            />
           </div>
         </motion.div>
       </div>

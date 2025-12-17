@@ -83,16 +83,6 @@ export function EventsGrid({ events }: EventsGridProps) {
                     </span>
                   </div>
                 )}
-
-                {/* Quick Actions */}
-                <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={(e) => e.preventDefault()}
-                    className="p-2.5 bg-black/70 backdrop-blur-sm hover:bg-black transition-colors"
-                  >
-                    <Share2 className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
 
               {/* Content */}
