@@ -233,11 +233,22 @@ export default function BookingComponent({ event }: BookingProps) {
 
       // Structure: { is_valid: boolean, reason: string, promo_code: { id, code, discount_value, ... } }
       if (responseData.is_valid) {
-        const { id, code, discount_value } = responseData.promo_code;
+        const { id, code, discount_value, discount_type } =
+          responseData.promo_code;
+
+        logger.log("Promo code applied!", responseData);
+        let calculatedDiscountAmount = 0;
+        if (discount_type === "percentage") {
+          calculatedDiscountAmount =
+            ticketTotal * (Number(discount_value) / 100);
+        } else if (discount_type === "fixed") {
+          calculatedDiscountAmount = Number(discount_value);
+        }
+
         setAppliedPromo({
           id,
           code,
-          discountAmount: Number(discount_value),
+          discountAmount: calculatedDiscountAmount,
         });
         toast.success("Promo code applied!");
       } else {
