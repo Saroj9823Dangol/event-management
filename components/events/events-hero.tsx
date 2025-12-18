@@ -115,6 +115,14 @@ export function EventsHero() {
     }
   };
 
+  const activeCategory = searchParams.get("category");
+  const displayTitle = activeCategory
+    ? `${activeCategory
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")} Events`
+    : "Find Your Next Adventure";
+
   return (
     <section className="relative pt-32 lg:pt-40">
       {/* Background Pattern */}
@@ -133,11 +141,12 @@ export function EventsHero() {
             DISCOVER EXPERIENCES
           </span>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair mb-6">
-            Find Your Next Adventure
+            {displayTitle}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore thousands of curated events across concerts, theater,
-            sports, and more
+            {activeCategory
+              ? `Browse all upcoming ${activeCategory} events and find your next unforgettable experience.`
+              : "Explore thousands of curated events across concerts, theater, sports, and more"}
           </p>
         </motion.div>
 

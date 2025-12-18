@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -24,6 +24,21 @@ export function EventsFilter({ categories }: EventsFilterProps) {
   const searchParams = useSearchParams();
   const activeCategory = searchParams.get("category") || "All";
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const activeButton = scrollContainerRef.current.querySelector(
+        '[data-active="true"]'
+      );
+      if (activeButton) {
+        activeButton.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
+    }
+  }, [activeCategory]);
 
   const handleCategoryChange = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -64,6 +79,7 @@ export function EventsFilter({ categories }: EventsFilterProps) {
           >
             <button
               onClick={() => handleCategoryChange("All")}
+              data-active={activeCategory === "All"}
               className={`px-5 py-2.5 text-sm tracking-wider whitespace-nowrap transition-colors flex-shrink-0 ${
                 activeCategory === "All"
                   ? "bg-white text-black font-bold"
@@ -76,6 +92,7 @@ export function EventsFilter({ categories }: EventsFilterProps) {
               <button
                 key={category.id}
                 onClick={() => handleCategoryChange(category.slug)}
+                data-active={activeCategory === category.slug}
                 className={`px-5 py-2.5 text-sm tracking-wider whitespace-nowrap transition-colors flex-shrink-0 ${
                   activeCategory === category.slug
                     ? "bg-white text-black font-bold"
