@@ -16,6 +16,7 @@ export async function getHomefeaturedEvents(): Promise<
       include_nearest_lineup: 1,
       is_featured: 1,
       include_price_range: 1,
+      sortByStartDate: "asc",
     },
   });
   return response.data;
@@ -31,6 +32,7 @@ export async function getHomeTrendingEvents(): Promise<
       includes: "category",
       include_nearest_lineup: 1,
       is_trending: 1,
+      sortByStartDate: "asc",
     },
   });
   return response.data;

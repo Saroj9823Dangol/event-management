@@ -4,9 +4,10 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TrendingUp, ArrowUpRight, Ticket } from "lucide-react";
+import { TrendingUp, ArrowUpRight, Ticket, Calendar } from "lucide-react";
 import { IPaginatedResponse } from "@/types/response";
 import { IEvent } from "@/types";
+import { formatDateTime } from "@/lib/utils";
 
 interface TopSellingEventsProps {
   events: IPaginatedResponse<IEvent>;
@@ -51,11 +52,12 @@ export function TopSellingEvents({ events }: TopSellingEventsProps) {
               </div>
 
               <div className="p-6 flex flex-col flex-1 relative">
-                {/* Decorative Tag */}
-                <div className="absolute top-0 right-6 -translate-y-1/2 bg-accent text-white px-3 py-1 text-xs font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md">
-                  Popular
+                <div className="flex items-center gap-2 text-black/70 text-xs uppercase tracking-wider">
+                  <Calendar className="w-3 h-3" />
+                  <span>
+                    {formatDateTime(event?.nearest_lineup?.start_date)}
+                  </span>
                 </div>
-
                 <h3 className="text-xl font-bold mb-2 leading-tight group-hover:text-accent transition-colors line-clamp-2">
                   {event.name}
                 </h3>
