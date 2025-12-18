@@ -269,7 +269,15 @@ export default function TicketDetailPage({
                         </div>
                       </div>
 
-                      <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end items-end">
+                      <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between items-end">
+                        <div>
+                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                            Ticket Holder
+                          </span>
+                          <span className="font-mono text-sm font-bold block">
+                            {holderName}
+                          </span>
+                        </div>
                         <div className="text-right">
                           {item.quantity >= 1 && (
                             <div className="mb-1">

@@ -1,6 +1,7 @@
 import { formatDate, formatTime } from "@/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
+import { IUser } from "@/types";
 
 interface TicketPrintTemplateProps {
   order: any;
@@ -25,13 +26,26 @@ export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
   const time = formatTime(startDateStr);
   const venue = eventLineup?.custom_fields?.venue_name || "Unknown Venue";
 
+  // Use order-specific user data
+  const customerName = orderUser?.name || "Guest";
+  const customerEmail = orderUser?.email || "N/A";
+  const customerPhone = orderUser?.phone || "N/A";
+
   return (
     <div className="p-8 max-w-3xl mx-auto space-y-8 font-sans text-black">
       <div className="text-center mb-8 border-b pb-4">
         <h1 className="text-2xl font-bold uppercase tracking-wider mb-2">
           {eventName}
         </h1>
-        <p className="text-sm text-gray-600">ORDER #{orderId?.slice(0, 8)}</p>
+        <div className="space-y-1">
+          <p className="text-sm font-bold uppercase">Customer Information</p>
+          <p className="text-xs text-gray-600">
+            {customerName} • {customerEmail} • {customerPhone}
+          </p>
+          <p className="text-xs text-gray-500 mt-2">
+            ORDER #{orderId?.slice(0, 8)}
+          </p>
+        </div>
       </div>
 
       {order_items?.map((item: any, index: number) => {
@@ -89,7 +103,15 @@ export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-gray-200 flex justify-end items-end">
+              <div className="flex justify-between items-end mt-8 pt-6 border-t border-gray-200">
+                <div>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">
+                    Ticket Holder
+                  </span>
+                  <span className="font-mono text-sm font-bold block">
+                    {customerName}
+                  </span>
+                </div>
                 <div className="text-right">
                   {item.quantity >= 1 && (
                     <div className="mb-1">
