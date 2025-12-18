@@ -209,7 +209,6 @@ export default function TicketDetailPage({
                   typeof item.ticket_type === "string"
                     ? item.ticket_type
                     : item.ticket_type?.name;
-                const holderName = user?.name || "Guest";
 
                 return (
                   <motion.div
@@ -268,7 +267,7 @@ export default function TicketDetailPage({
                             Ticket Holder
                           </span>
                           <span className="font-mono text-sm font-bold block">
-                            {holderName}
+                            {user?.name} • {user?.email} • {user?.phone}
                           </span>
                         </div>
                         <div className="text-right">

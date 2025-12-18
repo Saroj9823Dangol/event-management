@@ -106,7 +106,7 @@ export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
                     Ticket Holder
                   </span>
                   <span className="font-mono text-sm font-bold block">
-                    {customerName}
+                    {customerName} • {customerEmail} • {customerPhone}
                   </span>
                 </div>
                 <div className="text-right">
