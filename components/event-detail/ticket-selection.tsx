@@ -1,9 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Minus, Plus, Shield, CreditCard, Clock } from "lucide-react";
+import {
+  Minus,
+  Plus,
+  Shield,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+} from "lucide-react";
 import { useBooking } from "@/components/event-detail/booking-context";
 import { IEvent } from "@/types";
 import logger from "@/lib/logger/logger";
@@ -18,6 +25,11 @@ export function TicketSelection({ event }: TicketSelectionProps) {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { selectedLineupId } = useBooking();
   const { isAuthenticated, openLoginModal } = useAuth();
+
+  // Scroll navigation state
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
 
   const isLineupSelected = !!selectedLineupId;
 
@@ -42,6 +54,42 @@ export function TicketSelection({ event }: TicketSelectionProps) {
       return { ...prev, [ticketId]: next };
     });
   };
+
+  // Check scroll position to show/hide navigation arrows
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } =
+        scrollContainerRef.current;
+      setCanScrollUp(scrollTop > 10);
+      setCanScrollDown(scrollTop + clientHeight < scrollHeight - 10);
+    }
+  };
+
+  // Scroll by one ticket container height
+  const scrollByTicket = (direction: "up" | "down") => {
+    if (scrollContainerRef.current) {
+      const ticketHeight = 200; // Approximate height of one ticket card
+      const scrollAmount = direction === "down" ? ticketHeight : -ticketHeight;
+      scrollContainerRef.current.scrollBy({
+        top: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      checkScroll();
+      container.addEventListener("scroll", checkScroll);
+      // Check on resize too
+      window.addEventListener("resize", checkScroll);
+      return () => {
+        container.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, [selectedLineUpTicketTypes]);
 
   if (!isLineupSelected) {
     return (
@@ -73,13 +121,13 @@ export function TicketSelection({ event }: TicketSelectionProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="lg:sticky lg:top-32"
+      className="lg:sticky lg:top-32 lg:h-[calc(100vh-160px)] lg:flex lg:flex-col lg:self-start w-full"
     >
-      <div className="glass-card rounded-2xl border border-white/10 overflow-hidden relative group">
-        <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl" />
+      <div className="glass-card rounded-2xl border border-white/10 overflow-hidden relative group flex flex-col h-full min-h-0">
+        <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl pointer-events-none" />
 
-        {/* Header */}
-        <div className="relative p-6 border-b border-white/5 bg-white/5">
+        {/* Header - Fixed Top */}
+        <div className="relative p-6 border-b border-white/5 bg-white/5 flex-none z-10">
           <div className="flex justify-between items-start mb-2">
             <div>
               <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase mb-1">
@@ -95,69 +143,121 @@ export function TicketSelection({ event }: TicketSelectionProps) {
           </div>
         </div>
 
-        {/* Ticket Types List */}
-        <div className="relative p-6 border-b border-white/5 space-y-4">
-          <h3 className="text-xs font-bold tracking-widest text-white/50 mb-2 uppercase">
-            Select Tickets
-          </h3>
-          <div className="space-y-4">
-            {selectedLineUpTicketTypes?.map((ticket) => {
-              const qty = quantities[ticket.id] || 0;
-              return (
-                <div
-                  key={ticket.id}
-                  className={`p-4 border rounded-xl transition-all duration-300 ${
-                    qty > 0
-                      ? "border-accent bg-accent/5"
-                      : "border-white/10 bg-white/5 hover:border-white/30"
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-bold text-white mb-1">
-                        {ticket.name}
-                      </h4>
-                      {ticket?.description && ticket.description.length > 0 && (
-                        <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5">
-                          {ticket.description.map((desc, index) => (
-                            <li key={index}>{desc}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                    <div className="font-serif text-lg">
-                      {event.currency} {Number(ticket.price).toLocaleString()}
-                    </div>
-                  </div>
+        {/* Ticket Types List - Scrollable Center with Navigation */}
+        <div className="relative flex-1 min-h-0">
+          {/* Scroll Up Button */}
+          {canScrollUp && (
+            <motion.button
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              onClick={() => scrollByTicket("up")}
+              className="absolute top-2 left-1/2 -translate-x-1/2 z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-2 shadow-lg transition-all duration-300 animate-bounce"
+              aria-label="Scroll up"
+            >
+              <ChevronUp className="w-5 h-5" />
+            </motion.button>
+          )}
 
-                  {/* Quantity Control */}
-                  <div className="flex items-center justify-end mt-4 pt-3 border-t border-white/5">
-                    <div className="flex items-center gap-3 bg-black/40 rounded-lg p-1">
-                      <button
-                        onClick={() => handleQuantityChange(ticket.id, -1)}
-                        disabled={qty === 0}
-                        className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-6 text-center font-bold">{qty}</span>
-                      <button
-                        onClick={() => handleQuantityChange(ticket.id, 1)}
-                        disabled={qty >= 10}
-                        className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
+          <div
+            ref={scrollContainerRef}
+            className="relative overflow-y-scroll min-h-0 p-6 touch-pan-y h-full"
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "rgba(255,255,255,0.2) rgba(255,255,255,0.05)",
+              maxHeight: "calc(100vh - 400px)",
+            }}
+          >
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                width: 6px;
+                background: rgba(255, 255, 255, 0.05);
+              }
+              div::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+              }
+              div::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.3);
+              }
+            `}</style>
+            <h3 className="text-xs font-bold tracking-widest text-white/50 mb-4 uppercase">
+              Select Tickets
+            </h3>
+            <div className="space-y-4">
+              {selectedLineUpTicketTypes?.map((ticket) => {
+                const qty = quantities[ticket.id] || 0;
+                return (
+                  <div
+                    key={ticket.id}
+                    className={`p-4 border rounded-xl transition-all duration-300 ${
+                      qty > 0
+                        ? "border-accent bg-accent/5"
+                        : "border-white/10 bg-white/5 hover:border-white/30"
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-bold text-white mb-1">
+                          {ticket.name}
+                        </h4>
+                        {ticket?.description &&
+                          ticket.description.length > 0 && (
+                            <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5">
+                              {ticket.description.map((desc, index) => (
+                                <li key={index}>{desc}</li>
+                              ))}
+                            </ul>
+                          )}
+                      </div>
+                      <div className="font-serif text-lg">
+                        {event.currency} {Number(ticket.price).toLocaleString()}
+                      </div>
+                    </div>
+
+                    {/* Quantity Control */}
+                    <div className="flex items-center justify-end mt-4 pt-3 border-t border-white/5">
+                      <div className="flex items-center gap-3 bg-black/40 rounded-lg p-1">
+                        <button
+                          onClick={() => handleQuantityChange(ticket.id, -1)}
+                          disabled={qty === 0}
+                          className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <span className="w-6 text-center font-bold">{qty}</span>
+                        <button
+                          onClick={() => handleQuantityChange(ticket.id, 1)}
+                          disabled={qty >= 10}
+                          className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
+
+          {/* Scroll Down Button */}
+          {canScrollDown && (
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              onClick={() => scrollByTicket("down")}
+              className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-2 shadow-lg transition-all duration-300 animate-bounce"
+              aria-label="Scroll down"
+            >
+              <ChevronDown className="w-5 h-5" />
+            </motion.button>
+          )}
         </div>
 
-        {/* Summary */}
-        <div className="relative p-6 bg-black/20 space-y-4">
+        {/* Summary - Fixed Bottom */}
+        <div className="relative p-6 bg-black/20 space-y-4 flex-none border-t border-white/5 z-20">
           {/* Line Items Summary */}
           {totalQuantity > 0 && (
             <div className="space-y-2 pb-4 border-b border-white/10 text-sm">

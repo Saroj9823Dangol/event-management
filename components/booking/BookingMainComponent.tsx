@@ -414,36 +414,74 @@ export default function BookingComponent({ event }: BookingProps) {
                         <div className="grid grid-cols-2 gap-4">
                           <Button
                             variant="outline"
-                            className={`${
+                            className={`relative p-8 h-auto border-2 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all duration-300 ${
                               step === "stripe"
-                                ? "bg-muted border-primary/30"
-                                : ""
-                            } p-6 h-auto border-2 rounded-xl flex flex-col items-center justify-center gap-3`}
+                                ? "border-accent bg-accent/5 ring-1 ring-accent/20"
+                                : "border-white/10 bg-white/5 hover:border-white/20"
+                            }`}
                             onClick={() => setStep("stripe")}
                           >
+                            {step === "stripe" && (
+                              <div className="absolute top-3 right-3 w-6 h-6 bg-accent rounded-full flex items-center justify-center">
+                                <Check className="w-3.5 h-3.5 text-white" />
+                              </div>
+                            )}
                             <Image
                               src="/payment/stripe.webp"
                               alt="Stripe"
                               width={100}
                               height={50}
+                              className={
+                                step === "stripe"
+                                  ? "opacity-100"
+                                  : "opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                              }
                             />
+                            <span
+                              className={`text-xs font-bold uppercase tracking-widest ${
+                                step === "stripe"
+                                  ? "text-accent"
+                                  : "text-muted-foreground"
+                              }`}
+                            >
+                              Credit / Debit Card
+                            </span>
                           </Button>
 
                           <Button
                             variant="outline"
-                            className={`${
+                            className={`relative p-8 h-auto border-2 rounded-2xl flex flex-col items-center justify-center gap-4 transition-all duration-300 ${
                               step === "paypal"
-                                ? "bg-muted border-primary/30"
-                                : ""
-                            } p-6 h-auto border-2 rounded-xl flex flex-col items-center justify-center gap-3`}
+                                ? "border-accent bg-accent/5 ring-1 ring-accent/20"
+                                : "border-white/10 bg-white/5 hover:border-white/20"
+                            }`}
                             onClick={() => setStep("paypal")}
                           >
+                            {step === "paypal" && (
+                              <div className="absolute top-3 right-3 w-6 h-6 bg-accent rounded-full flex items-center justify-center">
+                                <Check className="w-3.5 h-3.5 text-white" />
+                              </div>
+                            )}
                             <Image
                               src="/payment/paypal.webp"
                               alt="PayPal"
                               width={100}
                               height={50}
+                              className={
+                                step === "paypal"
+                                  ? "opacity-100"
+                                  : "opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all"
+                              }
                             />
+                            <span
+                              className={`text-xs font-bold uppercase tracking-widest ${
+                                step === "paypal"
+                                  ? "text-accent"
+                                  : "text-muted-foreground"
+                              }`}
+                            >
+                              PayPal Express
+                            </span>
                           </Button>
                         </div>
                       </div>
