@@ -326,10 +326,10 @@ export function VideoHero({ featuredEvents }: VideoHeroProps) {
           <button
             key={i}
             onClick={() => setCurrentIndex(i)}
-            className={`transition-all duration-300 h-4 ${
+            className={`transition-all duration-300 h-2 sm:h-4 ${
               i === currentIndex
-                ? "w-12 h-4 bg-primary"
-                : "w-2 h-4 bg-white/20 hover:bg-white/40"
+                ? "w-8 sm:w-12 bg-primary"
+                : "w-1 sm:w-2 bg-white/20 hover:bg-white/40"
             } rounded-full cursor-pointer`}
           />
         ))}
