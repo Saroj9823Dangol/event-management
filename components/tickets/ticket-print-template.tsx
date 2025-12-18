@@ -2,6 +2,7 @@ import { formatDate, formatTime } from "@/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 import { IUser } from "@/types";
+import { useAuth } from "../auth/auth-context";
 
 interface TicketPrintTemplateProps {
   order: any;
@@ -10,15 +11,11 @@ interface TicketPrintTemplateProps {
 export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
   order,
 }) => {
+  const { user } = useAuth();
+
   if (!order) return null;
 
-  const {
-    event,
-    eventLineup,
-    order_items,
-    user: orderUser,
-    id: orderId,
-  } = order;
+  const { event, eventLineup, order_items, id: orderId } = order;
 
   const eventName = event?.name || "Event Name";
   const startDateStr = eventLineup?.start_date || event?.start_date;
@@ -27,9 +24,9 @@ export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
   const venue = eventLineup?.custom_fields?.venue_name || "Unknown Venue";
 
   // Use order-specific user data
-  const customerName = orderUser?.name || "Guest";
-  const customerEmail = orderUser?.email || "N/A";
-  const customerPhone = orderUser?.phone || "N/A";
+  const customerName = user?.name || "Guest";
+  const customerEmail = user?.email || "N/A";
+  const customerPhone = user?.phone || "N/A";
 
   return (
     <div className="p-8 max-w-3xl mx-auto space-y-8 font-sans text-black">

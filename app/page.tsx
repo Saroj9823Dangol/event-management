@@ -43,6 +43,8 @@ export default async function HomePage() {
 
   const categories = await getCategories();
 
+  logger.log(featuredEvents.data[0], "featured");
+
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <CinematicNav />

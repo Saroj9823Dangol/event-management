@@ -109,14 +109,7 @@ export default function TicketDetailPage({
   }
 
   // Destructure based on the provided JSON structure
-  const {
-    event,
-    eventLineup,
-    order_items,
-    user: orderUser,
-    status,
-    id: orderId,
-  } = order;
+  const { event, eventLineup, order_items, status, id: orderId } = order;
 
   // Data Mapping
   const eventName = event?.name || "Event Name";
@@ -216,7 +209,7 @@ export default function TicketDetailPage({
                   typeof item.ticket_type === "string"
                     ? item.ticket_type
                     : item.ticket_type?.name;
-                const holderName = orderUser?.name || "Guest";
+                const holderName = user?.name || "Guest";
 
                 return (
                   <motion.div
