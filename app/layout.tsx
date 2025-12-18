@@ -87,12 +87,16 @@ import { Providers } from "./providers";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/site-config";
+import { SiteFooter } from "@/components/site-footer";
+import { getCategories } from "@/lib/api/categories";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const categories = await getCategories();
+
   return (
     <html lang="en" className={`${font.variable} dark`}>
       <body
@@ -103,6 +107,7 @@ export default function RootLayout({
           <AuthProvider>
             <BackgroundPattern />
             <div className="relative z-10">{children}</div>
+            <SiteFooter categories={categories} />
             <Toaster richColors />
           </AuthProvider>
         </Providers>

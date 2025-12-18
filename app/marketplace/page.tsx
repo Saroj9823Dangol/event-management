@@ -1,9 +1,9 @@
-import { CinematicNav } from "@/components/cinematic-nav"
-import { MarketplaceHero } from "@/components/marketplace/marketplace-hero"
-import { MarketplaceCategories } from "@/components/marketplace/marketplace-categories"
-import { MarketplaceProducts } from "@/components/marketplace/marketplace-products"
-import { BrandSpotlight } from "@/components/marketplace/brand-spotlight"
-import { SiteFooter } from "@/components/site-footer"
+import { CinematicNav } from "@/components/cinematic-nav";
+import { MarketplaceHero } from "@/components/marketplace/marketplace-hero";
+import { MarketplaceCategories } from "@/components/marketplace/marketplace-categories";
+import { MarketplaceProducts } from "@/components/marketplace/marketplace-products";
+import { BrandSpotlight } from "@/components/marketplace/brand-spotlight";
+import { SiteFooter } from "@/components/site-footer";
 
 export default function MarketplacePage() {
   return (
@@ -13,7 +13,6 @@ export default function MarketplacePage() {
       <MarketplaceCategories />
       <MarketplaceProducts />
       <BrandSpotlight />
-      <SiteFooter />
     </main>
-  )
+  );
 }

@@ -72,8 +72,6 @@ export default function DashboardLayout({
           {children}
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

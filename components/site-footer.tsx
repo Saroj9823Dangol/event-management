@@ -3,33 +3,15 @@
 import Link from "next/link";
 import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
 import Image from "next/image";
+import { ICategory } from "@/types";
+import { IPaginatedResponse } from "@/types/response";
 
-const footerLinks = {
-  Discover: [
-    { label: "All Events", href: "/events" },
-    { label: "Concerts", href: "/events?category=concerts" },
-    { label: "Theater", href: "/events?category=theater" },
-    { label: "Sports", href: "/events?category=sports" },
-    { label: "Comedy", href: "/events?category=comedy" },
-    { label: "Festivals", href: "/events?category=festivals" },
-  ],
-  Company: [
-    { label: "About Us", href: "/about" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Partners", href: "#" },
-  ],
-  Support: [
-    { label: "Help Center", href: "#" },
-    { label: "Contact Us", href: "/contact" },
-    { label: "Refund Policy", href: "/legal/terms" }, // Usually part of terms or separate
-    { label: "Accessibility", href: "#" },
-  ],
+const otherLinks = {
+  Support: [{ label: "Contact Us", href: "/contact" }],
   Legal: [
-    { label: "Terms of Service", href: "/legal/terms" },
-    { label: "Privacy Policy", href: "/legal/privacy" },
-    { label: "Cookie Policy", href: "/legal/privacy" }, // Often same page
+    { label: "Terms of Service", href: "/legal/terms-and-conditions" },
+    { label: "Privacy Policy", href: "/legal/privacy-policies" },
+    { label: "Refund Policy", href: "/legal/refund-policies" },
   ],
 };
 
@@ -40,42 +22,41 @@ const socialLinks = [
   { icon: Linkedin, href: "#", label: "LinkedIn" },
 ];
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  categories: IPaginatedResponse<ICategory>;
+}
+
+export function SiteFooter({ categories }: SiteFooterProps) {
+  const discoverLinks = [
+    { label: "All Events", href: "/events" },
+    ...(categories?.data?.map((category) => ({
+      label: category.name,
+      href: `/events?category=${category.slug}`,
+    })) || []),
+  ];
+
+  const chunkArray = <T,>(arr: T[], size: number): T[][] =>
+    Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+      arr.slice(i * size, i * size + size)
+    );
+
+  const discoverChunks = chunkArray(discoverLinks, 8);
+
+  const columns = [
+    ...discoverChunks.map((links, index) => ({
+      title: index === 0 ? "Discover" : "",
+      links,
+    })),
+    ...Object.entries(otherLinks).map(([title, links]) => ({
+      title,
+      links,
+    })),
+  ];
+
   return (
     <footer className="bg-card border-t border-border">
-      {/* Newsletter */}
-      {/* <div className="border-b border-border">
-        <div className="container mx-auto py-20">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-serif mb-2">
-                Stay in the Loop
-              </h3>
-              <p className="text-muted-foreground">
-                Get exclusive access to presales and curated recommendations.
-              </p>
-            </div>
-            <form className="flex gap-3 w-full lg:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 lg:w-80 px-5 py-4 bg-background border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-white text-black text-sm tracking-wider hover:bg-accent hover:text-white transition-colors shrink-0"
-              >
-                SUBSCRIBE
-              </button>
-            </form>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Links */}
       <div className="mx-auto container py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12">
-          {/* Brand */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12">
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-3 mb-6">
               <div className="relative w-40 h-10">
@@ -105,14 +86,13 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Link Columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="text-sm tracking-wider mb-6">
-                {title.toUpperCase()}
+          {columns.map((column, idx) => (
+            <div key={`${column.title}-${idx}`}>
+              <h4 className="text-sm tracking-wider mb-6 min-h-[1.25rem]">
+                {column.title.toUpperCase()}
               </h4>
               <ul className="space-y-3">
-                {links.map((link) => (
+                {column.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -128,7 +108,6 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-border">
         <div className="max-w-[1800px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-muted-foreground">

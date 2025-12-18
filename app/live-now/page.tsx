@@ -13,7 +13,6 @@ export default async function LivePage() {
     <main className="min-h-screen bg-background text-foreground">
       <CinematicNav />
       <LiveNowComponent events={liveEvents} />
-      <SiteFooter />
     </main>
   );
 }

@@ -31,7 +31,6 @@ export default async function EventsPage({
         <EventsFilter categories={categories} />
         <EventsGrid events={events} />
       </div>
-      <SiteFooter />
     </main>
   );
 }

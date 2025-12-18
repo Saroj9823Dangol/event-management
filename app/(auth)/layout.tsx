@@ -9,14 +9,11 @@ export default function AuthLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col bg-background relative overflow-hidden">
-      <BackgroundPattern />
       <CinematicNav />
 
       <main className="flex-1 flex items-center justify-center p-6 pt-32 pb-20">
         <div className="w-full max-w-md relative z-10">{children}</div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

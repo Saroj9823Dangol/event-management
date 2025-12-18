@@ -89,7 +89,6 @@ export default async function HomePage() {
 
       {/* Final Calls to Action */}
       <CTASection />
-      <SiteFooter />
     </main>
   );
 }

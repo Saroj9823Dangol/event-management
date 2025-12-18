@@ -155,8 +155,6 @@ export default function CollectionsPage() {
           ))}
         </div>
       </section>
-
-      <SiteFooter />
     </main>
   );
 }

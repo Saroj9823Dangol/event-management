@@ -173,7 +173,6 @@ export default async function EventDetailPage({
           <RelatedEvents relatedEvents={relatedEvents} />
         </div>
       </BookingProvider>
-      <SiteFooter />
     </main>
   );
 }
