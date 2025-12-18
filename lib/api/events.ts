@@ -221,7 +221,7 @@ export async function getFilteredEvents(
     params.sortByStartDate = "asc";
   } else {
     // Default or Relevance
-    params.sortByStartDate = "desc";
+    params.sortByStartDate = "asc";
   }
 
   // Price Range
