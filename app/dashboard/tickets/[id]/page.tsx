@@ -51,7 +51,7 @@ export default function TicketDetailPage({
     try {
       setLoading(true);
       const receiptHtml = renderToStaticMarkup(
-        <TicketPrintTemplate order={order} />
+        <TicketPrintTemplate user={user} order={order} />
       );
 
       const styles = Array.from(

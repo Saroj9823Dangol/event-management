@@ -6,13 +6,13 @@ import { useAuth } from "../auth/auth-context";
 
 interface TicketPrintTemplateProps {
   order: any;
+  user: IUser | null;
 }
 
 export const TicketPrintTemplate: React.FC<TicketPrintTemplateProps> = ({
   order,
+  user,
 }) => {
-  const { user } = useAuth();
-
   if (!order) return null;
 
   const { event, eventLineup, order_items, id: orderId } = order;
