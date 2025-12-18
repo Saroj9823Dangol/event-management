@@ -80,6 +80,7 @@
 
 html {
   font-family: var(--font-main) !important;
+  font-size: clamp(14px, 1.2vw, 18px) !important;
 }
 
 /* Glassmorphism */
@@ -161,7 +162,7 @@ html {
 
 html {
   .container {
-    width: 90% !important;
+    max-width: 90% !important;
   }
 }
 

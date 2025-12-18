@@ -89,7 +89,7 @@ export function CinematicNav() {
                       ? "/live-now"
                       : `/${item.toLowerCase().replace(" ", "-")}`
                   }
-                  className="text-sm tracking-[0.1em] font-bold hover:text-white transition-colors relative group"
+                  className="text-sm whitespace-nowrap tracking-[0.1em] font-bold hover:text-white transition-colors relative group"
                 >
                   {item.toUpperCase()}
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-px bg-accent group-hover:w-full transition-all duration-500" />
