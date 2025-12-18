@@ -106,7 +106,7 @@ export default async function EventDetailPage({
                 {/* <VenueMap venue={event.location} address={event.address} /> */}
               </section>
 
-              {/* Artists Section */}
+            {/* Artists Section */}
               <section
                 id="artists"
                 className="space-y-8 pt-8 border-t border-white/10"

@@ -20,6 +20,7 @@ import {
   Link2,
   MessageCircle,
   Ticket,
+  CalendarPlus,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -32,6 +33,8 @@ import { IEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
 import { toast } from "sonner";
 import { ShareButton } from "../common/share-button";
+import { Button } from "../ui/button";
+import { generateCalendarLinks } from "@/lib/generateCalendarLink";
 
 interface EventHeroProps {
   event: IEvent;
@@ -63,6 +66,26 @@ export function EventDetailHero({ event }: EventHeroProps) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
+  };
+
+  const handleAddToCalendar = () => {
+    const links = generateCalendarLinks(event);
+    if (!links) return;
+
+    // Opens a clean, focused popup (most users love this)
+    const popup = window.open(
+      links.google,
+      "add-to-calendar",
+      "width=900,height=700,scrollbars=yes,resizable=yes"
+    );
+
+    // If popup was blocked, fall back to new tab
+    if (!popup || popup.closed || typeof popup.closed === "undefined") {
+      window.open(links.google, "_blank", "noopener,noreferrer");
+    }
+
+    // Optional toast
+    toast.success("Adding to your calendar...");
   };
 
   return (
@@ -170,6 +193,13 @@ export function EventDetailHero({ event }: EventHeroProps) {
               <Clock className="w-5 h-5 text-accent" />
               <span>{formatTime(event?.nearest_lineup?.start_date)}</span>
             </div>
+            <Button
+              onClick={handleAddToCalendar}
+              className="flex items-center gap-3 bg-secondary uppercase cursor-pointer"
+            >
+              <CalendarPlus className="w-5 h-5 text-white" />
+              Remind me
+            </Button>
             <div className="w-1 h-1 bg-white/30 rounded-full" />
             <div className="flex items-center gap-3">
               <MapPin className="w-5 h-5 text-accent" />
