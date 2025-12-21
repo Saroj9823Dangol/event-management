@@ -186,7 +186,7 @@ export function EventsHero() {
               </div>
 
               {/* Date Range Picker */}
-              <div className="flex items-center gap-3 bg-background md:border-l border-border md:min-w-[280px] w-full md:w-auto min-w-0">
+              <div className="flex items-center gap-3 bg-background md:border-l border-border w-full">
                 <DateRangePicker
                   aria-label="Filter by date range"
                   className="w-full"
