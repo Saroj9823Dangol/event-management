@@ -75,7 +75,7 @@ export function EventFilters() {
               </div>
 
               {/* Date Range Picker */}
-              <div className="flex items-center gap-3 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent w-full">
+              <div className="flex items-center gap-3 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent w-full md:w-auto min-w-0">
                 <DateRangePicker
                   label="Event Dates"
                   className="w-full"
