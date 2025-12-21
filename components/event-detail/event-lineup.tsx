@@ -57,13 +57,13 @@ export function EventLineup({ lineups }: EventLineupProps) {
                       <Clock className="w-4 h-4" />
                       {formatTime(item?.start_date)}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <MapPin className="w-4 h-4" />
                       {item?.addressable?.address}
                       <a
                         href={item?.custom_fields?.google_map_link}
                         target="_blank"
-                        className="text-xs underline decoration-dotted underline-offset-4 text-white hover:text-accent ml-2"
+                        className="text-xs whitespace-nowrap underline decoration-dotted underline-offset-4 text-white hover:text-accent ml-2"
                       >
                         (View Map)
                       </a>
