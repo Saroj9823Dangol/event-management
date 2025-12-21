@@ -167,6 +167,25 @@ html {
 }
 
 /* ============================================================================
+   DateRangePicker Calendar Width Override
+   ============================================================================ */
+
+/* Remove fixed calendar width calculation */
+[data-slot="calendar"] {
+  --calendar-width: auto !important;
+  --visible-months: 1 !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+/* Ensure calendar content is responsive */
+[data-slot="calendar"] [data-slot="grid-wrapper"],
+[data-slot="calendar"] [data-slot="content"] {
+  width: fit-content !important;
+  max-width: 100% !important;
+}
+
+/* ============================================================================
    PhoneInput Custom Styles - Fix for dark theme visibility
    ============================================================================ */
 
