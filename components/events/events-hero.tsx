@@ -208,10 +208,12 @@ export function EventsHero() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-background border border-border text-foreground shadow-xl min-w-[320px]",
+                      base: "bg-background border border-border text-foreground shadow-xl",
                       headerWrapper: "bg-background",
                       gridHeader: "bg-background text-foreground",
                       gridHeaderCell: "text-foreground",
+                      gridWrapper: "w-fit",
+                      content: "w-fit",
                       cellButton:
                         "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground text-foreground hover:bg-accent hover:text-accent-foreground data-[today=true]:bg-accent/50 data-[disabled=true]:text-muted-foreground data-[disabled=true]:cursor-not-allowed",
                     },
