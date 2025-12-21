@@ -93,7 +93,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
 
   if (!isLineupSelected) {
     return (
-      <div className="lg:sticky lg:top-32 p-8 rounded-2xl border border-white/10 bg-white/5 text-center space-y-4">
+      <div className="lg:sticky lg:top-32 p-8 border border-white/10 bg-white/5 text-center space-y-4">
         <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
           <Clock className="w-8 h-8 text-accent" />
         </div>

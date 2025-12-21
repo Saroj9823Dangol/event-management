@@ -76,7 +76,9 @@ export function EventLineup({ lineups }: EventLineupProps) {
                       setSelectedLineupId(item.id);
                     }}
                     className={`w-full lg:w-auto px-8 py-3 font-bold text-sm tracking-widest transition-all rounded-lg whitespace-nowrap ${
-                      isSelected
+                      new Date(item.start_date) < new Date()
+                        ? "bg-white/5 text-white/20 cursor-not-allowed"
+                        : isSelected
                         ? "bg-accent text-white shadow-lg shadow-accent/20"
                         : "bg-white text-black hover:bg-gray-200"
                     }`}
