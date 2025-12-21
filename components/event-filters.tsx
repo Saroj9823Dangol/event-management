@@ -98,12 +98,12 @@ export function EventFilters() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl",
+                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl max-w-full overflow-hidden",
                       headerWrapper: "bg-[#0a0a0a]",
                       gridHeader: "bg-[#0a0a0a] text-white",
                       gridHeaderCell: "text-white",
-                      gridWrapper: "!w-fit",
-                      content: "!w-fit",
+                      gridWrapper: "!w-fit max-w-full",
+                      content: "!w-fit max-w-full overflow-x-auto",
                       cellButton:
                         "data-[selected=true]:bg-accent data-[selected=true]:text-white text-white hover:bg-white/10 data-[today=true]:bg-white/10 data-[disabled=true]:text-white/20 data-[disabled=true]:cursor-not-allowed",
                     },

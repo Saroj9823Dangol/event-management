@@ -186,36 +186,37 @@ export function EventsHero() {
               </div>
 
               {/* Date Range Picker */}
-              <div className="flex items-center gap-3 bg-background md:border-l border-border md:min-w-[280px] w-full md:w-auto min-w-0">
+              <div className="flex items-center gap-3 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent w-full md:w-auto min-w-0">
                 <DateRangePicker
                   aria-label="Filter by date range"
                   className="!w-full"
-                  variant="underlined"
+                  variant="bordered"
                   value={dateRange}
                   onChange={setDateRange}
                   minValue={today(getLocalTimeZone())}
                   showMonthAndYearPickers
                   classNames={{
-                    inputWrapper: "shadow-none border-b-0",
-                    label: "hidden",
-                    input: "text-foreground placeholder:text-muted-foreground",
+                    inputWrapper:
+                      "bg-white/5 border-white/10 hover:border-white/20 data-[hover=true]:border-white/20 group-data-[focus=true]:border-white/30",
+                    label: "text-white/50 text-xs",
+                    input: "text-white placeholder:text-white/40",
                     segment:
-                      "text-foreground hover:text-foreground group-data-[editable=true]:text-foreground",
-                    separator: "text-foreground mx-2",
+                      "text-white hover:text-white group-data-[editable=true]:text-white",
+                    separator: "text-white mx-2",
                   }}
                   popoverProps={{
-                    className: "border-border bg-background",
+                    className: "border-white/20 bg-[#0a0a0a] text-xs",
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-background border border-border text-foreground shadow-xl",
-                      headerWrapper: "bg-background",
-                      gridHeader: "bg-background text-foreground",
-                      gridHeaderCell: "text-foreground",
-                      gridWrapper: "!w-fit",
-                      content: "!w-fit",
+                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl max-w-full overflow-hidden",
+                      headerWrapper: "bg-[#0a0a0a]",
+                      gridHeader: "bg-[#0a0a0a] text-white",
+                      gridHeaderCell: "text-white",
+                      gridWrapper: "!w-fit max-w-full",
+                      content: "!w-fit max-w-full overflow-x-auto",
                       cellButton:
-                        "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground text-foreground hover:bg-accent hover:text-accent-foreground data-[today=true]:bg-accent/50 data-[disabled=true]:text-muted-foreground data-[disabled=true]:cursor-not-allowed",
+                        "data-[selected=true]:bg-accent data-[selected=true]:text-white text-white hover:bg-white/10 data-[today=true]:bg-white/10 data-[disabled=true]:text-white/20 data-[disabled=true]:cursor-not-allowed",
                     },
                   }}
                 />
