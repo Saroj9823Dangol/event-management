@@ -78,7 +78,7 @@ export function EventFilters() {
               <div className="flex items-center gap-3 bg-white/5 border border-white/5 md:border-l md:border-white/10 md:bg-transparent w-full md:w-auto min-w-0">
                 <DateRangePicker
                   label="Event Dates"
-                  className="w-full"
+                  className="!w-full"
                   variant="bordered"
                   value={dateRange}
                   onChange={setDateRange}
@@ -102,8 +102,8 @@ export function EventFilters() {
                       headerWrapper: "bg-[#0a0a0a]",
                       gridHeader: "bg-[#0a0a0a] text-white",
                       gridHeaderCell: "text-white",
-                      gridWrapper: "w-fit",
-                      content: "w-fit",
+                      gridWrapper: "!w-fit",
+                      content: "!w-fit",
                       cellButton:
                         "data-[selected=true]:bg-accent data-[selected=true]:text-white text-white hover:bg-white/10 data-[today=true]:bg-white/10 data-[disabled=true]:text-white/20 data-[disabled=true]:cursor-not-allowed",
                     },

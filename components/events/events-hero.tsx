@@ -189,7 +189,7 @@ export function EventsHero() {
               <div className="flex items-center gap-3 bg-background md:border-l border-border md:min-w-[280px] w-full md:w-auto min-w-0">
                 <DateRangePicker
                   aria-label="Filter by date range"
-                  className="w-full"
+                  className="!w-full"
                   variant="underlined"
                   value={dateRange}
                   onChange={setDateRange}
@@ -212,8 +212,8 @@ export function EventsHero() {
                       headerWrapper: "bg-background",
                       gridHeader: "bg-background text-foreground",
                       gridHeaderCell: "text-foreground",
-                      gridWrapper: "w-fit",
-                      content: "w-fit",
+                      gridWrapper: "!w-fit",
+                      content: "!w-fit",
                       cellButton:
                         "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground text-foreground hover:bg-accent hover:text-accent-foreground data-[today=true]:bg-accent/50 data-[disabled=true]:text-muted-foreground data-[disabled=true]:cursor-not-allowed",
                     },
