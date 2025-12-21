@@ -98,7 +98,7 @@ export function EventFilters() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl w-full max-w-[280px] p-4",
+                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl min-w-[320px]",
                       headerWrapper: "bg-[#0a0a0a]",
                       gridHeader: "bg-[#0a0a0a] text-white",
                       gridHeaderCell: "text-white",

@@ -208,7 +208,7 @@ export function EventsHero() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-background border border-border text-foreground shadow-xl w-full max-w-[280px] p-4",
+                      base: "bg-background border border-border text-foreground shadow-xl min-w-[320px]",
                       headerWrapper: "bg-background",
                       gridHeader: "bg-background text-foreground",
                       gridHeaderCell: "text-foreground",
