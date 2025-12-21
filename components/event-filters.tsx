@@ -92,11 +92,11 @@ export function EventFilters() {
                     separator: "text-white mx-2",
                   }}
                   popoverProps={{
-                    className: "border-white/20 bg-[#0a0a0a]",
+                    className: "border-white/20 bg-[#0a0a0a] text-xs",
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-[#0a0a0a] border border-white/20 text-white shadow-xl",
+                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl",
                       headerWrapper: "bg-[#0a0a0a]",
                       gridHeader: "bg-[#0a0a0a] text-white",
                       cellButton:
