@@ -43,7 +43,7 @@ export function EventsGrid({ events }: EventsGridProps) {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-6">
         {events?.data.map((event, i) => (
           <motion.div
             key={event.id}
