@@ -71,6 +71,7 @@ export function EventLineup({ lineups }: EventLineupProps) {
                   </div>
 
                   <button
+                    disabled={new Date(item.start_date) < new Date()}
                     onClick={() => {
                       setSelectedLineupId(item.id);
                     }}
