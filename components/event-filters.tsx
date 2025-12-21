@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { DateRangePicker } from "@heroui/react";
-import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import { parseDate, getLocalTimeZone, today } from "@internationalized/date";
 
 export function EventFilters() {
   const router = useRouter();
@@ -82,6 +82,8 @@ export function EventFilters() {
                   variant="bordered"
                   value={dateRange}
                   onChange={setDateRange}
+                  minValue={today(getLocalTimeZone())}
+                  showMonthAndYearPickers
                   classNames={{
                     inputWrapper:
                       "bg-white/5 border-white/10 hover:border-white/20 data-[hover=true]:border-white/20 group-data-[focus=true]:border-white/30",
@@ -96,11 +98,12 @@ export function EventFilters() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl",
+                      base: "bg-[#0a0a0a] border-2 border border-white/20 text-white shadow-xl w-full max-w-[280px] p-4",
                       headerWrapper: "bg-[#0a0a0a]",
                       gridHeader: "bg-[#0a0a0a] text-white",
+                      gridHeaderCell: "text-white",
                       cellButton:
-                        "data-[selected=true]:bg-accent data-[selected=true]:text-white text-white hover:bg-white/10 data-[today=true]:bg-white/10",
+                        "data-[selected=true]:bg-accent data-[selected=true]:text-white text-white hover:bg-white/10 data-[today=true]:bg-white/10 data-[disabled=true]:text-white/20 data-[disabled=true]:cursor-not-allowed",
                     },
                   }}
                 />

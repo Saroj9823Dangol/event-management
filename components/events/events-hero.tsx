@@ -193,6 +193,8 @@ export function EventsHero() {
                   variant="underlined"
                   value={dateRange}
                   onChange={setDateRange}
+                  minValue={today(getLocalTimeZone())}
+                  showMonthAndYearPickers
                   classNames={{
                     inputWrapper: "shadow-none border-b-0",
                     label: "hidden",
@@ -206,11 +208,12 @@ export function EventsHero() {
                   }}
                   calendarProps={{
                     classNames: {
-                      base: "bg-background border border-border text-foreground shadow-xl",
+                      base: "bg-background border border-border text-foreground shadow-xl w-full max-w-[280px] p-4",
                       headerWrapper: "bg-background",
                       gridHeader: "bg-background text-foreground",
+                      gridHeaderCell: "text-foreground",
                       cellButton:
-                        "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground text-foreground hover:bg-accent hover:text-accent-foreground data-[today=true]:bg-accent/50",
+                        "data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground text-foreground hover:bg-accent hover:text-accent-foreground data-[today=true]:bg-accent/50 data-[disabled=true]:text-muted-foreground data-[disabled=true]:cursor-not-allowed",
                     },
                   }}
                 />
