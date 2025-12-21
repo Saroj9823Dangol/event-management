@@ -167,20 +167,44 @@ html {
 }
 
 /* ============================================================================
-   DateRangePicker Calendar Width Override
+   DateRangePicker Calendar Width Override - Remove Dynamic Width Calculation
    ============================================================================ */
 
-/* Remove fixed calendar width calculation */
-[data-slot="calendar"] {
-  --calendar-width: auto !important;
-  --visible-months: 1 !important;
-  width: auto !important;
+/* Completely remove calendar width variables and calculations */
+[data-slot="calendar"],
+[data-slot="calendar-wrapper"],
+.react-aria-Calendar,
+[role="application"][aria-label*="calendar" i],
+[role="application"][aria-label*="date" i] {
+  --calendar-width: unset !important;
+  --visible-months: unset !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-width: unset !important;
+}
+
+/* Force calendar grid and content to fit content */
+[data-slot="calendar"] [data-slot="grid-wrapper"],
+[data-slot="calendar"] [data-slot="content"],
+[data-slot="calendar"] > div,
+[data-slot="calendar"] table,
+.react-aria-Calendar > div,
+.react-aria-Calendar table {
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-width: unset !important;
+}
+
+/* Remove any calc() based widths */
+[data-slot="calendar"] *[style*="calc"],
+[data-slot="calendar"] *[class*="w-[calc"] {
+  width: fit-content !important;
   max-width: 100% !important;
 }
 
-/* Ensure calendar content is responsive */
-[data-slot="calendar"] [data-slot="grid-wrapper"],
-[data-slot="calendar"] [data-slot="content"] {
+/* Nuclear option: Override any inline styles with width calculations */
+[data-slot="calendar"] [style*="width"],
+[data-slot="calendar-wrapper"] [style*="width"] {
   width: fit-content !important;
   max-width: 100% !important;
 }
