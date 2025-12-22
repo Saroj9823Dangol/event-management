@@ -16,23 +16,23 @@ export const capitalize = (s: string): string => {
 };
 
 export const formatDate = (date: string) => {
-  return moment.utc(date).format("Do MMMM, YYYY");
+  return moment(date).format("Do MMMM, YYYY");
 };
 
 export const formatDateTime = (date: string) => {
-  return moment.utc(date).format("Do MMMM, YYYY | hh:mm A");
+  return moment(date).format("Do MMMM, YYYY | hh:mm A");
 };
 
 export const formatTime = (date: string) => {
-  return moment.utc(date).format("hh:mm A");
+  return moment(date).format("hh:mm A");
 };
 
 export const calculateDuration = (
   startTime: string,
   endTime: string
 ): string => {
-  const start = moment.utc(startTime);
-  const end = moment.utc(endTime);
+  const start = moment(startTime);
+  const end = moment(endTime);
   const duration = moment.duration(end.diff(start));
   return duration.humanize();
 };
