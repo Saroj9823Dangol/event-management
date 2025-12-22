@@ -152,10 +152,10 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               onClick={() => scrollByTicket("up")}
-              className="absolute top-2 left-1/2 -translate-x-1/2 z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-2 shadow-lg transition-all duration-300 animate-bounce"
+              className="absolute top-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300 animate-bounce"
               aria-label="Scroll up"
             >
-              <ChevronUp className="w-5 h-5" />
+              <ChevronUp className="w-3 h-3" />
             </motion.button>
           )}
 
@@ -186,7 +186,20 @@ export function TicketSelection({ event }: TicketSelectionProps) {
             </h3>
             <div className="space-y-4">
               {selectedLineUpTicketTypes?.map((ticket) => {
+                const now = new Date();
+                const startDate = ticket.sales_start_date
+                  ? new Date(ticket.sales_start_date)
+                  : null;
+                const endDate = ticket.sales_end_date
+                  ? new Date(ticket.sales_end_date)
+                  : null;
+
+                const isSalesStarted = !startDate || now >= startDate;
+                const isSalesEnded = endDate && now > endDate;
+                const isAvailable = isSalesStarted && !isSalesEnded;
+
                 const qty = quantities[ticket.id] || 0;
+
                 return (
                   <div
                     key={ticket.id}
@@ -194,7 +207,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                       qty > 0
                         ? "border-accent bg-accent/5"
                         : "border-white/10 bg-white/5 hover:border-white/30"
-                    }`}
+                    } ${!isAvailable ? "opacity-60" : ""}`}
                   >
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -215,25 +228,35 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                       </div>
                     </div>
 
-                    {/* Quantity Control */}
+                    {/* Quantity Control or Availability Message */}
                     <div className="flex items-center justify-end mt-4 pt-3 border-t border-white/5">
-                      <div className="flex items-center gap-3 bg-black/40 rounded-lg p-1">
-                        <button
-                          onClick={() => handleQuantityChange(ticket.id, -1)}
-                          disabled={qty === 0}
-                          className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <span className="w-6 text-center font-bold">{qty}</span>
-                        <button
-                          onClick={() => handleQuantityChange(ticket.id, 1)}
-                          disabled={qty >= 10}
-                          className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                      </div>
+                      {!isAvailable ? (
+                        <div className="text-xs font-bold uppercase tracking-widest text-accent/80 py-2">
+                          {!isSalesStarted
+                            ? `Sales start ${startDate?.toLocaleDateString()}`
+                            : "Sales ended"}
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-3 bg-black/40 rounded-lg p-1">
+                          <button
+                            onClick={() => handleQuantityChange(ticket.id, -1)}
+                            disabled={qty === 0}
+                            className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-6 text-center font-bold">
+                            {qty}
+                          </span>
+                          <button
+                            onClick={() => handleQuantityChange(ticket.id, 1)}
+                            disabled={qty >= 10}
+                            className="w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
@@ -248,10 +271,10 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               onClick={() => scrollByTicket("down")}
-              className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-2 shadow-lg transition-all duration-300 animate-bounce"
+              className="absolute bottom-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300 animate-bounce"
               aria-label="Scroll down"
             >
-              <ChevronDown className="w-5 h-5" />
+              <ChevronDown className="w-3 h-3" />
             </motion.button>
           )}
         </div>
