@@ -28,16 +28,14 @@ export function TicketSelection({ event }: TicketSelectionProps) {
 
   // Scroll navigation state
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollUp, setCanScrollUp] = useState(false);
-  const [canScrollDown, setCanScrollDown] = useState(false);
+  const [canScrollUp, setCanScrollUp] = useState(true);
+  const [canScrollDown, setCanScrollDown] = useState(true);
 
   const isLineupSelected = !!selectedLineupId;
 
   const selectedLineUpTicketTypes = event?.lineups?.find(
     (lineup) => lineup.id === selectedLineupId
   )?.ticketTypes;
-
-  logger.log(selectedLineUpTicketTypes, "lineeeeup");
 
   // Calculate totals
   const totalQuantity = Object.values(quantities).reduce((a, b) => a + b, 0);
@@ -60,8 +58,8 @@ export function TicketSelection({ event }: TicketSelectionProps) {
     if (scrollContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
         scrollContainerRef.current;
-      setCanScrollUp(scrollTop > 10);
-      setCanScrollDown(scrollTop + clientHeight < scrollHeight - 10);
+      // setCanScrollUp(scrollTop > 5);
+      // setCanScrollDown(scrollTop + clientHeight < scrollHeight - 5);
     }
   };
 
@@ -128,7 +126,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
 
         {/* Header - Fixed Top */}
         <div className="relative p-6 border-b border-white/5 bg-white/5 flex-none z-10">
-          <div className="flex justify-between items-start mb-2">
+          <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase mb-1">
                 Starting from
@@ -151,8 +149,8 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              onClick={() => scrollByTicket("up")}
-              className="absolute top-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300 animate-bounce"
+              onMouseEnter={() => scrollByTicket("up")}
+              className="absolute top-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300"
               aria-label="Scroll up"
             >
               <ChevronUp className="w-3 h-3" />
@@ -217,7 +215,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
                         {ticket?.description &&
                           ticket.description.length > 0 && (
                             <ul className="list-disc list-inside text-xs text-muted-foreground mt-1 space-y-0.5">
-                              {ticket.description.map((desc, index) => (
+                              {[...ticket.description].map((desc, index) => (
                                 <li key={index}>{desc}</li>
                               ))}
                             </ul>
@@ -270,8 +268,8 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              onClick={() => scrollByTicket("down")}
-              className="absolute bottom-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300 animate-bounce"
+              onMouseEnter={() => scrollByTicket("down")}
+              className="absolute bottom-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300"
               aria-label="Scroll down"
             >
               <ChevronDown className="w-3 h-3" />
