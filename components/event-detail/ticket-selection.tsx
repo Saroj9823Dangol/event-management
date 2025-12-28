@@ -150,6 +150,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               onMouseEnter={() => scrollByTicket("up")}
+              onClick={() => scrollByTicket("up")}
               className="absolute top-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300"
               aria-label="Scroll up"
             >
@@ -269,6 +270,7 @@ export function TicketSelection({ event }: TicketSelectionProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               onMouseEnter={() => scrollByTicket("down")}
+              onClick={() => scrollByTicket("down")}
               className="absolute bottom-2 right-5 cursor-pointer z-20 bg-accent/90 hover:bg-accent text-white rounded-full p-1 shadow-lg transition-all duration-300"
               aria-label="Scroll down"
             >

@@ -1,22 +1,30 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ShoppingBag, Sparkles, TrendingUp, Star, Heart, ExternalLink, Zap } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  ShoppingBag,
+  Sparkles,
+  TrendingUp,
+  Star,
+  Heart,
+  ExternalLink,
+  Zap,
+} from "lucide-react";
 
 interface Product {
-  id: number
-  name: string
-  brand: string
-  price: number
-  originalPrice?: number
-  image: string
-  category: string
-  rating: number
-  limited: boolean
-  aiMatch: number
-  story: string
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  category: string;
+  rating: number;
+  limited: boolean;
+  aiMatch: number;
+  story: string;
 }
 
 const products: Product[] = [
@@ -94,26 +102,29 @@ const products: Product[] = [
     aiMatch: 84,
     story: "Professional event photography and instant prints",
   },
-]
+];
 
 export function UCNCEEMarketplace() {
-  const [savedProducts, setSavedProducts] = useState<Set<number>>(new Set())
-  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null)
+  const [savedProducts, setSavedProducts] = useState<Set<number>>(new Set());
+  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
 
   const toggleSave = (id: number) => {
     setSavedProducts((prev) => {
-      const newSet = new Set(prev)
+      const newSet = new Set(prev);
       if (newSet.has(id)) {
-        newSet.delete(id)
+        newSet.delete(id);
       } else {
-        newSet.add(id)
+        newSet.add(id);
       }
-      return newSet
-    })
-  }
+      return newSet;
+    });
+  };
 
   return (
-    <section id="marketplace" className="relative py-24 px-4 overflow-hidden bg-muted/20">
+    <section
+      id="marketplace"
+      className="relative py-24 px-4 overflow-hidden bg-muted/20"
+    >
       {/* Background gradient */}
       <div className="absolute bottom-1/4 left-1/4 w-[700px] h-[700px] bg-accent/10 rounded-full blur-[160px] animate-[float_15s_ease-in-out_infinite]" />
 
@@ -122,7 +133,9 @@ export function UCNCEEMarketplace() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
             <ShoppingBag className="w-4 h-4 text-accent animate-pulse" />
-            <span className="text-sm font-medium">Brand Marketplace • UCNCEE</span>
+            <span className="text-sm font-medium">
+              Brand Marketplace • UCNCEE
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
             <span className="bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
@@ -130,7 +143,8 @@ export function UCNCEEMarketplace() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover exclusive products and experiences from top brands, matched to your event preferences with AI.
+            Discover exclusive products and experiences from top brands, matched
+            to your event preferences with AI.
           </p>
         </div>
 
@@ -141,9 +155,12 @@ export function UCNCEEMarketplace() {
               <Sparkles className="w-10 h-10 text-black" />
             </div>
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-xl font-bold mb-2">AI Style Match: 94% Compatibility</h3>
+              <h3 className="text-xl font-bold mb-2">
+                AI Style Match: 94% Compatibility
+              </h3>
               <p className="text-sm text-muted-foreground">
-                Based on your event preferences, we've found products you'll love. Personalized just for you.
+                Based on your event preferences, we've found products you'll
+                love. Personalized just for you.
               </p>
             </div>
             <Button className="bg-gradient-to-r from-accent to-amber-500 hover:opacity-90 text-black font-bold">
@@ -190,7 +207,12 @@ export function UCNCEEMarketplace() {
                       )}
                       {product.originalPrice && (
                         <Badge className="bg-accent/90 backdrop-blur-sm text-black border-0 w-fit">
-                          {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                          {Math.round(
+                            ((product.originalPrice - product.price) /
+                              product.originalPrice) *
+                              100
+                          )}
+                          % OFF
                         </Badge>
                       )}
                     </div>
@@ -200,7 +222,9 @@ export function UCNCEEMarketplace() {
                     >
                       <Heart
                         className={`w-5 h-5 transition-colors ${
-                          savedProducts.has(product.id) ? "fill-red-500 text-red-500" : "text-foreground"
+                          savedProducts.has(product.id)
+                            ? "fill-red-500 text-red-500"
+                            : "text-foreground"
                         }`}
                       />
                     </button>
@@ -210,7 +234,9 @@ export function UCNCEEMarketplace() {
                   <div className="absolute bottom-4 right-4">
                     <div className="glass-strong px-3 py-2 rounded-full flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-accent" />
-                      <span className="text-sm font-semibold">{product.aiMatch}% Match</span>
+                      <span className="text-sm font-semibold">
+                        {product.aiMatch}% Match
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -223,21 +249,33 @@ export function UCNCEEMarketplace() {
                     </Badge>
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 fill-accent text-accent" />
-                      <span className="text-sm font-semibold">{product.rating}</span>
+                      <span className="text-sm font-semibold">
+                        {product.rating}
+                      </span>
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold mb-1 text-balance">{product.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{product.brand}</p>
+                  <h3 className="text-xl font-bold mb-1 text-balance">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {product.brand}
+                  </p>
 
                   {/* Brand story */}
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.story}</p>
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                    {product.story}
+                  </p>
 
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-accent">${product.price}</span>
+                      <span className="text-2xl font-bold text-accent">
+                        ${product.price}
+                      </span>
                       {product.originalPrice && (
-                        <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
+                        <span className="text-sm text-muted-foreground line-through">
+                          ${product.originalPrice}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -247,7 +285,11 @@ export function UCNCEEMarketplace() {
                       <ShoppingBag className="w-4 h-4 mr-2" />
                       Add to Cart
                     </Button>
-                    <Button variant="outline" size="icon" className="glass bg-transparent">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="glass bg-transparent"
+                    >
                       <ExternalLink className="w-4 h-4" />
                     </Button>
                   </div>
@@ -259,7 +301,9 @@ export function UCNCEEMarketplace() {
 
         {/* Brand Stories Section */}
         <div className="glass-strong rounded-2xl p-8 mb-12">
-          <h3 className="text-2xl font-bold mb-6 text-center">Featured Brand Stories</h3>
+          <h3 className="text-2xl font-bold mb-6 text-center">
+            Featured Brand Stories
+          </h3>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -292,7 +336,9 @@ export function UCNCEEMarketplace() {
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <p className="font-bold mb-1">{story.brand}</p>
-                    <p className="text-sm text-muted-foreground line-clamp-2">{story.story}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {story.story}
+                    </p>
                   </div>
                 </div>
                 <div className="p-4">
@@ -318,5 +364,5 @@ export function UCNCEEMarketplace() {
         </div>
       </div>
     </section>
-  )
+  );
 }

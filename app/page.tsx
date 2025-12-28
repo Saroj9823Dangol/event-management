@@ -1,32 +1,27 @@
 // app/page.tsx or app/(home)/page.tsx
-import { Suspense } from "react";
 import { CategoryShowcase } from "@/components/category-showcase";
+import { CinematicNav } from "@/components/cinematic-nav";
 import { CTASection } from "@/components/cta-section";
+import { DownloadAppSection } from "@/components/download-app-section";
 import { EnterpriseSection } from "@/components/enterprise-section";
 import { EventFilters } from "@/components/event-filters";
 import { FeaturedGrid } from "@/components/featured-grid";
-import { LastMinuteDeals } from "@/components/last-minute-deals";
 import { LiveNowStrip } from "@/components/live-now-strip";
-import { SiteFooter } from "@/components/site-footer";
+import { PastHistory } from "@/components/past-history";
 import { StatsSection } from "@/components/stats-section";
-import { TicketCategories } from "@/components/ticket-categories";
-import { TrendingEvents } from "@/components/trending-events";
+import { TopSellingEvents } from "@/components/top-selling-events";
+import { UpcomingEvents } from "@/components/upcoming-events";
 import { VideoHero } from "@/components/video-hero";
-import { DownloadAppSection } from "@/components/download-app-section";
-import { CinematicNav } from "@/components/cinematic-nav";
+import { PromotionBanners } from "@/components/promotion-banners";
+import { getCategories } from "@/lib/api/categories";
 import {
   getHomefeaturedEvents,
-  getHomeTrendingEvents,
-  getUpcomingEvents,
-  getTopSellingEvents,
-  getLiveEvents,
   getHomeLiveEvents,
   getPastEvents,
+  getTopSellingEvents,
+  getUpcomingEvents,
 } from "@/lib/api/events";
-import { UpcomingEvents } from "@/components/upcoming-events";
-import { TopSellingEvents } from "@/components/top-selling-events";
-import { PastHistory } from "@/components/past-history";
-import { getCategories } from "@/lib/api/categories";
+import { getPromotionBanners } from "@/lib/api/promotion-banner";
 import logger from "@/lib/logger/logger";
 
 // Fix Vercel caching - force dynamic rendering
@@ -43,6 +38,8 @@ export default async function HomePage() {
 
   const categories = await getCategories();
 
+  const promotionBanners = await getPromotionBanners();
+
   logger.log(featuredEvents.data[0], "featured");
 
   return (
@@ -55,6 +52,7 @@ export default async function HomePage() {
       <EventFilters />
 
       {/* Discovery - Broad Categories first */}
+
       <CategoryShowcase categories={categories} />
 
       {/* Social Proof - What's Popular */}
@@ -63,7 +61,9 @@ export default async function HomePage() {
       )} */}
 
       {/* Timeline - Planning Ahead */}
-      <UpcomingEvents events={upcomingEvents} />
+      {!!upcomingEvents?.meta.total && (
+        <UpcomingEvents events={upcomingEvents} />
+      )}
 
       {/* Engagement - Live Content strip */}
       {!!liveEvents?.meta.total && <LiveNowStrip liveEvents={liveEvents} />}
@@ -91,6 +91,11 @@ export default async function HomePage() {
 
       {/* Final Calls to Action */}
       <CTASection />
+
+      {/* Promotion Banners Popup */}
+      {!!promotionBanners?.meta.total && (
+        <PromotionBanners banners={promotionBanners} />
+      )}
     </main>
   );
 }

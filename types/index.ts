@@ -376,6 +376,12 @@ export interface IPerformer extends IBase {
   name: string;
   sub_name: string;
   files: IFile[];
+  social_links: {
+    tiktok: string;
+    youtube: string;
+    facebook: string;
+    instagram: string;
+  };
 }
 
 export interface ILineup extends IBase {
@@ -583,4 +589,9 @@ export interface IPaginatedResponse<T> {
     to: number;
     total: number;
   };
+}
+
+export interface IPromotionBanner extends IBase {
+  event: IEvent;
+  files:IFile[];
 }

@@ -9,6 +9,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { EventTabs } from "@/components/event-detail/event-tabs";
 import { BookingProvider } from "@/components/event-detail/booking-context";
 import { EventLineup } from "@/components/event-detail/event-lineup";
+import {
+  Youtube,
+  Facebook,
+  Instagram,
+  Music2,
+  ExternalLink,
+} from "lucide-react";
 import logger from "@/lib/logger/logger";
 import { getEventDetail, getRelatedEvents } from "@/lib/api/events";
 import { Metadata } from "next";
@@ -117,18 +124,52 @@ export default async function EventDetailPage({
                     return (
                       <div
                         key={artist.id}
-                        className="group relative aspect-square overflow-hidden rounded-xl bg-white/5 border border-white/10"
+                        className="group relative aspect-square overflow-hidden bg-white/5 border border-white/10 rounded-none"
                       >
                         <img
-                          src={artist.files[0].url}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          src={artist.files[0]?.url}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           alt={artist.name}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 flex flex-col justify-end">
-                          <h3 className="text-xl font-bold">{artist.name}</h3>
-                          <p className="text-accent text-sm font-medium tracking-wider uppercase">
-                            {artist.sub_name}
-                          </p>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent p-6 flex flex-col justify-end">
+                          <div className="translate-y-0 transition-transform duration-500">
+                            <h3 className="text-3xl font-bold text-white mb-1 drop-shadow-xl">
+                              {artist.name}
+                            </h3>
+                            <p className="text-accent text-sm font-bold tracking-[0.2em] uppercase mb-6">
+                              {artist.sub_name}
+                            </p>
+
+                            {/* Social Links - High Visibility */}
+                            {artist.social_links && (
+                              <div className="flex items-center gap-3">
+                                {Object.entries(artist.social_links).map(
+                                  ([type, url]) => {
+                                    if (!url) return null;
+                                    const icons = {
+                                      youtube: <Youtube size={18} />,
+                                      facebook: <Facebook size={18} />,
+                                      instagram: <Instagram size={18} />,
+                                      tiktok: <Music2 size={18} />,
+                                    };
+                                    return (
+                                      <a
+                                        key={type}
+                                        href={url as string}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-12 h-12 rounded-none bg-white text-black flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 border-2 border-white"
+                                      >
+                                        {icons[type as keyof typeof icons] || (
+                                          <ExternalLink size={18} />
+                                        )}
+                                      </a>
+                                    );
+                                  }
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     );

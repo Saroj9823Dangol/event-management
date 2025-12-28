@@ -1,40 +1,27 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+import { generateCalendarLinks } from "@/lib/generateCalendarLink";
+import { formatDate, formatTime } from "@/lib/utils";
+import { IEvent } from "@/types";
 import { motion } from "framer-motion";
 import {
-  Play,
+  ArrowLeft,
+  Calendar,
+  CalendarPlus,
+  Clock,
+  MapPin,
   Pause,
+  Play,
+  Ticket,
   Volume2,
   VolumeX,
-  Heart,
-  Share2,
-  Calendar,
-  MapPin,
-  Clock,
-  ArrowLeft,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Link2,
-  MessageCircle,
-  Ticket,
-  CalendarPlus,
 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 import Link from "next/link";
-import { IEvent } from "@/types";
-import { formatDate, formatTime } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { ShareButton } from "../common/share-button";
 import { Button } from "../ui/button";
-import { generateCalendarLinks } from "@/lib/generateCalendarLink";
 
 interface EventHeroProps {
   event: IEvent;
@@ -223,9 +210,9 @@ export function EventDetailHero({ event }: EventHeroProps) {
               </span>
             </button>
             <ShareButton
-              title={event.name}
-              url={process.env.NEXT_PUBLIC_APP_URL + "/events/" + event.slug}
-              excerpt={event.description}
+              title={event?.name}
+              url={process.env.NEXT_PUBLIC_APP_URL + "/events/" + event?.slug}
+              excerpt={event?.description}
             />
           </div>
         </motion.div>

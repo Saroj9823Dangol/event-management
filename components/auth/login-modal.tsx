@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/input-otp";
 import { CustomPhoneInput } from "@/components/auth/phone-input";
 import { authApi } from "@/lib/api/auth";
+import { useLenis } from "lenis/react";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -40,6 +41,19 @@ export function LoginModal({
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (isOpen) {
+      lenis?.stop();
+    } else {
+      lenis?.start();
+    }
+    return () => {
+      lenis?.start();
+    };
+  }, [isOpen, lenis]);
 
   const resetState = () => {
     setStep("PHONE");
@@ -116,7 +130,10 @@ export function LoginModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md glass-card text-white border-white/10 p-0 overflow-hidden">
+      <DialogContent
+        data-lenis-prevent
+        className="sm:max-w-md glass-card text-white border-white/10 p-0 overflow-hidden"
+      >
         <DialogHeader className="p-6 pb-2">
           <DialogTitle className="text-xl font-serif text-white">
             {step === "PHONE" ? "Login" : "Verify OTP"}

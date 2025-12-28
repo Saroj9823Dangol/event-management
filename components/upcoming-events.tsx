@@ -24,12 +24,14 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
-  if (!events || events?.data.length === 0) return null;
+  const hasEvents = events && events?.data.length > 0;
 
   return (
     <section
       ref={containerRef}
-      className="py-20 bg-zinc-950 relative overflow-hidden"
+      className={`py-20 bg-zinc-950 relative overflow-hidden ${
+        !hasEvents ? "hidden" : ""
+      }`}
     >
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-accent/5 blur-[120px] pointer-events-none" />
